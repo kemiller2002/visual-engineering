@@ -1,6 +1,6 @@
 {
-  "name": "@kemiller2002/visual-engineering-context",
-  "version": "0.0.0-dev",
+  "name": "@echelon-foundry/visual-engineering-context",
+  "version": "0.2.0",
   "description": "Versioned Visual Engineering research context for UI implementation agents",
   "type": "module",
   "license": "MIT",

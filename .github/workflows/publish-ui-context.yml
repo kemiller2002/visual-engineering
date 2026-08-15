@@ -30,8 +30,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     env:
+      # Optional bootstrap fallback. Remove this secret after npm trusted
+      # publishing is configured; npm will then authenticate through OIDC.
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      PACKAGE_NAME: ${{ vars.VE_CONTEXT_NPM_PACKAGE || '@kemiller2002/visual-engineering-context' }}
+      PACKAGE_NAME: "@echelon-foundry/visual-engineering-context"
       CONTEXT_VERSION: 0.${{ github.run_number }}.${{ github.run_attempt }}
       VE_CONTEXT_VERSION: 0.${{ github.run_number }}.${{ github.run_attempt }}
       VE_GENERATED_AT: ${{ github.event.head_commit.timestamp }}
@@ -102,11 +104,5 @@ jobs:
           npm run context:pack
 
       - name: Publish latest package
-        if: ${{ env.NODE_AUTH_TOKEN != '' }}
         working-directory: packages/visual-engineering-context
-        run: npm publish --access public --provenance --tag latest
-
-      - name: Explain skipped publication
-        if: ${{ env.NODE_AUTH_TOKEN == '' }}
-        run: |
-          echo "::warning::UI context was built and validated but not published because the NPM_TOKEN repository secret is not configured."
+        run: npm publish --access public --tag latest
