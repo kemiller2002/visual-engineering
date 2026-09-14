@@ -24,7 +24,7 @@ module Diagnostics =
         let probe = Path.Combine(root, Tool.EchelonDirectory, ".write-probe")
 
         try
-            Directory.CreateDirectory(Path.GetDirectoryName probe) |> ignore
+            Paths.ensureParent probe
             File.WriteAllText(probe, "")
             File.Delete probe
             Ok()

@@ -77,11 +77,7 @@ module Execution =
                                     | None -> Ok()
                                     | Some(_, (path, stagedFile)) ->
                                         let target = RepoPath.toAbsolute root path
-                                        let directory = Path.GetDirectoryName target
-
-                                        if not (String.IsNullOrEmpty directory) then
-                                            Directory.CreateDirectory directory |> ignore
-
+                                        Paths.ensureParent target
                                         File.Move(stagedFile, target, true)
                                         Ok()
                             with error ->

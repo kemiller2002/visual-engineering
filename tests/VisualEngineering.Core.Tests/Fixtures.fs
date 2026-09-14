@@ -90,7 +90,7 @@ let snapshot (root: string) =
 
 let write (root: string) (relative: string) (content: string) =
     let target = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar))
-    Directory.CreateDirectory(Path.GetDirectoryName target) |> ignore
+    Paths.ensureParent target
     File.WriteAllText(target, content, UTF8Encoding false)
 
 let read (root: string) (relative: string) =

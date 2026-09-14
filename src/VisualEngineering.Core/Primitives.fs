@@ -178,6 +178,23 @@ module RepoPath =
     let startsWith (prefix: RepoPath) (path: RepoPath) =
         path.Value = prefix.Value || path.Value.StartsWith(prefix.Value + "/", StringComparison.Ordinal)
 
+/// Filesystem path helpers that keep the nullable parts of `System.IO.Path` at the boundary.
+[<RequireQualifiedAccess>]
+module Paths =
+
+    /// Directory containing `path`, when it has one. `Path.GetDirectoryName` returns null for a
+    /// root, and an empty string for a bare file name; both mean "no directory to create".
+    let tryParent (path: string) =
+        Path.GetDirectoryName path
+        |> Option.ofObj
+        |> Option.filter (fun directory -> directory <> "")
+
+    /// Creates the directory containing `path` when there is one to create.
+    let ensureParent (path: string) =
+        match tryParent path with
+        | Some directory -> Directory.CreateDirectory directory |> ignore
+        | None -> ()
+
 /// Thin, testable filesystem surface. Every read normalizes line endings for hashing purposes
 /// but writes bytes exactly as produced, so output stays deterministic.
 [<RequireQualifiedAccess>]
@@ -202,11 +219,7 @@ module Files =
 
     let writeText (root: string) (path: RepoPath) (content: string) =
         let absolute = RepoPath.toAbsolute root path
-        let directory = Path.GetDirectoryName absolute
-
-        if not (String.IsNullOrEmpty directory) then
-            Directory.CreateDirectory directory |> ignore
-
+        Paths.ensureParent absolute
         File.WriteAllText(absolute, content, UTF8Encoding false)
 
     let createDirectory (root: string) (path: RepoPath) =
