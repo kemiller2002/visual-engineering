@@ -21,10 +21,22 @@ F# core (src/VisualEngineering.Core)
 
 npm is distribution and invocation. F# is the application and the domain.
 
-The Node launcher may only: detect the platform, locate the packaged executable, forward
-arguments and standard streams, and return the exit code. It decides nothing about what to
-install, what repository state means, whether an installation is valid, what migrations are
-required, what configuration should exist, what is stale, or what integrations are correct.
+The Node launcher may only: detect the platform, locate the packaged executable, point it at
+the packaged payload, forward arguments and standard streams, and return the exit code. It
+decides nothing about what to install, what repository state means, whether an installation is
+valid, what migrations are required, what configuration should exist, what is stale, or what
+integrations are correct.
+
+### Distribution shape
+
+The executable ships in a per-platform package and the research context payload in the root
+package, so the launcher passes the payload directory to the executable in
+`VISUAL_ENGINEERING_PAYLOAD`. That is package layout, not a lifecycle decision.
+
+The executable does not depend on being told: `Payload.candidateRoots` also looks for the root
+package beside the platform package, for the staged `platforms/<rid>` layout, and for a payload
+next to the executable. Running the binary directly is therefore a supported path, and the
+packed artifact test exercises it with the launcher's hint stripped.
 
 ## Layout
 
@@ -34,9 +46,10 @@ required, what configuration should exist, what is stale, or what integrations a
 | `src/VisualEngineering.Cli/` | Argument parsing, rendering, exit codes. A thin adapter |
 | `tests/VisualEngineering.Core.Tests/` | Lifecycle, migration, ownership, idempotency and JSON schema tests |
 | `tests/VisualEngineering.Cli.Tests/` | Parser and help text tests |
-| `npm/` | The npm package: launcher, staged payload, staged runtimes |
-| `scripts/build-tool-package.mjs` | Stages the npm package from the F# build and the generated context |
-| `scripts/test-tool-package.mjs` | Packs and exercises the real archive |
+| `npm/` | The root npm package: launcher, staged payload, README and licence |
+| `npm/platforms/<rid>/` | One npm package per platform, each carrying a single executable |
+| `scripts/build-tool-package.mjs` | Stages all seven packages from the F# build and the generated context |
+| `scripts/test-tool-package.mjs` | Packs and exercises the real archives |
 
 ### Core module order
 
@@ -106,7 +119,7 @@ npm run tool:build         # publishes the CLI and stages npm/
 ```
 
 `npm run tool:build -- --rid linux-x64` stages a single runtime identifier, which is much
-faster during development.
+faster during development. The packed artifact test only needs the host platform.
 
 Version flows from one place: `scripts/build-tool-package.mjs` takes `--version` (or
 `VE_TOOL_VERSION`) and stamps it into both `dotnet publish -p:Version=` and `npm/package.json`.
@@ -117,7 +130,7 @@ drift.
 
 ```bash
 dotnet test VisualEngineering.sln     # 80 unit and lifecycle tests
-npm run tool:test-package             # packs and exercises the real .tgz
+npm run tool:test-package             # packs and exercises the real .tgz archives
 ```
 
 `npm run tool:test-package` is the authoritative check. It packs the package, installs the

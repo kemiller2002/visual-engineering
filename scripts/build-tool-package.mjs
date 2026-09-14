@@ -1,8 +1,19 @@
-// Producer side build for the @echelon-foundry/visual-engineering npm package.
+// Producer side build for the @echelon-foundry/visual-engineering npm packages.
 //
-// This script only assembles the distributable: it stages the generated context payload,
-// publishes the F# CLI for each supported runtime identifier, and stamps one authoritative
-// version into both the executable and package.json. It makes no lifecycle decisions.
+// This script only assembles the distributables: it stages the generated context payload,
+// publishes the F# CLI for each supported runtime identifier into its own platform package,
+// and stamps one authoritative version into every package.json and into the executables.
+// It makes no lifecycle decisions.
+//
+// Layout produced:
+//
+//   npm/                                  @echelon-foundry/visual-engineering
+//     bin/ payload/ README.md LICENSE     launcher, context payload, docs
+//   npm/platforms/<rid>/                  @echelon-foundry/visual-engineering-<rid>
+//     visual-engineering[.exe] LICENSE    one executable, declared os/cpu
+//
+// The root package declares each platform package as an optionalDependency, so npm
+// downloads only the executable the installing machine can run.
 
 import { execFileSync } from "node:child_process";
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
@@ -14,17 +25,18 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const packageRoot = path.join(root, "npm");
 const contextSource = path.join(root, "packages/visual-engineering-context/context");
 const payloadDir = path.join(packageRoot, "payload");
-const runtimesDir = path.join(packageRoot, "runtimes");
+const platformsDir = path.join(packageRoot, "platforms");
 const cliProject = path.join(root, "src/VisualEngineering.Cli/VisualEngineering.Cli.fsproj");
 
-const ALL_RUNTIME_IDENTIFIERS = [
-  "linux-x64",
-  "linux-arm64",
-  "win-x64",
-  "win-arm64",
-  "osx-x64",
-  "osx-arm64",
-];
+// Runtime identifier -> the npm `os` and `cpu` values npm matches against the install host.
+const PLATFORMS = {
+  "linux-x64": { os: "linux", cpu: "x64" },
+  "linux-arm64": { os: "linux", cpu: "arm64" },
+  "win-x64": { os: "win32", cpu: "x64" },
+  "win-arm64": { os: "win32", cpu: "arm64" },
+  "osx-x64": { os: "darwin", cpu: "x64" },
+  "osx-arm64": { os: "darwin", cpu: "arm64" },
+};
 
 function argument(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -37,10 +49,10 @@ if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(version)) {
   throw new Error(`Version must be semantic, received: ${version}`);
 }
 
-const runtimeIdentifiers = argument("--rid", ALL_RUNTIME_IDENTIFIERS.join(",")).split(",");
+const runtimeIdentifiers = argument("--rid", Object.keys(PLATFORMS).join(",")).split(",");
 
 for (const identifier of runtimeIdentifiers) {
-  if (!ALL_RUNTIME_IDENTIFIERS.includes(identifier)) {
+  if (!PLATFORMS[identifier]) {
     throw new Error(`Unsupported runtime identifier: ${identifier}`);
   }
 }
@@ -52,11 +64,17 @@ if (!existsSync(path.join(contextSource, "context.json"))) {
 }
 
 await rm(payloadDir, { recursive: true, force: true });
-await rm(runtimesDir, { recursive: true, force: true });
+await rm(platformsDir, { recursive: true, force: true });
 await mkdir(path.join(payloadDir, "context"), { recursive: true });
 await cp(contextSource, path.join(payloadDir, "context"), { recursive: true });
 
+const packageJsonPath = path.join(packageRoot, "package.json");
+const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
+const license = await readFile(path.join(root, "LICENSE"));
+
 for (const identifier of runtimeIdentifiers) {
+  const target = path.join(platformsDir, identifier);
+
   execFileSync(
     "dotnet",
     [
@@ -68,15 +86,48 @@ for (const identifier of runtimeIdentifiers) {
       identifier,
       `-p:Version=${version}`,
       "-o",
-      path.join(runtimesDir, identifier),
+      target,
     ],
     { stdio: "inherit", cwd: root }
   );
+
+  const executable = identifier.startsWith("win-")
+    ? "visual-engineering.exe"
+    : "visual-engineering";
+
+  if (!existsSync(path.join(target, executable))) {
+    throw new Error(`dotnet publish did not produce ${executable} for ${identifier}`);
+  }
+
+  await writeFile(
+    path.join(target, "package.json"),
+    `${JSON.stringify(
+      {
+        name: `${packageJson.name}-${identifier}`,
+        version,
+        description: `${identifier} executable for ${packageJson.name}.`,
+        license: packageJson.license,
+        repository: packageJson.repository,
+        bugs: packageJson.bugs,
+        os: [PLATFORMS[identifier].os],
+        cpu: [PLATFORMS[identifier].cpu],
+        files: [executable, "LICENSE"],
+        publishConfig: packageJson.publishConfig,
+      },
+      null,
+      2
+    )}\n`
+  );
+
+  await writeFile(path.join(target, "LICENSE"), license);
 }
 
-const packageJsonPath = path.join(packageRoot, "package.json");
-const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
+// Every platform package is optional: npm skips the ones whose os/cpu do not match, so an
+// install downloads one executable rather than six.
 packageJson.version = version;
+packageJson.optionalDependencies = Object.fromEntries(
+  Object.keys(PLATFORMS).map((identifier) => [`${packageJson.name}-${identifier}`, version])
+);
 await writeFile(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 
 // The root README is the authoritative package page, and the root LICENSE the authoritative
@@ -93,7 +144,9 @@ process.stdout.write(
       version,
       contextVersion: context.contextVersion,
       sourceCommit: context.sourceCommit,
-      runtimeIdentifiers,
+      platformPackages: runtimeIdentifiers.map(
+        (identifier) => `${packageJson.name}-${identifier}`
+      ),
     },
     null,
     2

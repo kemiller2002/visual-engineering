@@ -110,7 +110,7 @@ jobs:
 
       - name: Restore executable permissions
         if: runner.os != 'Windows'
-        run: chmod +x npm/runtimes/*/visual-engineering npm/bin/visual-engineering.js
+        run: chmod +x npm/platforms/*/visual-engineering npm/bin/visual-engineering.js
 
       - name: Test the packed artifact
         run: node scripts/test-tool-package.mjs

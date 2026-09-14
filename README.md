@@ -45,8 +45,6 @@ through untouched. See [docs/ownership.md](docs/ownership.md).
 
 ## Supported environments
 
-Binaries for six platforms ship in the package, and the launcher selects the right one:
-
 | Platform | Architectures |
 | --- | --- |
 | Linux | x64, arm64 |
@@ -54,6 +52,19 @@ Binaries for six platforms ship in the package, and the launcher selects the rig
 | Windows | x64, arm64 |
 
 Any other platform fails immediately with exit code 7.
+
+Each platform's executable ships in its own package, declared as an optional dependency of this
+one and marked with the `os` and `cpu` it runs on. npm installs only the one your machine can
+run, so an install downloads about 7 MB rather than all six executables:
+
+| Package | Size |
+| --- | --- |
+| `@echelon-foundry/visual-engineering` | ~43 KB (launcher, research context, docs) |
+| `@echelon-foundry/visual-engineering-<platform>` | ~7 MB (one executable) |
+
+The six platform packages are `-linux-x64`, `-linux-arm64`, `-osx-x64`, `-osx-arm64`,
+`-win-x64` and `-win-arm64`. You never name them directly; npm resolves the right one. If you
+install with `--omit=optional`, add the one you need explicitly.
 
 ### Prerequisites
 
@@ -263,9 +274,10 @@ npm run tool:test-package                  # tests the actual packed npm artifac
 npm ci
 npm run research:build                     # generate the research catalog
 npm run context:build                      # generate the context payload
-npm run tool:build                         # publish the F# CLI and stage the npm package
-npm run tool:pack                          # npm pack --dry-run, review the contents
-npm run tool:test-package                  # pack, install and exercise the real archive
+npm run tool:build                         # publish the F# CLI and stage all seven packages
+npm run tool:build -- --rid linux-x64      # or stage one platform, much faster
+npm run tool:pack                          # npm pack --dry-run, review the root contents
+npm run tool:test-package                  # pack, install and exercise the real archives
 ```
 
 ### Release
@@ -279,7 +291,7 @@ Windows, and only then publishes. See [docs/releasing.md](docs/releasing.md).
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `unsupported platform` (exit 7) | No binary for this platform/architecture | Use a supported platform from the table above |
-| `this package does not contain an executable for ...` (exit 6) | Incomplete install | Reinstall the package |
+| `the executable for ... is missing` (exit 6) | The platform package was not installed, usually from `--omit=optional` | Reinstall, or add `@echelon-foundry/visual-engineering-<platform>` explicitly |
 | `... was modified locally` (exit 5) | Tool maintained content was edited | Restore the file, or rerun with `--force` |
 | `the managed '...' region ... was edited locally` (exit 5) | Edits inside the managed markers | Move edits outside the markers, or rerun with `--force` |
 | `verify` fails only with `--strict` | The installation is behind this release | `npx @echelon-foundry/visual-engineering upgrade` |

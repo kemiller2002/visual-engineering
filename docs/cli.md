@@ -103,6 +103,10 @@ Findings carry a `severity` (`error`, `warning`, `information`), a stable `code`
 | 6 | environment failure | The packaged context is missing or corrupt, or the repository cannot be opened |
 | 7 | unsupported platform | No packaged executable for this platform and architecture |
 
+Exit code 6 also covers a missing platform package: the executable ships in
+`@echelon-foundry/visual-engineering-<platform>`, installed automatically as an optional
+dependency, and the launcher says so by name when it is absent.
+
 Exit code 7 is produced by the Node launcher before the executable starts. All other codes come
 from the F# implementation.
 

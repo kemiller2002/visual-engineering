@@ -14,7 +14,7 @@ tests/**/obj/
 
 # Staged npm package artifacts for @echelon-foundry/visual-engineering
 npm/payload/
-npm/runtimes/
+npm/platforms/
 npm/README.md
 packages/visual-engineering-context/LICENSE
 npm/LICENSE

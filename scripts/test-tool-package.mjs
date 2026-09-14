@@ -165,25 +165,46 @@ try {
     throw new Error('npm/payload is missing. Run "npm run tool:build" first.');
   }
 
-  const packOutput = npm(["pack", "--pack-destination", workspace, "--silent"], packageRoot);
-  const archive = path.join(workspace, packOutput.trim().split("\n").pop().trim());
-  check("npm pack produced an archive", existsSync(archive), archive);
+  const hostPlatform = {
+    "linux-x64": { rid: "linux-x64", os: "linux", cpu: "x64" },
+    "linux-arm64": { rid: "linux-arm64", os: "linux", cpu: "arm64" },
+    "darwin-x64": { rid: "osx-x64", os: "darwin", cpu: "x64" },
+    "darwin-arm64": { rid: "osx-arm64", os: "darwin", cpu: "arm64" },
+    "win32-x64": { rid: "win-x64", os: "win32", cpu: "x64" },
+    "win32-arm64": { rid: "win-arm64", os: "win32", cpu: "arm64" },
+  }[`${process.platform}-${process.arch}`];
 
-  // ------------------------------------------------------- package contents
+  check(
+    "the host platform is supported",
+    Boolean(hostPlatform),
+    `${process.platform}-${process.arch}`
+  );
+
+  const hostRuntime = hostPlatform.rid;
+  const binaryName = process.platform === "win32" ? "visual-engineering.exe" : "visual-engineering";
+  const platformPackageName = `${packageJson.name}-${hostRuntime}`;
+  const platformRoot = path.join(packageRoot, "platforms", hostRuntime);
+
+  function pack(directory) {
+    const output = npm(["pack", "--pack-destination", workspace, "--silent"], directory);
+    return path.join(workspace, output.trim().split("\n").pop().trim());
+  }
+
+  const archive = pack(packageRoot);
+  check("npm pack produced the root archive", existsSync(archive), archive);
+
+  check(
+    `the platform package for ${hostRuntime} was staged`,
+    existsSync(path.join(platformRoot, "package.json")),
+    `${platformRoot} is missing. Run "npm run tool:build" first.`
+  );
+  const platformArchive = pack(platformRoot);
+  check("npm pack produced the platform archive", existsSync(platformArchive), platformArchive);
+
+  // --------------------------------------------------- root package contents
   const contents = listArchive(archive)
     .map((entry) => entry.replace(/^package\//, ""))
     .filter((entry) => !entry.endsWith("/"));
-
-  const hostRuntime = {
-    "linux-x64": "linux-x64",
-    "linux-arm64": "linux-arm64",
-    "darwin-x64": "osx-x64",
-    "darwin-arm64": "osx-arm64",
-    "win32-x64": "win-x64",
-    "win32-arm64": "win-arm64",
-  }[`${process.platform}-${process.arch}`];
-
-  check("the host platform is supported", Boolean(hostRuntime), `${process.platform}-${process.arch}`);
 
   for (const required of [
     "package.json",
@@ -193,13 +214,25 @@ try {
     "payload/context/context.json",
     "payload/context/UI-FOUNDATIONS.md",
   ]) {
-    check(`the package contains ${required}`, contents.includes(required));
+    check(`the root package contains ${required}`, contents.includes(required));
   }
 
+  // The whole point of the split: executables live in the platform packages, so an install
+  // downloads one of them rather than all six.
+  const strayExecutables = contents.filter((entry) =>
+    /^(platforms|runtimes)\/|visual-engineering(\.exe)?$/.test(entry)
+  );
   check(
-    `the package contains an executable for ${hostRuntime}`,
-    contents.some((entry) => entry.startsWith(`runtimes/${hostRuntime}/visual-engineering`)),
-    contents.filter((entry) => entry.startsWith("runtimes/")).join(", ")
+    "the root package ships no platform executables",
+    strayExecutables.length === 0,
+    strayExecutables.join(", ")
+  );
+
+  const rootArchiveBytes = statSync(archive).size;
+  check(
+    "the root package stays small",
+    rootArchiveBytes < 2 * 1024 * 1024,
+    `${(rootArchiveBytes / 1024).toFixed(1)} KB`
   );
 
   const forbidden = contents.filter((entry) =>
@@ -207,7 +240,46 @@ try {
       entry
     )
   );
-  check("the package publishes nothing unnecessary or sensitive", forbidden.length === 0, forbidden.join(", "));
+  check("the root package publishes nothing unnecessary or sensitive", forbidden.length === 0, forbidden.join(", "));
+
+  // ------------------------------------------------ optional dependency wiring
+  const optional = packageJson.optionalDependencies ?? {};
+  for (const rid of ["linux-x64", "linux-arm64", "win-x64", "win-arm64", "osx-x64", "osx-arm64"]) {
+    const name = `${packageJson.name}-${rid}`;
+    check(
+      `${name} is an optional dependency pinned to this version`,
+      optional[name] === packageJson.version,
+      `${name} = ${optional[name]}`
+    );
+  }
+
+  // ----------------------------------------------- platform package contents
+  const platformContents = listArchive(platformArchive)
+    .map((entry) => entry.replace(/^package\//, ""))
+    .filter((entry) => !entry.endsWith("/"));
+
+  for (const required of ["package.json", "LICENSE", binaryName]) {
+    check(`the platform package contains ${required}`, platformContents.includes(required));
+  }
+  check(
+    "the platform package ships nothing else",
+    platformContents.length === 3,
+    platformContents.join(", ")
+  );
+
+  const platformJson = JSON.parse(readFileSync(path.join(platformRoot, "package.json"), "utf8"));
+  check("the platform package is named for its runtime", platformJson.name === platformPackageName);
+  check("the platform package shares the root version", platformJson.version === packageJson.version);
+  check(
+    "the platform package declares the os npm matches on",
+    JSON.stringify(platformJson.os) === JSON.stringify([hostPlatform.os]),
+    JSON.stringify(platformJson.os)
+  );
+  check(
+    "the platform package declares the cpu npm matches on",
+    JSON.stringify(platformJson.cpu) === JSON.stringify([hostPlatform.cpu]),
+    JSON.stringify(platformJson.cpu)
+  );
 
   // ------------------------------------------------------------- install
   const installRoot = path.join(workspace, "consumer");
@@ -216,7 +288,10 @@ try {
     path.join(installRoot, "package.json"),
     JSON.stringify({ name: "package-under-test", version: "1.0.0", private: true }, null, 2)
   );
-  npm(["install", "--no-audit", "--no-fund", "--silent", archive], installRoot);
+  // The platform package is installed from its tarball because the version under test is not
+  // on the registry yet; the root package's optionalDependency on the same name and version
+  // is satisfied by it.
+  npm(["install", "--no-audit", "--no-fund", "--silent", archive, platformArchive], installRoot);
 
   const cli = path.join(
     installRoot,
@@ -227,6 +302,59 @@ try {
     "visual-engineering.js"
   );
   check("the installed package exposes its launcher", existsSync(cli), cli);
+  const installedPlatformBinary = path.join(
+    installRoot,
+    "node_modules",
+    "@echelon-foundry",
+    `visual-engineering-${hostRuntime}`,
+    binaryName
+  );
+  check(
+    "the platform package installed its executable",
+    existsSync(installedPlatformBinary),
+    installedPlatformBinary
+  );
+  check(
+    "the installed root package carries no executables of its own",
+    !existsSync(
+      path.join(installRoot, "node_modules", "@echelon-foundry", "visual-engineering", "platforms")
+    ) &&
+      !existsSync(
+        path.join(installRoot, "node_modules", "@echelon-foundry", "visual-engineering", "runtimes")
+      )
+  );
+
+  // The launcher tells the executable where the payload is, but the executable must also find
+  // it unaided, so that running the binary directly is not a broken path.
+  const directRepository = path.join(workspace, "direct");
+  mkdirSync(path.join(directRepository, ".git"), { recursive: true });
+  const direct = (() => {
+    try {
+      return {
+        status: 0,
+        stdout: execFileSync(installedPlatformBinary, ["status", "--json"], {
+          cwd: directRepository,
+          encoding: "utf8",
+          // Strip the launcher's hint so only the executable's own discovery is exercised.
+          env: { ...process.env, VISUAL_ENGINEERING_PAYLOAD: "" },
+        }),
+      };
+    } catch (error) {
+      return { status: error.status ?? 1, stdout: error.stdout ?? "", stderr: error.stderr ?? "" };
+    }
+  })();
+  check(
+    "the executable finds the payload when run directly",
+    direct.status === 0,
+    direct.stderr || direct.stdout
+  );
+  const directJson = parseJson("the direct run emits valid JSON", direct.stdout);
+  check(
+    "the direct run reports the packaged context",
+    Boolean(directJson?.packagedContextVersion),
+    JSON.stringify(directJson?.packagedContextVersion)
+  );
+
   const binDirectory = path.join(installRoot, "node_modules", ".bin");
   check(
     "the bin mapping is installed",
@@ -355,7 +483,10 @@ try {
   }
 
   // ------------------------------------------------------------- damage
-  rmSync(path.join(repository, ".visual-engineering", "UI-FOUNDATIONS.md"));
+  const damaged = path.join(repository, ".visual-engineering", "UI-FOUNDATIONS.md");
+  check("init installed the file the damage checks operate on", existsSync(damaged), damaged);
+  if (!existsSync(damaged)) throw new Error("cannot continue: init did not install the context");
+  rmSync(damaged);
   check("verify fails on a missing file", tryRun(cli, ["verify"], repository).status === 3);
   const damagedDoctor = tryRun(cli, ["doctor", "--json"], repository);
   check("doctor fails on a missing file", damagedDoctor.status === 3);

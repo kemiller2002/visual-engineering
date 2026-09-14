@@ -17,7 +17,6 @@
   "files": [
     "bin/",
     "payload/",
-    "runtimes/",
     "README.md",
     "LICENSE"
   ],
@@ -39,5 +38,13 @@
   "publishConfig": {
     "access": "public",
     "provenance": true
+  },
+  "optionalDependencies": {
+    "@echelon-foundry/visual-engineering-linux-x64": "0.0.0-dev",
+    "@echelon-foundry/visual-engineering-linux-arm64": "0.0.0-dev",
+    "@echelon-foundry/visual-engineering-win-x64": "0.0.0-dev",
+    "@echelon-foundry/visual-engineering-win-arm64": "0.0.0-dev",
+    "@echelon-foundry/visual-engineering-osx-x64": "0.0.0-dev",
+    "@echelon-foundry/visual-engineering-osx-arm64": "0.0.0-dev"
   }
 }

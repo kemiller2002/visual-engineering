@@ -94,7 +94,15 @@ module Payload =
 
         let packaged =
             [
-              // npm package layout: <package>/runtimes/<rid>/<exe> with <package>/payload.
+              // Installed npm layout: the executable ships in
+              // node_modules/@echelon-foundry/visual-engineering-<rid>/ and the payload in the
+              // sibling node_modules/@echelon-foundry/visual-engineering/. The launcher passes
+              // the payload location explicitly; these cover running the executable directly.
+              Path.GetFullPath(Path.Combine(exeDirectory, "..", "visual-engineering", "payload"))
+              Path.GetFullPath(
+                  Path.Combine(exeDirectory, "..", "..", "..", "..", "visual-engineering", "payload")
+              )
+              // Staged layout: <package>/platforms/<rid>/<exe> with <package>/payload.
               Path.GetFullPath(Path.Combine(exeDirectory, "..", "..", "payload"))
               // Flat layout: the payload sits next to the executable.
               Path.GetFullPath(Path.Combine(exeDirectory, "payload")) ]
