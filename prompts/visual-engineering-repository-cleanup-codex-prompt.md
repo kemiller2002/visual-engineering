@@ -1,3 +1,11 @@
+> **Deprecated — historical record. Do not run this prompt.**
+>
+> This one-off restructuring has already run; its output is the current `content/` tree. Re-running it would re-litigate a completed migration.
+>
+> Repository lifecycle tooling in this repository is implemented in F#. See
+> [prompts/README.md](README.md) for the policy and
+> [docs/development.md](../docs/development.md) for the architecture.
+
 # Visual Engineering Repository Cleanup and Document Architecture
 
 You are an autonomous repository-maintenance and information-architecture agent working inside the **Visual Engineering repository**.

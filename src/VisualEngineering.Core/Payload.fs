@@ -2,7 +2,6 @@ namespace VisualEngineering.Core
 
 open System
 open System.IO
-open System.Reflection
 
 /// One file shipped inside the npm package and installed into a repository.
 type PayloadArtifact =
@@ -55,20 +54,21 @@ module Payload =
     [<Literal>]
     let PayloadEnvironmentVariable = "VISUAL_ENGINEERING_PAYLOAD"
 
+    /// Directory the executable was launched from.
+    ///
+    /// `AppContext.BaseDirectory` is the correct source for a single-file bundle, which is how
+    /// this CLI ships; `Assembly.Location` is empty there. `Environment.ProcessPath` is the
+    /// fallback for hosts that do not set a base directory.
     let private executableDirectory () =
-        let entry = Assembly.GetEntryAssembly()
+        let fromBaseDirectory =
+            match AppContext.BaseDirectory with
+            | "" -> None
+            | directory -> Some(Path.TrimEndingDirectorySeparator directory)
 
-        let candidate =
-            match entry with
-            | null -> null
-            | assembly -> assembly.Location
+        let fromProcessPath =
+            Environment.ProcessPath |> Option.ofObj |> Option.bind Paths.tryParent
 
-        if String.IsNullOrEmpty candidate then
-            Path.GetDirectoryName(Environment.ProcessPath |> Option.ofObj |> Option.defaultValue ".")
-            |> Option.ofObj
-            |> Option.defaultValue "."
-        else
-            Path.GetDirectoryName candidate |> Option.ofObj |> Option.defaultValue "."
+        fromBaseDirectory |> Option.orElse fromProcessPath |> Option.defaultValue "."
 
     let private ascend (start: string) (depth: int) =
         let rec loop (current: string) remaining acc =

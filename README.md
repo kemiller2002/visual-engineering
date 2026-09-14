@@ -304,4 +304,4 @@ briefing in `agent-context/` is the human maintained source of the context this 
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).

@@ -79,8 +79,10 @@ const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
 packageJson.version = version;
 await writeFile(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 
-// The root README is the authoritative package page. Copying it keeps the two from drifting.
+// The root README is the authoritative package page, and the root LICENSE the authoritative
+// licence. Copying both keeps the published copies from drifting from the repository.
 await cp(path.join(root, "README.md"), path.join(packageRoot, "README.md"));
+await cp(path.join(root, "LICENSE"), path.join(packageRoot, "LICENSE"));
 
 const context = JSON.parse(await readFile(path.join(payloadDir, "context/context.json"), "utf8"));
 

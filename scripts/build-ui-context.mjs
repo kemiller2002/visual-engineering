@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -155,5 +155,9 @@ const context = {
   artifacts,
 };
 await writeFile(path.join(outputDir, "context.json"), `${JSON.stringify(context, null, 2)}\n`);
+
+// The package has always declared MIT; stage the repository's licence file so the published
+// package carries the text too, from a single authoritative source.
+await cp(path.join(root, "LICENSE"), path.join(packageRoot, "LICENSE"));
 
 process.stdout.write(`Built UI context ${contextVersion} from ${records.length} research documents.\n`);

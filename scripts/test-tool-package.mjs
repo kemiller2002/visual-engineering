@@ -188,6 +188,7 @@ try {
   for (const required of [
     "package.json",
     "README.md",
+    "LICENSE",
     "bin/visual-engineering.js",
     "payload/context/context.json",
     "payload/context/UI-FOUNDATIONS.md",

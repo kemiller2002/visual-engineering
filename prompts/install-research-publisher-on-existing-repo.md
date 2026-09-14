@@ -1,3 +1,11 @@
+> **Deprecated — historical record. Do not run this prompt.**
+>
+> Installing a capability into a repository is now a lifecycle command backed by F# (`init`), not a prompt handed to an agent.
+>
+> Repository lifecycle tooling in this repository is implemented in F#. See
+> [prompts/README.md](README.md) for the policy and
+> [docs/development.md](../docs/development.md) for the architecture.
+
 # Autonomous Prompt: Install `research-publisher` On An Existing Repository
 
 **Purpose:** Give this prompt to Codex or another autonomous engineering agent to inspect an existing repository, install `research-publisher`, discover the real Markdown corpus, and configure a maintainable static research publishing workflow without requiring constant folder-path updates.

@@ -16,3 +16,5 @@ tests/**/obj/
 npm/payload/
 npm/runtimes/
 npm/README.md
+packages/visual-engineering-context/LICENSE
+npm/LICENSE
