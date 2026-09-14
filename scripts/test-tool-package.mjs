@@ -228,10 +228,12 @@ try {
     strayExecutables.join(", ")
   );
 
+  // The README promises "under 1 MB" for the root package and "about 7 MB" for a platform
+  // package. Hold the documentation to it.
   const rootArchiveBytes = statSync(archive).size;
   check(
-    "the root package stays small",
-    rootArchiveBytes < 2 * 1024 * 1024,
+    "the root package stays under the 1 MB the README promises",
+    rootArchiveBytes < 1024 * 1024,
     `${(rootArchiveBytes / 1024).toFixed(1)} KB`
   );
 
@@ -265,6 +267,13 @@ try {
     "the platform package ships nothing else",
     platformContents.length === 3,
     platformContents.join(", ")
+  );
+
+  const platformArchiveBytes = statSync(platformArchive).size;
+  check(
+    "the platform package is about the 7 MB the README promises",
+    platformArchiveBytes > 4 * 1024 * 1024 && platformArchiveBytes < 12 * 1024 * 1024,
+    `${(platformArchiveBytes / 1048576).toFixed(1)} MB`
   );
 
   const platformJson = JSON.parse(readFileSync(path.join(platformRoot, "package.json"), "utf8"));
@@ -402,6 +411,112 @@ try {
   check("README shows the quick start init command", readme.includes(`npx ${packageJson.name} init`));
   check("README shows the quick start status command", readme.includes(`npx ${packageJson.name} status`));
   check("README shows the quick start verify command", readme.includes(`npx ${packageJson.name} verify`));
+
+  // Every install route the README offers must name the package correctly.
+  for (const instruction of [
+    `npm install --save-dev ${packageJson.name}`,
+    `npm install --global ${packageJson.name}`,
+  ]) {
+    check(`README documents the install command \`${instruction}\``, readme.includes(instruction));
+  }
+
+  check(
+    "README states the Node version the package actually requires",
+    readme.includes("Node.js 20 or newer") && packageJson.engines.node === ">=20",
+    `engines.node = ${packageJson.engines.node}`
+  );
+
+  // A flag is only documented if it exists. Probe in a throwaway directory using read-only or
+  // --check invocations, and treat exit 2 (invalid arguments) as "the flag does not exist".
+  const flagProbe = path.join(workspace, "flag-probe");
+  mkdirSync(path.join(flagProbe, ".git"), { recursive: true });
+
+  const GLOBAL_FLAGS = ["--help", "--version", "--repo", "--json", "--verbose"];
+  for (const flag of GLOBAL_FLAGS) {
+    check(`help documents the global flag ${flag}`, help.stdout.includes(flag));
+    check(`README documents the global flag ${flag}`, readme.includes(flag));
+  }
+
+  const COMMAND_FLAGS = {
+    init: ["--dry-run", "--check", "--force"],
+    upgrade: ["--dry-run", "--check", "--force"],
+    verify: ["--strict"],
+    doctor: ["--strict"],
+  };
+
+  for (const [command, flags] of Object.entries(COMMAND_FLAGS)) {
+    const commandHelp = tryRun(cli, [command, "--help"], flagProbe).stdout;
+    for (const flag of flags) {
+      check(`${command} --help documents ${flag}`, commandHelp.includes(flag));
+      check(`README documents ${flag}`, readme.includes(flag));
+
+      // --check and --dry-run write nothing; verify and doctor are read only.
+      const probeArgs =
+        command === "init" || command === "upgrade" ? [command, "--check", flag] : [command, flag];
+      const probe = tryRun(cli, probeArgs, flagProbe);
+      check(
+        `${command} actually accepts ${flag}`,
+        probe.status !== 2,
+        `exit ${probe.status}: ${probe.stderr.split("\n")[0]}`
+      );
+    }
+  }
+
+  // Documentation smoke test: every invocation the docs show must actually parse. Exit 2 means
+  // the CLI rejected it, so the documentation would be telling users to run something that does
+  // not exist.
+  const documentedInvocations = new Set();
+  const documentationFiles = [path.join(root, "README.md")];
+  for (const entry of readdirSync(path.join(root, "docs"))) {
+    if (entry.endsWith(".md")) documentationFiles.push(path.join(root, "docs", entry));
+  }
+
+  for (const file of documentationFiles) {
+    for (const line of readFileSync(file, "utf8").split("\n")) {
+      const match = line.match(
+        /npx (?:--yes )?@echelon-foundry\/visual-engineering(?:@[\w.-]+)? ([^\n`"]*)/
+      );
+      if (!match) continue;
+      // Drop trailing shell comments, and skip usage placeholders such as "<command>".
+      const args = match[1].replace(/\s+#.*$/, "").trim().replace(/\.$/, "");
+      if (!args || args.includes("<") || args.includes("[")) continue;
+      documentedInvocations.add(args);
+    }
+  }
+
+  check(
+    "the documentation shows invocations to validate",
+    documentedInvocations.size >= 10,
+    `${documentedInvocations.size} found`
+  );
+
+  for (const invocation of documentedInvocations) {
+    const args = invocation.split(/\s+/);
+    // Make repository-changing invocations inert for the probe.
+    const probeArgs =
+      (args[0] === "init" || args[0] === "upgrade") && !args.includes("--check")
+        ? [...args, "--check"]
+        : args;
+    const probe = tryRun(cli, probeArgs, flagProbe);
+    check(
+      `the documented invocation \`${invocation}\` is valid`,
+      probe.status !== 2,
+      `exit ${probe.status}: ${(probe.stderr || probe.stdout).split("\n")[0]}`
+    );
+  }
+
+  check(
+    "the changelog is published with the package",
+    contents.includes("CHANGELOG.md"),
+    contents.join(", ")
+  );
+  check(
+    "the changelog documents the version being published",
+    readFileSync(path.join(packageRoot, "CHANGELOG.md"), "utf8").includes(
+      `## ${packageJson.version.split("-")[0]}`
+    ),
+    packageJson.version
+  );
 
   // ------------------------------------------------------ clean repository
   const repository = path.join(workspace, "repo");

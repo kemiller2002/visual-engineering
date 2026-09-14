@@ -7,21 +7,128 @@ implementation agents design, build and review interfaces from current evidence 
 from copied snapshots. The tool owns the whole lifecycle of that installation: it detects the
 current state, installs, verifies, diagnoses and upgrades it, and records what it manages.
 
-## Quick start
+## Requirements
+
+- **Node.js 20 or newer.** Node is only used to start the packaged executable.
+- **Nothing else.** The executable is self contained: no .NET runtime, no compiler, no global
+  tooling. After installation nothing is downloaded — the research context travels inside the
+  package — so it works on an offline or air-gapped machine.
+- Linux, macOS or Windows on x64 or arm64. See
+  [supported environments](#supported-environments).
+
+## Installation
+
+Pick whichever fits how you work. All three give you the same `visual-engineering` command.
+
+### Run it without installing
 
 ```bash
-# Bring the repository into a valid installed state
 npx @echelon-foundry/visual-engineering init
+```
 
-# Confirm what is installed
+`npx` downloads the package on first use and caches it, so later runs start immediately. Best
+for trying it out and for one-off runs. To pin a version rather than following the latest
+release:
+
+```bash
+npx @echelon-foundry/visual-engineering@1.0.0 init
+```
+
+### Add it to a project (recommended for teams and CI)
+
+```bash
+npm install --save-dev @echelon-foundry/visual-engineering
+```
+
+Then run it through your package manager, which uses the exact version in your lockfile:
+
+```bash
+npx visual-engineering status
+```
+
+This is the reproducible option: everyone on the project, and every CI run, uses the same
+version until you deliberately update it. Add a script if you run it often:
+
+```json
+{
+  "scripts": {
+    "ve:verify": "visual-engineering verify --strict"
+  }
+}
+```
+
+### Install it globally
+
+```bash
+npm install --global @echelon-foundry/visual-engineering
+visual-engineering --version
+```
+
+Best if you work across many repositories. The command is then on your `PATH` everywhere.
+
+## Quick start
+
+From the root of the repository you want to set up:
+
+```bash
+npx @echelon-foundry/visual-engineering init
+```
+
+```text
+Applied 13 change(s).
+```
+
+Confirm what you got:
+
+```bash
 npx @echelon-foundry/visual-engineering status
+```
 
-# Validate the installation
+```text
+Visual Engineering
+
+  CLI version:           1.0.0
+  Installed version:     1.0.0
+  Configuration:         version 3 (valid)
+  Context:               1.0.0
+  Installation state:    installed
+  Required artifacts:    valid
+  Integration:           valid
+  Verification:          passed
+  Upgrade:               none
+
+  Context directory:     .visual-engineering
+  Manifest:              .echelon/visual-engineering.json
+  Research documents:    97
+```
+
+Check it is intact at any time:
+
+```bash
 npx @echelon-foundry/visual-engineering verify
 ```
 
-`init` is safe to run repeatedly. Running it a second time when nothing needs to change reports
-no changes and rewrites nothing.
+```text
+Verification passed.
+```
+
+`init` is safe to run repeatedly. A second run when nothing needs to change reports
+`Visual Engineering is already up to date. No changes required.` and rewrites nothing — not one
+file, not one timestamp.
+
+Want to see what it would do before it does anything?
+
+```bash
+npx @echelon-foundry/visual-engineering init --dry-run
+```
+
+### What just happened
+
+`init` installed the Visual Engineering UI research briefing into `.visual-engineering/`,
+recorded what it manages in `.echelon/visual-engineering.json`, added a managed block to your
+`.gitignore` so the context is not committed, and registered a managed block in `AGENTS.md`
+telling coding agents to read the briefing before doing UI work. Your own content in those two
+files is untouched. The next section lists every path.
 
 ## What it installs
 
@@ -57,21 +164,14 @@ Each platform's executable ships in its own package, declared as an optional dep
 one and marked with the `os` and `cpu` it runs on. npm installs only the one your machine can
 run, so an install downloads about 7 MB rather than all six executables:
 
-| Package | Size |
+| Package | Download |
 | --- | --- |
-| `@echelon-foundry/visual-engineering` | ~43 KB (launcher, research context, docs) |
-| `@echelon-foundry/visual-engineering-<platform>` | ~7 MB (one executable) |
+| `@echelon-foundry/visual-engineering` | under 1 MB (launcher, research context, docs) |
+| `@echelon-foundry/visual-engineering-<platform>` | about 7 MB (one executable) |
 
 The six platform packages are `-linux-x64`, `-linux-arm64`, `-osx-x64`, `-osx-arm64`,
 `-win-x64` and `-win-arm64`. You never name them directly; npm resolves the right one. If you
 install with `--omit=optional`, add the one you need explicitly.
-
-### Prerequisites
-
-- Node.js 20 or newer, only to launch the packaged executable.
-- No .NET installation is required: the executable is self contained.
-- No network access is required after the package is installed. The research context is
-  carried inside the package.
 
 ## Commands
 
@@ -306,6 +406,7 @@ Run `npx @echelon-foundry/visual-engineering doctor --verbose` for an explanatio
 - [docs/ownership.md](docs/ownership.md) — file ownership model
 - [docs/development.md](docs/development.md) — architecture and contributor workflow
 - [docs/releasing.md](docs/releasing.md) — release and publishing process
+- [CHANGELOG.md](CHANGELOG.md) — what changed in each release
 
 ## About this repository
 

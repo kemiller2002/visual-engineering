@@ -134,6 +134,7 @@ await writeFile(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 // licence. Copying both keeps the published copies from drifting from the repository.
 await cp(path.join(root, "README.md"), path.join(packageRoot, "README.md"));
 await cp(path.join(root, "LICENSE"), path.join(packageRoot, "LICENSE"));
+await cp(path.join(root, "CHANGELOG.md"), path.join(packageRoot, "CHANGELOG.md"));
 
 const context = JSON.parse(await readFile(path.join(payloadDir, "context/context.json"), "utf8"));
 

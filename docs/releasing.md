@@ -42,13 +42,45 @@ It is stamped into `dotnet publish -p:Version=`, into `npm/package.json`, and in
 `visual-engineering --version` always equals the published npm version. The packed artifact test
 asserts this, and that each optional dependency is pinned to that same version.
 
-### Credentials
+### Registry prerequisites
 
-- Repository secret `NPM_TOKEN`: an npm automation or granular token allowed to publish
-  `@echelon-foundry/visual-engineering` and `@echelon-foundry/visual-engineering-*`.
+Publishing needs three things to be true on the npm side. The workflow cannot create any of
+them, and a publish that is missing one fails at the final step with an unhelpful error.
 
-Without it the workflow still builds, tests, packs and exercises the archive, and then warns
-that publication was skipped.
+1. **The `@echelon-foundry` scope exists and this account can publish to it.** For an
+   organisation scope, the org must exist on npm and the publishing account must be a member
+   with publish rights.
+2. **The repository secret `NPM_TOKEN` is set**, to an npm automation token or a granular
+   access token.
+3. **That token is authorised for these packages.** A granular token is limited to the packages
+   or scopes selected when it was created. It must cover
+   `@echelon-foundry/visual-engineering` *and* `@echelon-foundry/visual-engineering-*`, since
+   the release publishes seven packages.
+
+Without `NPM_TOKEN` the workflow still builds, tests, packs and exercises the archives, then
+warns that publication was skipped.
+
+#### Diagnosing a failed publish
+
+npm reports authorisation failures on publish as **404, not 403**, so it does not distinguish
+"this package does not exist" from "you may not publish here":
+
+```text
+npm error code E404
+npm error 404 Not Found - PUT https://registry.npmjs.org/@scope%2fname
+npm error 404  The requested resource '@scope/name@1.0.0' could not be found
+npm error 404  or you do not have permission to access it.
+```
+
+Reaching that error means authentication succeeded and authorisation did not. Check, in order:
+the scope exists; the token's account is a member of it; and the token's package permissions
+cover the packages being published. A first publish into a scope the account does not own fails
+exactly this way.
+
+The same failure has occurred on every run of the legacy
+`.github/workflows/publish-ui-context.yml`, which is why
+`@kemiller2002/visual-engineering-context` has never reached the registry despite the workflow
+running. Fixing the registry side fixes both release paths.
 
 ## 2. `@kemiller2002/visual-engineering-context` (legacy compatibility)
 
@@ -82,3 +114,14 @@ Then push the tag:
 git tag visual-engineering-v<version>
 git push origin visual-engineering-v<version>
 ```
+
+The tag is the release trigger and the version comes from it, so pushing a tag whose registry
+prerequisites are not yet met burns that version number: the workflow will build and test, fail
+at publish, and the tag will then refer to a release that does not exist. Confirm the
+[registry prerequisites](#registry-prerequisites) before tagging.
+
+### Publishing order
+
+The workflow publishes the six platform packages first, then the root package. The root
+declares each platform package as an `optionalDependency` pinned to the exact release version,
+so publishing the root first would briefly reference packages that do not exist.
