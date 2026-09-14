@@ -1,0 +1,160 @@
+name: Publish Visual Engineering tool
+
+on:
+  push:
+    tags:
+      - "visual-engineering-v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semantic version to publish
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-visual-engineering-tool
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and stage
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Resolve release version
+        id: version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            VERSION="${INPUT_VERSION#visual-engineering-v}"
+          else
+            VERSION="${REF_NAME#visual-engineering-v}"
+          fi
+          if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "::error::Version must be semantic: $VERSION"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and test the F# implementation
+        run: |
+          dotnet restore VisualEngineering.sln
+          dotnet build VisualEngineering.sln -c Release --no-restore
+          dotnet test VisualEngineering.sln -c Release --no-build
+
+      - name: Build research catalog and context payload
+        env:
+          VE_CONTEXT_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          npm run research:build
+          npm run context:build
+          npm run context:validate
+          npm run context:test
+
+      - name: Stage the npm package
+        run: npm run tool:build -- --version "${{ steps.version.outputs.version }}"
+
+      - name: Inspect package contents
+        run: npm run tool:pack
+
+      - name: Upload staged package
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-engineering-npm-package
+          path: |
+            npm/package.json
+            npm/README.md
+            npm/bin/
+            npm/payload/
+            npm/runtimes/
+          retention-days: 7
+
+  packed-artifact:
+    name: Packed artifact on ${{ matrix.os }}
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Download staged package
+        uses: actions/download-artifact@v4
+        with:
+          name: visual-engineering-npm-package
+          path: npm
+
+      - name: Restore executable permissions
+        if: runner.os != 'Windows'
+        run: chmod +x npm/runtimes/*/visual-engineering npm/bin/visual-engineering.js
+
+      - name: Test the packed artifact
+        run: node scripts/test-tool-package.mjs
+
+  publish:
+    name: Publish to npm
+    needs: [build, packed-artifact]
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Download staged package
+        uses: actions/download-artifact@v4
+        with:
+          name: visual-engineering-npm-package
+          path: npm
+
+      - name: Restore executable permissions
+        run: chmod +x npm/runtimes/*/visual-engineering npm/bin/visual-engineering.js
+
+      - name: Publish
+        if: ${{ env.NODE_AUTH_TOKEN != '' }}
+        working-directory: npm
+        run: npm publish --access public --provenance --tag latest
+
+      - name: Explain skipped publication
+        if: ${{ env.NODE_AUTH_TOKEN == '' }}
+        run: |
+          echo "::warning::@echelon-foundry/visual-engineering ${{ needs.build.outputs.version }} was built, packed and exercised but not published because the NPM_TOKEN repository secret is not configured."

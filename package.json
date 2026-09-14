@@ -11,7 +11,11 @@
     "context:test": "node scripts/test-ui-context.mjs",
     "context:stage-pages": "node scripts/stage-ui-context-pages.mjs",
     "context:release": "node scripts/build-ui-context-release.mjs",
-    "context:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./packages/visual-engineering-context"
+    "context:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./packages/visual-engineering-context",
+    "tool:build": "node scripts/build-tool-package.mjs",
+    "tool:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./npm",
+    "tool:test-package": "node scripts/test-tool-package.mjs",
+    "tool:test": "dotnet test VisualEngineering.sln"
   },
   "engines": {
     "node": ">=24 <25"

@@ -5,3 +5,14 @@ packages/visual-engineering-context/context/
 build-reports/ui-context-release/
 dist/context/
 *.tgz
+
+# .NET build output
+src/**/bin/
+src/**/obj/
+tests/**/bin/
+tests/**/obj/
+
+# Staged npm package artifacts for @echelon-foundry/visual-engineering
+npm/payload/
+npm/runtimes/
+npm/README.md

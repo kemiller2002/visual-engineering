@@ -1,0 +1,22 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>FS3370</WarningsNotAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <!-- Authoritative product version. Build scripts and CI override with -p:Version=. -->
+    <Version Condition="'$(Version)' == ''">0.0.0-dev</Version>
+    <Company>Echelon Foundry</Company>
+    <Product>Echelon Foundry Visual Engineering</Product>
+    <RepositoryUrl>https://github.com/kemiller2002/visual-engineering</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

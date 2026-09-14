@@ -1,0 +1,42 @@
+{
+  "name": "@echelon-foundry/visual-engineering",
+  "version": "0.0.0-dev",
+  "description": "Echelon Foundry Visual Engineering repository initialization, verification, diagnostics, and upgrade tooling.",
+  "license": "MIT",
+  "homepage": "https://visual.echelonfoundry.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemiller2002/visual-engineering.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kemiller2002/visual-engineering/issues"
+  },
+  "bin": {
+    "visual-engineering": "bin/visual-engineering.js"
+  },
+  "files": [
+    "bin/",
+    "payload/",
+    "runtimes/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "echelon-foundry",
+    "visual-engineering",
+    "repository-tooling",
+    "cli",
+    "initialization",
+    "verification",
+    "migration",
+    "automation",
+    "ui-research",
+    "agents"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
