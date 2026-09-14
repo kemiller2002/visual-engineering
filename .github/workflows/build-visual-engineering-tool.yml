@@ -78,12 +78,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-engineering-npm-package
-          path: |
-            npm/package.json
-            npm/README.md
-            npm/bin/
-            npm/payload/
-            npm/runtimes/
+          # The whole staged package, so a new file added to it cannot be silently dropped
+          # from the artifact. What actually gets published is governed by "files" in
+          # npm/package.json, and asserted by scripts/test-tool-package.mjs.
+          path: npm/
           retention-days: 7
 
   packed-artifact:
