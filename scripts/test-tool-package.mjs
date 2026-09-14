@@ -7,6 +7,7 @@
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { gunzipSync } from "node:zlib";
 import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -28,6 +29,82 @@ function check(description, condition, detail) {
   if (!condition) {
     failures.push(detail ? `${description}\n      ${detail}` : description);
   }
+}
+
+// npm is a .cmd shim on Windows, which execFileSync cannot launch and which recent Node
+// refuses to spawn without a shell. Running npm's own JS entry point with the current Node
+// works identically on every platform and keeps shell quoting out of the picture.
+// Lists the regular files inside a gzipped tar, without shelling out to `tar`, whose
+// availability and flavour vary by platform.
+function listArchive(file) {
+  const buffer = gunzipSync(readFileSync(file));
+  const names = [];
+  let offset = 0;
+  let longName = null;
+
+  while (offset + 512 <= buffer.length) {
+    const header = buffer.subarray(offset, offset + 512);
+    // Two consecutive zero blocks terminate the archive.
+    if (header.every((byte) => byte === 0)) break;
+
+    const field = (start, length) => {
+      const raw = header.subarray(start, start + length).toString("utf8");
+      const end = raw.indexOf("\0");
+      return end === -1 ? raw : raw.slice(0, end);
+    };
+
+    const name = field(0, 100);
+    const prefix = field(345, 155);
+    const typeFlag = String.fromCharCode(header[156]);
+    const size = parseInt(field(124, 12).trim() || "0", 8);
+    offset += 512 + Math.ceil(size / 512) * 512;
+
+    if (typeFlag === "L") {
+      // GNU long name: the real path is this entry's payload.
+      longName = buffer
+        .subarray(offset - Math.ceil(size / 512) * 512, offset - Math.ceil(size / 512) * 512 + size)
+        .toString("utf8")
+        .replace(/\0+$/, "");
+      continue;
+    }
+
+    const resolved = longName ?? (prefix ? `${prefix}/${name}` : name);
+    longName = null;
+
+    // Regular files only; skip directories, pax headers and everything else.
+    if (typeFlag === "0" || typeFlag === "\0" || header[156] === 0) names.push(resolved);
+  }
+
+  return names;
+}
+
+function resolveNpm() {
+  const fromEnvironment = process.env.npm_execpath;
+  if (fromEnvironment && fromEnvironment.endsWith(".js") && existsSync(fromEnvironment)) {
+    return [process.execPath, fromEnvironment];
+  }
+
+  const nodeDirectory = path.dirname(process.execPath);
+  const candidates = [
+    // Windows layout: npm sits beside node.exe.
+    path.join(nodeDirectory, "node_modules", "npm", "bin", "npm-cli.js"),
+    // POSIX layout: npm sits under the installation prefix.
+    path.join(nodeDirectory, "..", "lib", "node_modules", "npm", "bin", "npm-cli.js"),
+  ];
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return [process.execPath, candidate];
+  }
+
+  // Last resort: rely on PATH resolution. Works on POSIX; on Windows it is expected to fail
+  // loudly rather than silently doing something else.
+  return [process.platform === "win32" ? "npm.cmd" : "npm"];
+}
+
+const [npmCommand, ...npmPrefixArgs] = resolveNpm();
+
+function npm(args, cwd) {
+  return execFileSync(npmCommand, [...npmPrefixArgs, ...args], { cwd, encoding: "utf8" });
 }
 
 function run(cli, args, cwd) {
@@ -88,18 +165,12 @@ try {
     throw new Error('npm/payload is missing. Run "npm run tool:build" first.');
   }
 
-  const packOutput = execFileSync(
-    "npm",
-    ["pack", "--pack-destination", workspace, "--silent"],
-    { cwd: packageRoot, encoding: "utf8" }
-  );
+  const packOutput = npm(["pack", "--pack-destination", workspace, "--silent"], packageRoot);
   const archive = path.join(workspace, packOutput.trim().split("\n").pop().trim());
   check("npm pack produced an archive", existsSync(archive), archive);
 
   // ------------------------------------------------------- package contents
-  const contents = execFileSync("tar", ["-tzf", archive], { encoding: "utf8" })
-    .split("\n")
-    .filter(Boolean)
+  const contents = listArchive(archive)
     .map((entry) => entry.replace(/^package\//, ""))
     .filter((entry) => !entry.endsWith("/"));
 
@@ -144,10 +215,7 @@ try {
     path.join(installRoot, "package.json"),
     JSON.stringify({ name: "package-under-test", version: "1.0.0", private: true }, null, 2)
   );
-  execFileSync("npm", ["install", "--no-audit", "--no-fund", "--silent", archive], {
-    cwd: installRoot,
-    encoding: "utf8",
-  });
+  npm(["install", "--no-audit", "--no-fund", "--silent", archive], installRoot);
 
   const cli = path.join(
     installRoot,
@@ -158,10 +226,14 @@ try {
     "visual-engineering.js"
   );
   check("the installed package exposes its launcher", existsSync(cli), cli);
+  const binDirectory = path.join(installRoot, "node_modules", ".bin");
   check(
     "the bin mapping is installed",
-    existsSync(path.join(installRoot, "node_modules", ".bin", "visual-engineering")) ||
-      process.platform === "win32"
+    // npm writes a shell shim on POSIX and a .cmd shim on Windows.
+    ["visual-engineering", "visual-engineering.cmd"].some((shim) =>
+      existsSync(path.join(binDirectory, shim))
+    ),
+    existsSync(binDirectory) ? readdirSync(binDirectory).join(", ") : `${binDirectory} is missing`
   );
 
   // ------------------------------------------------------------ metadata
