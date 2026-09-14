@@ -472,7 +472,10 @@ try {
   }
 
   for (const file of documentationFiles) {
-    for (const line of readFileSync(file, "utf8").split("\n")) {
+    // Normalize line endings first: a Windows checkout gives CRLF, and JavaScript's "." does
+    // not match \r, so a trailing \r would stop the comment-stripping regex below from ever
+    // reaching the end of the string.
+    for (const line of readFileSync(file, "utf8").replace(/\r\n/g, "\n").split("\n")) {
       const match = line.match(
         /npx (?:--yes )?@echelon-foundry\/visual-engineering(?:@[\w.-]+)? ([^\n`"]*)/
       );
