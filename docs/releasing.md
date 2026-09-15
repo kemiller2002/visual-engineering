@@ -57,6 +57,35 @@ them, and a publish that is missing one fails at the final step with an unhelpfu
    `@echelon-foundry/visual-engineering` *and* `@echelon-foundry/visual-engineering-*`, since
    the release publishes seven packages.
 
+Prerequisite 1 is already satisfied, and this is worth knowing before debugging: the scope holds
+seven published packages, all with `kevin.m.miller` as maintainer.
+
+```text
+@echelon-foundry/communication-engineering     0.1.0
+@echelon-foundry/repository-operating-system   3.0.0
+@echelon-foundry/research-publisher            0.1.1
+@echelon-foundry/ros-worker-daemon             0.1.1
+@echelon-foundry/sde                           1.1.1
+@echelon-foundry/typescript-wasm-kernel        0.4.1
+@echelon-foundry/visual-engineering-context    0.2.0
+```
+
+The org exists, the account is a member, and it has published into the scope seven times. So a
+404 on publishing `@echelon-foundry/visual-engineering-*` is **not** a missing scope and **not**
+a missing membership. It narrows to prerequisite 3: the token in `NPM_TOKEN` does not cover the
+seven new package names.
+
+That is the expected failure for a granular token whose permissions were selected per package,
+because the seven packages did not exist when the token was created and so could not be
+selected. Fix it with either:
+
+- an **automation token**, which is account-wide; or
+- a **granular token** whose permission is set on the **`@echelon-foundry` scope** rather than on
+  a list of individual packages.
+
+After the first successful release the seven packages exist and a per-package granular token
+becomes possible, but a scope-level one keeps working without being reissued.
+
 Without `NPM_TOKEN` the workflow still builds, tests, packs and exercises the archives, then
 warns that publication was skipped.
 
@@ -112,13 +141,15 @@ npm error 404  or you do not have permission to access it.
 
 Reaching that error means authentication succeeded and authorisation did not. Check, in order:
 the scope exists; the token's account is a member of it; and the token's package permissions
-cover the packages being published. A first publish into a scope the account does not own fails
-exactly this way.
+cover the packages being published. For `@echelon-foundry` the first two are already
+established above, so only the third is in question.
 
 The same failure has occurred on every run of the legacy
-`.github/workflows/publish-ui-context.yml`, which is why
-`@kemiller2002/visual-engineering-context` has never reached the registry despite the workflow
-running. Fixing the registry side fixes both release paths.
+`.github/workflows/publish-ui-context.yml`, and `@kemiller2002/visual-engineering-context` has
+never reached the registry despite the workflow running. That one is a separate problem, not the
+same one: `@kemiller2002` is a different scope from `@echelon-foundry`, so a token fixed for one
+does not necessarily cover the other. If both release paths are wanted, the token needs write
+access to both scopes.
 
 ## 2. `@kemiller2002/visual-engineering-context` (legacy compatibility)
 
