@@ -60,6 +60,44 @@ them, and a publish that is missing one fails at the final step with an unhelpfu
 Without `NPM_TOKEN` the workflow still builds, tests, packs and exercises the archives, then
 warns that publication was skipped.
 
+#### What the preflight checks, and what it cannot
+
+Before publishing anything, the publish job runs `scripts/preflight-npm-publish.mjs`. It reads
+the staged `npm/package.json`, derives the seven packages and the release version from it, and
+refuses the release if:
+
+- any platform package is pinned to a version other than the release version, meaning the
+  staged package is internally inconsistent;
+- `npm whoami` fails, meaning `NPM_TOKEN` is missing, expired or revoked;
+- any of the seven versions already exists on the registry, which cannot be republished.
+
+It runs every check before reporting, so one run lists everything that is wrong.
+
+It **cannot** confirm that the token is allowed to publish. npm exposes no endpoint for that:
+
+- `npm access list packages @echelon-foundry` returns each package's own public access setting,
+  not the caller's permission. It answers the same for an anonymous caller as for an authorised
+  one, so a pass means nothing about write access.
+- `npm org ls echelon-foundry` exits 0 with empty output when unauthenticated.
+- A publish authorisation failure comes back as 404, indistinguishable from a missing package.
+
+The only true test of publish permission is a publish. So the preflight reports how many of the
+seven packages are new to the scope -- a first publish needs scope-level write access, because a
+granular token cannot be scoped to packages that do not exist yet -- and the publish steps are
+written to fail legibly: if a publish fails partway, the error names exactly which versions
+reached the registry. Those versions are permanently taken, and the release must move to a new
+version rather than retry the same one.
+
+Run it locally against the staged package at any time:
+
+```bash
+npm run tool:build -- --version <version>
+npm run tool:preflight
+```
+
+Without npm credentials the authentication check fails and the rest still runs, which is the
+quickest way to confirm a version is still free before tagging.
+
 #### Diagnosing a failed publish
 
 npm reports authorisation failures on publish as **404, not 403**, so it does not distinguish
@@ -106,6 +144,7 @@ dotnet test VisualEngineering.sln
 npm run tool:build -- --version <version>
 npm run tool:pack
 npm run tool:test-package
+npm run tool:preflight
 ```
 
 Then push the tag:
@@ -115,9 +154,11 @@ git tag visual-engineering-v<version>
 git push origin visual-engineering-v<version>
 ```
 
-The tag is the release trigger and the version comes from it, so pushing a tag whose registry
-prerequisites are not yet met burns that version number: the workflow will build and test, fail
-at publish, and the tag will then refer to a release that does not exist. Confirm the
+The tag is the release trigger and the version comes from it. If the registry prerequisites are
+not met, the workflow builds, tests, and then stops at the preflight or the first publish, and
+the tag refers to a release that does not exist. Nothing is published in that case, so the
+version number is still free and the same tag can be re-run once the registry side is fixed --
+but only as long as no package actually reached the registry. Confirm the
 [registry prerequisites](#registry-prerequisites) before tagging.
 
 ### Publishing order
