@@ -1,3 +1,11 @@
+> **Deprecated — historical record. Do not run this prompt.**
+>
+> Upgrading an installation is now a lifecycle command backed by F# (`upgrade`), with typed sequential migrations and preconditions, not a prompt handed to an agent.
+>
+> Repository lifecycle tooling in this repository is implemented in F#. See
+> [prompts/README.md](README.md) for the policy and
+> [docs/development.md](../docs/development.md) for the architecture.
+
 # Autonomous Prompt: Upgrade An Existing `research-publisher` Installation
 
 **Purpose:** Give this prompt to Codex or another autonomous engineering agent to upgrade a repository that already uses `research-publisher`, refresh its configuration and GitHub Actions if needed, and verify that the upgraded install still builds correctly.

@@ -12,7 +12,22 @@ audiences:
 
 The files in this directory are the maintained operational synthesis. The package build combines them with a generated, source-linked index of current research.
 
-## Recommended consumer setup: GitHub Pages
+## Recommended consumer setup: the Echelon Foundry lifecycle tool
+
+```bash
+npx @echelon-foundry/visual-engineering init
+```
+
+This is the canonical public interface. It installs the context, writes an installation
+manifest, registers the agent integration, and supports `status`, `verify`, `upgrade` and
+`doctor`. See the [repository README](../README.md), [docs/installation.md](../docs/installation.md)
+and [docs/cli.md](../docs/cli.md).
+
+The channels below remain supported for existing consumers and are unchanged. They are legacy
+compatibility, not equal alternatives: a repository set up with any of them is detected and
+migrated in place by `npx @echelon-foundry/visual-engineering upgrade`.
+
+## Legacy compatibility: GitHub Pages
 
 Add this to the consumer repository's `AGENTS.md`:
 
@@ -59,7 +74,7 @@ Pages exposes:
 - `/context/visual-engineering-context-latest.tar.gz`: verified current bundle
 - `/context/SHA256SUMS`: bundle checksum
 
-## Immutable GitHub Releases
+## Legacy compatibility: immutable GitHub Releases
 
 For consequential work, pin a release rather than following `latest`. Create one by:
 
@@ -86,7 +101,7 @@ https://github.com/kemiller2002/Visual-Engineering/releases
 
 The Pages feed is mutable and always current. GitHub Release assets are immutable version pins.
 
-## Optional npm adapter
+## Legacy compatibility: the `ve-context` npm adapter
 
 Node projects may still use:
 
@@ -94,7 +109,8 @@ Node projects may still use:
 npm exec --yes --package=@kemiller2002/visual-engineering-context@latest -- ve-context sync
 ```
 
-npm is an adapter, not the canonical distribution channel.
+This adapter predates `@echelon-foundry/visual-engineering` and is retained so existing
+consumers keep working.
 
 ## Producer commands
 
@@ -104,6 +120,11 @@ npm run context:build
 npm run context:validate
 npm run context:test
 npm run context:pack
+
+# Stage, inspect and exercise the @echelon-foundry/visual-engineering package
+npm run tool:build
+npm run tool:pack
+npm run tool:test-package
 ```
 
 Publishing is performed by `.github/workflows/publish-ui-context.yml`. Configure:
@@ -112,3 +133,7 @@ Publishing is performed by `.github/workflows/publish-ui-context.yml`. Configure
 - Optional repository variable `VE_CONTEXT_NPM_PACKAGE`: alternate scoped package name.
 
 Without `NPM_TOKEN`, the workflow still builds and validates but skips registry publication.
+
+`@echelon-foundry/visual-engineering` is published by
+`.github/workflows/publish-visual-engineering-tool.yml` from a `visual-engineering-v*` tag, using
+the same `NPM_TOKEN` secret. See [docs/releasing.md](../docs/releasing.md).

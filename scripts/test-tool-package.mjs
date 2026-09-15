@@ -1,0 +1,706 @@
+// Tests the actual packed npm artifact, not the source tree.
+//
+// It packs @echelon-foundry/visual-engineering, inspects the archive contents, installs the
+// archive into a clean directory, and exercises the published command contract against
+// temporary repositories: help, version, JSON output, dry run, idempotency, damage detection,
+// forced repair, a legacy installation fixture, and agreement between help text and README.
+
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { gunzipSync } from "node:zlib";
+import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { mkdtemp, rm } from "node:fs/promises";
+import { mkdirSync, writeFileSync } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const packageRoot = path.join(root, "npm");
+const packageJson = JSON.parse(readFileSync(path.join(packageRoot, "package.json"), "utf8"));
+const readme = readFileSync(path.join(root, "README.md"), "utf8");
+const commands = ["init", "status", "verify", "upgrade", "doctor"];
+
+const failures = [];
+let checks = 0;
+
+function check(description, condition, detail) {
+  checks += 1;
+  if (!condition) {
+    failures.push(detail ? `${description}\n      ${detail}` : description);
+  }
+}
+
+// npm is a .cmd shim on Windows, which execFileSync cannot launch and which recent Node
+// refuses to spawn without a shell. Running npm's own JS entry point with the current Node
+// works identically on every platform and keeps shell quoting out of the picture.
+// Lists the regular files inside a gzipped tar, without shelling out to `tar`, whose
+// availability and flavour vary by platform.
+function listArchive(file) {
+  const buffer = gunzipSync(readFileSync(file));
+  const names = [];
+  let offset = 0;
+  let longName = null;
+
+  while (offset + 512 <= buffer.length) {
+    const header = buffer.subarray(offset, offset + 512);
+    // Two consecutive zero blocks terminate the archive.
+    if (header.every((byte) => byte === 0)) break;
+
+    const field = (start, length) => {
+      const raw = header.subarray(start, start + length).toString("utf8");
+      const end = raw.indexOf("\0");
+      return end === -1 ? raw : raw.slice(0, end);
+    };
+
+    const name = field(0, 100);
+    const prefix = field(345, 155);
+    const typeFlag = String.fromCharCode(header[156]);
+    const size = parseInt(field(124, 12).trim() || "0", 8);
+    offset += 512 + Math.ceil(size / 512) * 512;
+
+    if (typeFlag === "L") {
+      // GNU long name: the real path is this entry's payload.
+      longName = buffer
+        .subarray(offset - Math.ceil(size / 512) * 512, offset - Math.ceil(size / 512) * 512 + size)
+        .toString("utf8")
+        .replace(/\0+$/, "");
+      continue;
+    }
+
+    const resolved = longName ?? (prefix ? `${prefix}/${name}` : name);
+    longName = null;
+
+    // Regular files only; skip directories, pax headers and everything else.
+    if (typeFlag === "0" || typeFlag === "\0" || header[156] === 0) names.push(resolved);
+  }
+
+  return names;
+}
+
+function resolveNpm() {
+  const fromEnvironment = process.env.npm_execpath;
+  if (fromEnvironment && fromEnvironment.endsWith(".js") && existsSync(fromEnvironment)) {
+    return [process.execPath, fromEnvironment];
+  }
+
+  const nodeDirectory = path.dirname(process.execPath);
+  const candidates = [
+    // Windows layout: npm sits beside node.exe.
+    path.join(nodeDirectory, "node_modules", "npm", "bin", "npm-cli.js"),
+    // POSIX layout: npm sits under the installation prefix.
+    path.join(nodeDirectory, "..", "lib", "node_modules", "npm", "bin", "npm-cli.js"),
+  ];
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return [process.execPath, candidate];
+  }
+
+  // Last resort: rely on PATH resolution. Works on POSIX; on Windows it is expected to fail
+  // loudly rather than silently doing something else.
+  return [process.platform === "win32" ? "npm.cmd" : "npm"];
+}
+
+const [npmCommand, ...npmPrefixArgs] = resolveNpm();
+
+function npm(args, cwd) {
+  return execFileSync(npmCommand, [...npmPrefixArgs, ...args], { cwd, encoding: "utf8" });
+}
+
+function run(cli, args, cwd) {
+  const result = execFileSync(process.execPath, [cli, ...args], {
+    cwd,
+    encoding: "utf8",
+    env: { ...process.env, NO_COLOR: "1" },
+    // The CLI signals outcomes through exit codes, so a non-zero code is data, not a crash.
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  return { status: 0, stdout: result, stderr: "" };
+}
+
+function tryRun(cli, args, cwd) {
+  try {
+    return run(cli, args, cwd);
+  } catch (error) {
+    return {
+      status: typeof error.status === "number" ? error.status : 1,
+      stdout: error.stdout ?? "",
+      stderr: error.stderr ?? "",
+    };
+  }
+}
+
+function snapshot(directory) {
+  const entries = [];
+  const walk = (current) => {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      if (entry.name === ".git") continue;
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else
+        entries.push([
+          path.relative(directory, full).split(path.sep).join("/"),
+          createHash("sha256").update(readFileSync(full)).digest("hex"),
+        ]);
+    }
+  };
+  walk(directory);
+  return entries.sort(([a], [b]) => a.localeCompare(b));
+}
+
+function parseJson(description, text) {
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    check(description, false, `stdout was not valid JSON: ${error.message}`);
+    return null;
+  }
+}
+
+const workspace = await mkdtemp(path.join(os.tmpdir(), "ve-package-test-"));
+
+try {
+  // ---------------------------------------------------------------- pack
+  if (!existsSync(path.join(packageRoot, "payload", "context", "context.json"))) {
+    throw new Error('npm/payload is missing. Run "npm run tool:build" first.');
+  }
+
+  const hostPlatform = {
+    "linux-x64": { rid: "linux-x64", os: "linux", cpu: "x64" },
+    "linux-arm64": { rid: "linux-arm64", os: "linux", cpu: "arm64" },
+    "darwin-x64": { rid: "osx-x64", os: "darwin", cpu: "x64" },
+    "darwin-arm64": { rid: "osx-arm64", os: "darwin", cpu: "arm64" },
+    "win32-x64": { rid: "win-x64", os: "win32", cpu: "x64" },
+    "win32-arm64": { rid: "win-arm64", os: "win32", cpu: "arm64" },
+  }[`${process.platform}-${process.arch}`];
+
+  check(
+    "the host platform is supported",
+    Boolean(hostPlatform),
+    `${process.platform}-${process.arch}`
+  );
+
+  const hostRuntime = hostPlatform.rid;
+  const binaryName = process.platform === "win32" ? "visual-engineering.exe" : "visual-engineering";
+  const platformPackageName = `${packageJson.name}-${hostRuntime}`;
+  const platformRoot = path.join(packageRoot, "platforms", hostRuntime);
+
+  function pack(directory) {
+    const output = npm(["pack", "--pack-destination", workspace, "--silent"], directory);
+    return path.join(workspace, output.trim().split("\n").pop().trim());
+  }
+
+  const archive = pack(packageRoot);
+  check("npm pack produced the root archive", existsSync(archive), archive);
+
+  check(
+    `the platform package for ${hostRuntime} was staged`,
+    existsSync(path.join(platformRoot, "package.json")),
+    `${platformRoot} is missing. Run "npm run tool:build" first.`
+  );
+  const platformArchive = pack(platformRoot);
+  check("npm pack produced the platform archive", existsSync(platformArchive), platformArchive);
+
+  // --------------------------------------------------- root package contents
+  const contents = listArchive(archive)
+    .map((entry) => entry.replace(/^package\//, ""))
+    .filter((entry) => !entry.endsWith("/"));
+
+  for (const required of [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "bin/visual-engineering.js",
+    "payload/context/context.json",
+    "payload/context/UI-FOUNDATIONS.md",
+  ]) {
+    check(`the root package contains ${required}`, contents.includes(required));
+  }
+
+  // The whole point of the split: executables live in the platform packages, so an install
+  // downloads one of them rather than all six.
+  const strayExecutables = contents.filter((entry) =>
+    /^(platforms|runtimes)\/|visual-engineering(\.exe)?$/.test(entry)
+  );
+  check(
+    "the root package ships no platform executables",
+    strayExecutables.length === 0,
+    strayExecutables.join(", ")
+  );
+
+  // The README promises "under 1 MB" for the root package and "about 7 MB" for a platform
+  // package. Hold the documentation to it.
+  const rootArchiveBytes = statSync(archive).size;
+  check(
+    "the root package stays under the 1 MB the README promises",
+    rootArchiveBytes < 1024 * 1024,
+    `${(rootArchiveBytes / 1024).toFixed(1)} KB`
+  );
+
+  const forbidden = contents.filter((entry) =>
+    /(^src\/|^tests\/|^scripts\/|^content\/|^dist\/|node_modules\/|\.pdb$|\.tgz$|\.fs$|\.fsproj$|\.env|secret|token|coverage\/)/i.test(
+      entry
+    )
+  );
+  check("the root package publishes nothing unnecessary or sensitive", forbidden.length === 0, forbidden.join(", "));
+
+  // ------------------------------------------------ optional dependency wiring
+  const optional = packageJson.optionalDependencies ?? {};
+  for (const rid of ["linux-x64", "linux-arm64", "win-x64", "win-arm64", "osx-x64", "osx-arm64"]) {
+    const name = `${packageJson.name}-${rid}`;
+    check(
+      `${name} is an optional dependency pinned to this version`,
+      optional[name] === packageJson.version,
+      `${name} = ${optional[name]}`
+    );
+  }
+
+  // ----------------------------------------------- platform package contents
+  const platformContents = listArchive(platformArchive)
+    .map((entry) => entry.replace(/^package\//, ""))
+    .filter((entry) => !entry.endsWith("/"));
+
+  for (const required of ["package.json", "LICENSE", binaryName]) {
+    check(`the platform package contains ${required}`, platformContents.includes(required));
+  }
+  check(
+    "the platform package ships nothing else",
+    platformContents.length === 3,
+    platformContents.join(", ")
+  );
+
+  const platformArchiveBytes = statSync(platformArchive).size;
+  check(
+    "the platform package is about the 7 MB the README promises",
+    platformArchiveBytes > 4 * 1024 * 1024 && platformArchiveBytes < 12 * 1024 * 1024,
+    `${(platformArchiveBytes / 1048576).toFixed(1)} MB`
+  );
+
+  const platformJson = JSON.parse(readFileSync(path.join(platformRoot, "package.json"), "utf8"));
+  check("the platform package is named for its runtime", platformJson.name === platformPackageName);
+  check("the platform package shares the root version", platformJson.version === packageJson.version);
+  check(
+    "the platform package declares the os npm matches on",
+    JSON.stringify(platformJson.os) === JSON.stringify([hostPlatform.os]),
+    JSON.stringify(platformJson.os)
+  );
+  check(
+    "the platform package declares the cpu npm matches on",
+    JSON.stringify(platformJson.cpu) === JSON.stringify([hostPlatform.cpu]),
+    JSON.stringify(platformJson.cpu)
+  );
+
+  // ------------------------------------------------------------- install
+  const installRoot = path.join(workspace, "consumer");
+  mkdirSync(installRoot, { recursive: true });
+  writeFileSync(
+    path.join(installRoot, "package.json"),
+    JSON.stringify({ name: "package-under-test", version: "1.0.0", private: true }, null, 2)
+  );
+  // The platform package is installed from its tarball because the version under test is not
+  // on the registry yet; the root package's optionalDependency on the same name and version
+  // is satisfied by it.
+  npm(["install", "--no-audit", "--no-fund", "--silent", archive, platformArchive], installRoot);
+
+  const cli = path.join(
+    installRoot,
+    "node_modules",
+    "@echelon-foundry",
+    "visual-engineering",
+    "bin",
+    "visual-engineering.js"
+  );
+  check("the installed package exposes its launcher", existsSync(cli), cli);
+  const installedPlatformBinary = path.join(
+    installRoot,
+    "node_modules",
+    "@echelon-foundry",
+    `visual-engineering-${hostRuntime}`,
+    binaryName
+  );
+  check(
+    "the platform package installed its executable",
+    existsSync(installedPlatformBinary),
+    installedPlatformBinary
+  );
+  check(
+    "the installed root package carries no executables of its own",
+    !existsSync(
+      path.join(installRoot, "node_modules", "@echelon-foundry", "visual-engineering", "platforms")
+    ) &&
+      !existsSync(
+        path.join(installRoot, "node_modules", "@echelon-foundry", "visual-engineering", "runtimes")
+      )
+  );
+
+  // The launcher tells the executable where the payload is, but the executable must also find
+  // it unaided, so that running the binary directly is not a broken path.
+  const directRepository = path.join(workspace, "direct");
+  mkdirSync(path.join(directRepository, ".git"), { recursive: true });
+  const direct = (() => {
+    try {
+      return {
+        status: 0,
+        stdout: execFileSync(installedPlatformBinary, ["status", "--json"], {
+          cwd: directRepository,
+          encoding: "utf8",
+          // Strip the launcher's hint so only the executable's own discovery is exercised.
+          env: { ...process.env, VISUAL_ENGINEERING_PAYLOAD: "" },
+        }),
+      };
+    } catch (error) {
+      return { status: error.status ?? 1, stdout: error.stdout ?? "", stderr: error.stderr ?? "" };
+    }
+  })();
+  check(
+    "the executable finds the payload when run directly",
+    direct.status === 0,
+    direct.stderr || direct.stdout
+  );
+  const directJson = parseJson("the direct run emits valid JSON", direct.stdout);
+  check(
+    "the direct run reports the packaged context",
+    Boolean(directJson?.packagedContextVersion),
+    JSON.stringify(directJson?.packagedContextVersion)
+  );
+
+  const binDirectory = path.join(installRoot, "node_modules", ".bin");
+  check(
+    "the bin mapping is installed",
+    // npm writes a shell shim on POSIX and a .cmd shim on Windows.
+    ["visual-engineering", "visual-engineering.cmd"].some((shim) =>
+      existsSync(path.join(binDirectory, shim))
+    ),
+    existsSync(binDirectory) ? readdirSync(binDirectory).join(", ") : `${binDirectory} is missing`
+  );
+
+  // ------------------------------------------------------------ metadata
+  const version = tryRun(cli, ["--version"], installRoot);
+  check("--version exits 0", version.status === 0, version.stderr);
+  check(
+    "--version matches the npm package version",
+    version.stdout.trim() === packageJson.version,
+    `${version.stdout.trim()} !== ${packageJson.version}`
+  );
+
+  const help = tryRun(cli, ["--help"], installRoot);
+  check("--help exits 0", help.status === 0, help.stderr);
+  for (const command of commands) {
+    check(`--help lists ${command}`, help.stdout.includes(command));
+    const commandHelp = tryRun(cli, [command, "--help"], installRoot);
+    check(`${command} --help exits 0`, commandHelp.status === 0, commandHelp.stderr);
+    check(`${command} --help documents side effects`, commandHelp.stdout.includes("SIDE EFFECTS"));
+    check(
+      `${command} --help agrees with README on the package name`,
+      commandHelp.stdout.includes(packageJson.name)
+    );
+  }
+
+  check("no arguments prints help", tryRun(cli, [], installRoot).status === 0);
+  check("an unknown command exits 2", tryRun(cli, ["frobnicate"], installRoot).status === 2);
+  check("an unknown option exits 2", tryRun(cli, ["status", "--nope"], installRoot).status === 2);
+
+  // --------------------------------------------- README and help agreement
+  for (const command of commands) {
+    check(`README documents ${command}`, readme.includes(`visual-engineering ${command}`));
+  }
+  for (const code of [0, 1, 2, 3, 4, 5, 6, 7]) {
+    check(`README documents exit code ${code}`, new RegExp(`\\|\\s*${code}\\s*\\|`).test(readme));
+    check(`help documents exit code ${code}`, new RegExp(`\\s${code}\\s{2}`).test(help.stdout));
+  }
+  check("README shows the quick start init command", readme.includes(`npx ${packageJson.name} init`));
+  check("README shows the quick start status command", readme.includes(`npx ${packageJson.name} status`));
+  check("README shows the quick start verify command", readme.includes(`npx ${packageJson.name} verify`));
+
+  // Every install route the README offers must name the package correctly.
+  for (const instruction of [
+    `npm install --save-dev ${packageJson.name}`,
+    `npm install --global ${packageJson.name}`,
+  ]) {
+    check(`README documents the install command \`${instruction}\``, readme.includes(instruction));
+  }
+
+  check(
+    "README states the Node version the package actually requires",
+    readme.includes("Node.js 20 or newer") && packageJson.engines.node === ">=20",
+    `engines.node = ${packageJson.engines.node}`
+  );
+
+  // A flag is only documented if it exists. Probe in a throwaway directory using read-only or
+  // --check invocations, and treat exit 2 (invalid arguments) as "the flag does not exist".
+  const flagProbe = path.join(workspace, "flag-probe");
+  mkdirSync(path.join(flagProbe, ".git"), { recursive: true });
+
+  const GLOBAL_FLAGS = ["--help", "--version", "--repo", "--json", "--verbose"];
+  for (const flag of GLOBAL_FLAGS) {
+    check(`help documents the global flag ${flag}`, help.stdout.includes(flag));
+    check(`README documents the global flag ${flag}`, readme.includes(flag));
+  }
+
+  const COMMAND_FLAGS = {
+    init: ["--dry-run", "--check", "--force"],
+    upgrade: ["--dry-run", "--check", "--force"],
+    verify: ["--strict"],
+    doctor: ["--strict"],
+  };
+
+  for (const [command, flags] of Object.entries(COMMAND_FLAGS)) {
+    const commandHelp = tryRun(cli, [command, "--help"], flagProbe).stdout;
+    for (const flag of flags) {
+      check(`${command} --help documents ${flag}`, commandHelp.includes(flag));
+      check(`README documents ${flag}`, readme.includes(flag));
+
+      // --check and --dry-run write nothing; verify and doctor are read only.
+      const probeArgs =
+        command === "init" || command === "upgrade" ? [command, "--check", flag] : [command, flag];
+      const probe = tryRun(cli, probeArgs, flagProbe);
+      check(
+        `${command} actually accepts ${flag}`,
+        probe.status !== 2,
+        `exit ${probe.status}: ${probe.stderr.split("\n")[0]}`
+      );
+    }
+  }
+
+  // Documentation smoke test: every invocation the docs show must actually parse. Exit 2 means
+  // the CLI rejected it, so the documentation would be telling users to run something that does
+  // not exist.
+  const documentedInvocations = new Set();
+  const documentationFiles = [path.join(root, "README.md")];
+  for (const entry of readdirSync(path.join(root, "docs"))) {
+    if (entry.endsWith(".md")) documentationFiles.push(path.join(root, "docs", entry));
+  }
+
+  for (const file of documentationFiles) {
+    // Normalize line endings first: a Windows checkout gives CRLF, and JavaScript's "." does
+    // not match \r, so a trailing \r would stop the comment-stripping regex below from ever
+    // reaching the end of the string.
+    for (const line of readFileSync(file, "utf8").replace(/\r\n/g, "\n").split("\n")) {
+      const match = line.match(
+        /npx (?:--yes )?@echelon-foundry\/visual-engineering(?:@[\w.-]+)? ([^\n`"]*)/
+      );
+      if (!match) continue;
+      // Drop trailing shell comments, and skip usage placeholders such as "<command>".
+      const args = match[1].replace(/\s+#.*$/, "").trim().replace(/\.$/, "");
+      if (!args || args.includes("<") || args.includes("[")) continue;
+      documentedInvocations.add(args);
+    }
+  }
+
+  check(
+    "the documentation shows invocations to validate",
+    documentedInvocations.size >= 10,
+    `${documentedInvocations.size} found`
+  );
+
+  for (const invocation of documentedInvocations) {
+    const args = invocation.split(/\s+/);
+    // Make repository-changing invocations inert for the probe.
+    const probeArgs =
+      (args[0] === "init" || args[0] === "upgrade") && !args.includes("--check")
+        ? [...args, "--check"]
+        : args;
+    const probe = tryRun(cli, probeArgs, flagProbe);
+    check(
+      `the documented invocation \`${invocation}\` is valid`,
+      probe.status !== 2,
+      `exit ${probe.status}: ${(probe.stderr || probe.stdout).split("\n")[0]}`
+    );
+  }
+
+  check(
+    "the changelog is published with the package",
+    contents.includes("CHANGELOG.md"),
+    contents.join(", ")
+  );
+  check(
+    "the changelog documents the version being published",
+    readFileSync(path.join(packageRoot, "CHANGELOG.md"), "utf8").includes(
+      `## ${packageJson.version.split("-")[0]}`
+    ),
+    packageJson.version
+  );
+
+  // ------------------------------------------------------ clean repository
+  const repository = path.join(workspace, "repo");
+  mkdirSync(path.join(repository, ".git"), { recursive: true });
+
+  const emptyStatus = tryRun(cli, ["status", "--json"], repository);
+  check("status on a clean repository exits 0", emptyStatus.status === 0, emptyStatus.stderr);
+  const emptyStatusJson = parseJson("status --json emits valid JSON", emptyStatus.stdout);
+  check(
+    "status reports not-installed",
+    emptyStatusJson?.state?.status === "not-installed",
+    JSON.stringify(emptyStatusJson?.state)
+  );
+  check("status --json writes nothing else to stdout", emptyStatus.stdout.trimStart().startsWith("{"));
+  check("the JSON envelope is complete", ["schemaVersion", "tool", "package", "command", "cliVersion", "exitCode"].every(
+    (field) => emptyStatusJson && field in emptyStatusJson
+  ));
+
+  const beforeDryRun = snapshot(repository);
+  const dryRun = tryRun(cli, ["init", "--dry-run", "--json"], repository);
+  check("init --dry-run exits 0", dryRun.status === 0, dryRun.stderr);
+  const dryRunJson = parseJson("init --dry-run --json emits valid JSON", dryRun.stdout);
+  check("the dry run reports a plan", (dryRunJson?.plan?.changeCount ?? 0) > 0);
+  check("the dry run applies nothing", dryRunJson?.execution?.applied === false);
+  check(
+    "the dry run changed no files",
+    JSON.stringify(beforeDryRun) === JSON.stringify(snapshot(repository))
+  );
+
+  const checkRun = tryRun(cli, ["init", "--check"], repository);
+  check("init --check exits 4 when changes are required", checkRun.status === 4, String(checkRun.status));
+  check(
+    "init --check changed no files",
+    JSON.stringify(beforeDryRun) === JSON.stringify(snapshot(repository))
+  );
+
+  // ------------------------------------------------------------------ init
+  const firstInit = tryRun(cli, ["init"], repository);
+  check("init exits 0", firstInit.status === 0, firstInit.stderr);
+  for (const installed of [
+    ".echelon/visual-engineering.json",
+    ".echelon/visual-engineering.config.json",
+    ".visual-engineering/UI-FOUNDATIONS.md",
+    ".visual-engineering/RESEARCH-INDEX.md",
+    "AGENTS.md",
+    ".gitignore",
+  ]) {
+    check(`init created ${installed}`, existsSync(path.join(repository, installed)));
+  }
+
+  const afterFirstInit = snapshot(repository);
+  const secondInit = tryRun(cli, ["init"], repository);
+  check("a second init exits 0", secondInit.status === 0, secondInit.stderr);
+  check("a second init reports no changes", secondInit.stdout.includes("No changes required"), secondInit.stdout);
+  check(
+    "a second init changed nothing",
+    JSON.stringify(afterFirstInit) === JSON.stringify(snapshot(repository))
+  );
+  check("init --check exits 0 once installed", tryRun(cli, ["init", "--check"], repository).status === 0);
+
+  // -------------------------------------------------- read only commands
+  for (const [command, args] of [
+    ["status", ["status"]],
+    ["verify", ["verify"]],
+    ["verify --strict", ["verify", "--strict"]],
+    ["doctor", ["doctor"]],
+    ["upgrade", ["upgrade"]],
+  ]) {
+    const result = tryRun(cli, args, repository);
+    check(`${command} exits 0 on a healthy installation`, result.status === 0, result.stderr || result.stdout);
+  }
+
+  for (const command of ["status", "verify", "doctor"]) {
+    const before = snapshot(repository);
+    tryRun(cli, [command, "--json"], repository);
+    check(`${command} did not modify the repository`, JSON.stringify(before) === JSON.stringify(snapshot(repository)));
+    const json = parseJson(`${command} --json emits valid JSON`, tryRun(cli, [command, "--json"], repository).stdout);
+    check(`${command} --json carries the envelope`, json?.schemaVersion === 1 && json?.command === command);
+  }
+
+  // ------------------------------------------------------------- damage
+  const damaged = path.join(repository, ".visual-engineering", "UI-FOUNDATIONS.md");
+  check("init installed the file the damage checks operate on", existsSync(damaged), damaged);
+  if (!existsSync(damaged)) throw new Error("cannot continue: init did not install the context");
+  rmSync(damaged);
+  check("verify fails on a missing file", tryRun(cli, ["verify"], repository).status === 3);
+  const damagedDoctor = tryRun(cli, ["doctor", "--json"], repository);
+  check("doctor fails on a missing file", damagedDoctor.status === 3);
+  const damagedDoctorJson = parseJson("doctor --json emits valid JSON when unhealthy", damagedDoctor.stdout);
+  check(
+    "doctor identifies the missing file",
+    (damagedDoctorJson?.findings ?? []).some(
+      (finding) => finding.code === "file-missing" && finding.severity === "error" && finding.remedy
+    ),
+    JSON.stringify(damagedDoctorJson?.findings?.map((f) => f.code))
+  );
+  check("init repairs the damage", tryRun(cli, ["init"], repository).status === 0);
+  check("verify passes after repair", tryRun(cli, ["verify", "--strict"], repository).status === 0);
+
+  writeFileSync(path.join(repository, ".visual-engineering", "UI-FOUNDATIONS.md"), "hand edited\n");
+  const blocked = tryRun(cli, ["init"], repository);
+  check("a locally modified tool owned file blocks init with exit 5", blocked.status === 5, String(blocked.status));
+  check(
+    "the blocked run did not replace the local edit",
+    readFileSync(path.join(repository, ".visual-engineering", "UI-FOUNDATIONS.md"), "utf8") === "hand edited\n"
+  );
+  check("--force replaces it", tryRun(cli, ["init", "--force"], repository).status === 0);
+  check("verify passes after a forced repair", tryRun(cli, ["verify", "--strict"], repository).status === 0);
+
+  // -------------------------------------------------------- legacy fixture
+  const legacy = path.join(workspace, "legacy");
+  mkdirSync(path.join(legacy, ".git"), { recursive: true });
+  mkdirSync(path.join(legacy, ".visual-engineering"), { recursive: true });
+
+  const payloadContext = path.join(packageRoot, "payload", "context");
+  for (const file of readdirSync(payloadContext)) {
+    if (statSync(path.join(payloadContext, file)).isFile()) {
+      writeFileSync(
+        path.join(legacy, ".visual-engineering", file),
+        readFileSync(path.join(payloadContext, file))
+      );
+    }
+  }
+  const legacyContext = JSON.parse(
+    readFileSync(path.join(legacy, ".visual-engineering", "context.json"), "utf8")
+  );
+  legacyContext.contextVersion = "0.0.0-legacy";
+  writeFileSync(
+    path.join(legacy, ".visual-engineering", "context.json"),
+    `${JSON.stringify(legacyContext, null, 2)}\n`
+  );
+  writeFileSync(path.join(legacy, "AGENTS.md"), "# House rules\n\nNever force push.\n");
+  writeFileSync(path.join(legacy, ".gitignore"), "node_modules/\ncoverage/\n");
+
+  const legacyStatus = parseJson(
+    "status --json on a legacy installation emits valid JSON",
+    tryRun(cli, ["status", "--json"], legacy).stdout
+  );
+  check(
+    "a legacy installation is detected as upgrade-required at configuration version 1",
+    legacyStatus?.state?.status === "upgrade-required" && legacyStatus?.configurationVersion === 1,
+    JSON.stringify(legacyStatus?.state)
+  );
+
+  const beforeUpgrade = snapshot(legacy);
+  check("upgrade --dry-run exits 0", tryRun(cli, ["upgrade", "--dry-run"], legacy).status === 0);
+  check(
+    "upgrade --dry-run changed nothing",
+    JSON.stringify(beforeUpgrade) === JSON.stringify(snapshot(legacy))
+  );
+
+  const upgrade = tryRun(cli, ["upgrade", "--json"], legacy);
+  check("upgrade exits 0", upgrade.status === 0, upgrade.stderr);
+  const upgradeJson = parseJson("upgrade --json emits valid JSON", upgrade.stdout);
+  check(
+    "upgrade ran both migrations in order",
+    JSON.stringify(upgradeJson?.plan?.migrations) === JSON.stringify([{ from: 1, to: 2 }, { from: 2, to: 3 }]),
+    JSON.stringify(upgradeJson?.plan?.migrations)
+  );
+  check(
+    "upgrade preserved user content in AGENTS.md",
+    readFileSync(path.join(legacy, "AGENTS.md"), "utf8").includes("Never force push.")
+  );
+  check(
+    "upgrade preserved user content in .gitignore",
+    readFileSync(path.join(legacy, ".gitignore"), "utf8").includes("coverage/")
+  );
+  check("the upgraded installation verifies strictly", tryRun(cli, ["verify", "--strict"], legacy).status === 0);
+  check("upgrade is idempotent", tryRun(cli, ["upgrade", "--check"], legacy).status === 0);
+
+  // ------------------------------------------------- environment failures
+  const missingRepo = tryRun(cli, ["status", "--repo", path.join(workspace, "does-not-exist")], installRoot);
+  check("a missing repository exits 6", missingRepo.status === 6, String(missingRepo.status));
+} finally {
+  await rm(workspace, { recursive: true, force: true });
+}
+
+if (failures.length > 0) {
+  process.stderr.write(`\n${failures.length} of ${checks} package checks failed:\n`);
+  for (const failure of failures) process.stderr.write(`  - ${failure}\n`);
+  process.exitCode = 1;
+} else {
+  process.stdout.write(`All ${checks} packed artifact checks passed for ${packageJson.name}@${packageJson.version}.\n`);
+}

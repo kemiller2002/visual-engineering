@@ -26,6 +26,14 @@ export default {
       "input-documents/**",
       "prompts/**",
       "packages/**",
+      // Tooling and product documentation for @echelon-foundry/visual-engineering.
+      // These are not research artifacts and are not published to the research site.
+      "README.md",
+      "docs/**",
+      "src/**",
+      "tests/**",
+      "npm/**",
+      "scripts/**",
       "**/archive/**",
       "**/archives/**",
     ],

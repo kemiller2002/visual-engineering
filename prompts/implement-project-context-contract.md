@@ -1,3 +1,11 @@
+> **Deprecated — historical record. Do not run this prompt.**
+>
+> Superseded by `@echelon-foundry/visual-engineering`, which installs, verifies, diagnoses and upgrades the Visual Engineering context from F#. This prompt designed the earlier Node `ve-context` mechanism, which remains supported for existing consumers but is no longer the design anyone should build on.
+>
+> Repository lifecycle tooling in this repository is implemented in F#. See
+> [prompts/README.md](README.md) for the policy and
+> [docs/development.md](../docs/development.md) for the architecture.
+
 # Autonomous Implementation Prompt: Visual Engineering Project Context Contract
 
 Run this prompt from the root of the Visual Engineering repository.

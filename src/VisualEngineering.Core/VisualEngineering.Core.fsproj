@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>VisualEngineering.Core</AssemblyName>
+    <RootNamespace>VisualEngineering.Core</RootNamespace>
+    <!-- The core is the future integration assembly: keep it trim-safe and dependency-free. -->
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Primitives.fs" />
+    <Compile Include="Json.fs" />
+    <Compile Include="Payload.fs" />
+    <Compile Include="Model.fs" />
+    <Compile Include="ManagedBlock.fs" />
+    <Compile Include="Desired.fs" />
+    <Compile Include="Inspection.fs" />
+    <Compile Include="Migrations.fs" />
+    <Compile Include="Planning.fs" />
+    <Compile Include="Execution.fs" />
+    <Compile Include="Verification.fs" />
+    <Compile Include="Diagnostics.fs" />
+    <Compile Include="Api.fs" />
+    <Compile Include="JsonOutput.fs" />
+  </ItemGroup>
+
+</Project>

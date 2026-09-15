@@ -1,0 +1,116 @@
+name: Build Visual Engineering tool
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-visual-engineering-tool-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dotnet:
+    name: F# build and tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore VisualEngineering.sln
+
+      - name: Build
+        run: dotnet build VisualEngineering.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test VisualEngineering.sln -c Release --no-build
+
+  package:
+    name: Stage npm package
+    runs-on: ubuntu-latest
+    env:
+      VE_CONTEXT_VERSION: 0.${{ github.run_number }}.${{ github.run_attempt }}
+      VE_TOOL_VERSION: 1.0.0-ci.${{ github.run_number }}.${{ github.run_attempt }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build research catalog
+        run: npm run research:build
+
+      - name: Build context payload
+        run: |
+          npm run context:build
+          npm run context:validate
+
+      - name: Stage the npm package
+        run: npm run tool:build
+
+      - name: Inspect package contents
+        run: npm run tool:pack
+
+      - name: Upload staged package
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-engineering-npm-package
+          # The whole staged package, so a new file added to it cannot be silently dropped
+          # from the artifact. What actually gets published is governed by "files" in
+          # npm/package.json, and asserted by scripts/test-tool-package.mjs.
+          path: npm/
+          retention-days: 7
+
+  packed-artifact:
+    name: Packed artifact on ${{ matrix.os }} / node ${{ matrix.node }}
+    needs: package
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [20, 24]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Download staged package
+        uses: actions/download-artifact@v4
+        with:
+          name: visual-engineering-npm-package
+          path: npm
+
+      - name: Restore executable permissions
+        if: runner.os != 'Windows'
+        run: chmod +x npm/platforms/*/visual-engineering npm/bin/visual-engineering.js
+
+      - name: Test the packed artifact
+        run: node scripts/test-tool-package.mjs

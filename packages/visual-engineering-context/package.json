@@ -12,7 +12,8 @@
   "files": [
     "bin/",
     "context/",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "bin": {
     "ve-context": "bin/ve-context.mjs"

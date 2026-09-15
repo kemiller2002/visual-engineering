@@ -2,6 +2,17 @@
 
 Generated, versioned UI research context for implementation agents.
 
+> **Legacy compatibility.** This package remains supported and is not changing. New projects
+> should use the canonical Echelon Foundry lifecycle interface instead:
+>
+> ```bash
+> npx @echelon-foundry/visual-engineering init
+> ```
+>
+> It installs the same context, adds an installation manifest, verification, diagnostics and
+> in-place upgrades, and adopts an existing `ve-context` installation without deleting anything.
+> See the [repository README](../../README.md) and [docs/installation.md](../../docs/installation.md).
+
 ## Always retrieve the latest published context
 
 ```bash

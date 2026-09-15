@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>VisualEngineering.Cli.Tests</AssemblyName>
+    <RootNamespace>VisualEngineering.Cli.Tests</RootNamespace>
+    <!-- The CLI is published single file and trimmed; tests reference it as a plain library. -->
+    <PublishSingleFile>false</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ParserTests.fs" />
+    <Compile Include="HelpTests.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\VisualEngineering.Cli\VisualEngineering.Cli.fsproj" />
+  </ItemGroup>
+
+</Project>
