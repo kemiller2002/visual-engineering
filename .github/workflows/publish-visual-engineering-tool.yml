@@ -147,21 +147,43 @@ jobs:
       - name: Restore executable permissions
         run: chmod +x npm/platforms/*/visual-engineering npm/bin/visual-engineering.js
 
+      # npm publish is not transactional across the seven packages, so a problem found on the
+      # last one leaves the earlier versions permanently taken. This refuses the release up
+      # front for every failure that can be detected without publishing.
+      - name: Preflight the release
+        if: ${{ env.NODE_AUTH_TOKEN != '' }}
+        run: node scripts/preflight-npm-publish.mjs
+
       # Platform packages go first: the root package declares each of them as an
       # optionalDependency pinned to this exact version, so they must exist on the registry
       # before the root package that points at them.
+      #
+      # The preflight cannot prove the token may publish -- npm has no endpoint for that --
+      # so this still has to survive failing partway. It reports exactly which versions went
+      # out, because those cannot be republished and the release has to move to a new version.
       - name: Publish the platform packages
         if: ${{ env.NODE_AUTH_TOKEN != '' }}
         run: |
+          published=""
           for platform in npm/platforms/*/; do
-            echo "Publishing $platform"
-            npm publish --access public --provenance --tag latest "$platform"
+            rid="$(basename "$platform")"
+            echo "Publishing $rid"
+            if npm publish --access public --provenance --tag latest "$platform"; then
+              published="$published $rid"
+            else
+              echo "::error::Publishing $rid failed. Platform packages already published at ${{ needs.build.outputs.version }}:${published:- none}. Those versions are permanently taken, so re-run this release under a new version rather than retrying this one."
+              exit 1
+            fi
           done
 
       - name: Publish the root package
         if: ${{ env.NODE_AUTH_TOKEN != '' }}
         working-directory: npm
-        run: npm publish --access public --provenance --tag latest
+        run: |
+          if ! npm publish --access public --provenance --tag latest; then
+            echo "::error::All six platform packages published at ${{ needs.build.outputs.version }} but the root package did not. That version is now unusable for the platform packages, so re-run this release under a new version."
+            exit 1
+          fi
 
       - name: Explain skipped publication
         if: ${{ env.NODE_AUTH_TOKEN == '' }}

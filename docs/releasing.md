@@ -57,8 +57,75 @@ them, and a publish that is missing one fails at the final step with an unhelpfu
    `@echelon-foundry/visual-engineering` *and* `@echelon-foundry/visual-engineering-*`, since
    the release publishes seven packages.
 
+Prerequisite 1 is already satisfied, and this is worth knowing before debugging: the scope holds
+seven published packages, all with `kevin.m.miller` as maintainer.
+
+```text
+@echelon-foundry/communication-engineering     0.1.0
+@echelon-foundry/repository-operating-system   3.0.0
+@echelon-foundry/research-publisher            0.1.1
+@echelon-foundry/ros-worker-daemon             0.1.1
+@echelon-foundry/sde                           1.1.1
+@echelon-foundry/typescript-wasm-kernel        0.4.1
+@echelon-foundry/visual-engineering-context    0.2.0
+```
+
+The org exists, the account is a member, and it has published into the scope seven times. So a
+404 on publishing `@echelon-foundry/visual-engineering-*` is **not** a missing scope and **not**
+a missing membership. It narrows to prerequisite 3: the token in `NPM_TOKEN` does not cover the
+seven new package names.
+
+That is the expected failure for a granular token whose permissions were selected per package,
+because the seven packages did not exist when the token was created and so could not be
+selected. Fix it with either:
+
+- an **automation token**, which is account-wide; or
+- a **granular token** whose permission is set on the **`@echelon-foundry` scope** rather than on
+  a list of individual packages.
+
+After the first successful release the seven packages exist and a per-package granular token
+becomes possible, but a scope-level one keeps working without being reissued.
+
 Without `NPM_TOKEN` the workflow still builds, tests, packs and exercises the archives, then
 warns that publication was skipped.
+
+#### What the preflight checks, and what it cannot
+
+Before publishing anything, the publish job runs `scripts/preflight-npm-publish.mjs`. It reads
+the staged `npm/package.json`, derives the seven packages and the release version from it, and
+refuses the release if:
+
+- any platform package is pinned to a version other than the release version, meaning the
+  staged package is internally inconsistent;
+- `npm whoami` fails, meaning `NPM_TOKEN` is missing, expired or revoked;
+- any of the seven versions already exists on the registry, which cannot be republished.
+
+It runs every check before reporting, so one run lists everything that is wrong.
+
+It **cannot** confirm that the token is allowed to publish. npm exposes no endpoint for that:
+
+- `npm access list packages @echelon-foundry` returns each package's own public access setting,
+  not the caller's permission. It answers the same for an anonymous caller as for an authorised
+  one, so a pass means nothing about write access.
+- `npm org ls echelon-foundry` exits 0 with empty output when unauthenticated.
+- A publish authorisation failure comes back as 404, indistinguishable from a missing package.
+
+The only true test of publish permission is a publish. So the preflight reports how many of the
+seven packages are new to the scope -- a first publish needs scope-level write access, because a
+granular token cannot be scoped to packages that do not exist yet -- and the publish steps are
+written to fail legibly: if a publish fails partway, the error names exactly which versions
+reached the registry. Those versions are permanently taken, and the release must move to a new
+version rather than retry the same one.
+
+Run it locally against the staged package at any time:
+
+```bash
+npm run tool:build -- --version <version>
+npm run tool:preflight
+```
+
+Without npm credentials the authentication check fails and the rest still runs, which is the
+quickest way to confirm a version is still free before tagging.
 
 #### Diagnosing a failed publish
 
@@ -74,13 +141,15 @@ npm error 404  or you do not have permission to access it.
 
 Reaching that error means authentication succeeded and authorisation did not. Check, in order:
 the scope exists; the token's account is a member of it; and the token's package permissions
-cover the packages being published. A first publish into a scope the account does not own fails
-exactly this way.
+cover the packages being published. For `@echelon-foundry` the first two are already
+established above, so only the third is in question.
 
 The same failure has occurred on every run of the legacy
-`.github/workflows/publish-ui-context.yml`, which is why
-`@kemiller2002/visual-engineering-context` has never reached the registry despite the workflow
-running. Fixing the registry side fixes both release paths.
+`.github/workflows/publish-ui-context.yml`, and `@kemiller2002/visual-engineering-context` has
+never reached the registry despite the workflow running. That one is a separate problem, not the
+same one: `@kemiller2002` is a different scope from `@echelon-foundry`, so a token fixed for one
+does not necessarily cover the other. If both release paths are wanted, the token needs write
+access to both scopes.
 
 ## 2. `@kemiller2002/visual-engineering-context` (legacy compatibility)
 
@@ -106,6 +175,7 @@ dotnet test VisualEngineering.sln
 npm run tool:build -- --version <version>
 npm run tool:pack
 npm run tool:test-package
+npm run tool:preflight
 ```
 
 Then push the tag:
@@ -115,9 +185,11 @@ git tag visual-engineering-v<version>
 git push origin visual-engineering-v<version>
 ```
 
-The tag is the release trigger and the version comes from it, so pushing a tag whose registry
-prerequisites are not yet met burns that version number: the workflow will build and test, fail
-at publish, and the tag will then refer to a release that does not exist. Confirm the
+The tag is the release trigger and the version comes from it. If the registry prerequisites are
+not met, the workflow builds, tests, and then stops at the preflight or the first publish, and
+the tag refers to a release that does not exist. Nothing is published in that case, so the
+version number is still free and the same tag can be re-run once the registry side is fixed --
+but only as long as no package actually reached the registry. Confirm the
 [registry prerequisites](#registry-prerequisites) before tagging.
 
 ### Publishing order
