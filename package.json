@@ -14,6 +14,7 @@
     "context:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./packages/visual-engineering-context",
     "tool:build": "node scripts/build-tool-package.mjs",
     "tool:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./npm",
+    "tool:preflight": "node scripts/preflight-npm-publish.mjs",
     "tool:test-package": "node scripts/test-tool-package.mjs",
     "tool:test": "dotnet test VisualEngineering.sln"
   },
