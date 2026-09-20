@@ -76,6 +76,21 @@ Visual quality is not decoration applied after structure. Architecture, content 
 - Do not hide critical actions behind unfamiliar gestures or unexplained icons.
 - Ensure keyboard order, reading order, focus order, and visual order tell the same story.
 
+## Semantic projection
+
+A UI is often a purpose-specific projection of richer product state. Treat that projection as a semantic boundary, not only a visual transformation.
+
+- Identify what is authoritative for the state, uncertainty, completion, unresolved work, and legal actions shown on the screen.
+- Do not communicate stronger certainty, success, completeness, or authority than the source state supports. Loading is not empty; unknown is not failed; partial is not complete; unverifiable is not pass.
+- Preserve domain alternatives when they differ in legal next action, authority, uncertainty, reconciliation, recovery, completion meaning, or another material user conclusion.
+- Preserve scope. A fact that is complete for one dimension does not imply completeness for another.
+- Where the product exposes legal actions or capabilities, derive available UI actions from that authority rather than re-implementing legality in presentation code.
+- Keep decision-relevant unresolved work perceptible. Do not make users infer reconciliation, pending review, stale state, or partial coverage from generic errors or missing controls.
+- Do not invent aggregate percentages, pass/fail verdicts, or global completion states unless the product defines a valid aggregation rule.
+- Preserve the purpose of the projection. A task-focused view need not expose every domain fact, but it must not imply that omitted state does not exist.
+
+These constraints preserve meaning, not visual form. Visual Engineering still determines hierarchy, grouping, density, wording, interaction pattern, responsive composition, and aesthetic expression.
+
 ## Accessibility and human factors
 
 - Begin with semantic HTML and native behavior.
