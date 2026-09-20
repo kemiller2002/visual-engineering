@@ -26,3 +26,9 @@ audiences:
 - Accessibility treated as a final audit
 - Visual novelty prioritized over recognition and verification
 - Research guidance applied without inspecting the product context
+
+- Semantic state collapsed into a generic success, failure, loading, empty, or complete state when the product distinguishes consequential alternatives
+- Presentation code independently recreates domain action legality instead of consuming the authoritative capability or legal-action model when one exists
+- Scoped uncertainty or coverage flattened into a global completion percentage, pass/fail verdict, or status without a valid product aggregation rule
+- Unknown external effect presented as definite failure with an unsafe blind retry path
+- Previous render, screenshot, or cached presentation state treated as authority for a newer semantic state
