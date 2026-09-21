@@ -2,5 +2,22 @@
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
   "nextSeq": 1,
-  "items": []
+  "items": [
+    {
+      "id": "ECHELON-UPGRADE-2026-09-21",
+      "title": "Reconcile current Echelon engineering capabilities",
+      "description": null,
+      "tags": [
+        "tooling,ordo,ros,limen"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-21T15:45:50.632Z",
+      "updatedAt": "2026-09-21T15:45:53Z",
+      "createdBy": "agent:chatgpt",
+      "source": "agent-discovery",
+      "sourceReference": "public-repository-upgrade-2026-09-21"
+    }
+  ]
 }
