@@ -188,7 +188,7 @@ module PerceptualRobustness =
           RemainingChannels = remaining
           Reasons = reasons }
 
-    let evaluateState scenarios state =
+    let evaluateState (scenarios: DegradationScenario list) (state: SemanticStateEncoding) : StateRobustness =
         let baselineReasons =
             requirements state.Criticality state.Channels state.ProgrammaticSemantics
 
@@ -228,7 +228,7 @@ module PerceptualRobustness =
           ScenarioResults = scenarioResults
           Findings = findings }
 
-    let evaluate manifest =
+    let evaluate (manifest: RobustnessManifest) : RobustnessReport =
         let states = manifest.States |> List.map (evaluateState manifest.Scenarios)
 
         let passed =
