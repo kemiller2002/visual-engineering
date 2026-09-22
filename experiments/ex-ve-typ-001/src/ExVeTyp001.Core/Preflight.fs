@@ -3,7 +3,7 @@ namespace ExVeTyp001.Core
 [<RequireQualifiedAccess>]
 module Preflight =
 
-    let private crossoverBalanced conditions =
+    let private crossoverBalanced (conditions: TypographyCondition list) =
         conditions
         |> List.mapi (fun conditionIndex _ ->
             [ 0 .. 3 ]
@@ -22,7 +22,7 @@ module Preflight =
             |> Set.ofList
             |> Set.count = TaskClass.all.Length)
 
-    let run conditions =
+    let run (conditions: TypographyCondition list) =
         let findings = Design.validateConditions DesignBounds.pilot conditions
         let primary0 = Design.primarySchedule conditions 0 Design.DefaultSeed
         let primary0Again = Design.primarySchedule conditions 0 Design.DefaultSeed
