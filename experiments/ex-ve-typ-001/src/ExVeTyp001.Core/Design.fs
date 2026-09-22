@@ -120,10 +120,12 @@ module Design =
             |> List.map fst
 
         if not duplicateIds.IsEmpty then
+            let joinedIds = String.Join(", ", duplicateIds)
+
             findings.Add
                 { Severity = Error
                   Code = "DESIGN002"
-                  Message = $"duplicate condition IDs: {String.Join(", ", duplicateIds)}" }
+                  Message = $"duplicate condition IDs: {joinedIds}" }
 
         for condition in conditions do
             let checks =
