@@ -34,6 +34,9 @@ export default {
       "tests/**",
       "npm/**",
       "scripts/**",
+      // Executable experiment implementations are engineering artifacts. Canonical
+      // research records under content/projects/** link to them when appropriate.
+      "experiments/**",
       "**/archive/**",
       "**/archives/**",
     ],
