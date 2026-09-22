@@ -10,8 +10,7 @@ let private options =
     )
 
 let private serialize value =
-    JsonSerializer.Serialize(value, options) + "
-"
+    JsonSerializer.Serialize(value, options) + "\n"
 
 let private conditionDto (condition: TypographyCondition) =
     {| id = condition.Id
