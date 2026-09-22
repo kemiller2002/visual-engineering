@@ -108,6 +108,11 @@ module Api =
     let diagnose (session: Session) =
         Diagnostics.diagnose session.Repository session.Payload
 
+    /// Evaluates a semantic robustness manifest without requiring visual simulation.
+    /// The result is provisional engineering guidance, not a human-performance claim.
+    let evaluateRobustness (manifestText: string) =
+        PerceptualRobustness.parseAndEvaluate manifestText
+
     let getStatus (session: Session) : StatusReport =
         let repository = session.Repository
         let report = Verification.evaluate repository session.Payload false
