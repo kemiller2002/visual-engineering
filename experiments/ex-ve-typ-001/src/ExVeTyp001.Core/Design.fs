@@ -199,7 +199,7 @@ module Design =
         let stimulusNumber = ((localIndex + offset) % 8) + 1
         $"{TaskClass.code task}-S{stimulusNumber:D2}"
 
-    let primarySchedule conditions participantIndex seed =
+    let primarySchedule (conditions: TypographyCondition list) participantIndex seed =
         let order = taskOrder participantIndex
 
         let assignments =
@@ -234,7 +234,7 @@ module Design =
     /// Session two deliberately repeats eight condition/task pairs from session
     /// one, with different stimuli, to measure stability without repeating the
     /// entire primary session.
-    let repeatabilitySchedule conditions participantIndex seed =
+    let repeatabilitySchedule (conditions: TypographyCondition list) participantIndex seed =
         let selectedIndices =
             [ 0; 3; 6; 9; 12; 15; 18; 21 ]
             |> List.filter (fun index -> index < conditions.Length)
@@ -291,7 +291,7 @@ module Design =
               invariant condition.ContrastRatio ]
         )
 
-    let fingerprint conditions =
+    let fingerprint (conditions: TypographyCondition list) =
         let text =
             conditions
             |> List.map canonicalConditionText
