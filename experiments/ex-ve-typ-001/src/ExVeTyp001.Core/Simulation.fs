@@ -95,15 +95,15 @@ module Simulation =
             taskAdjustedIdeal task participantIndex
 
         let distances =
-            [ normalizedDistance (fst (bounds.FontSizePx) (snd (bounds.FontSizePx)) condition.FontSizePx fontSize
-              normalizedDistanceInt (fst (bounds.Weight) (snd (bounds.Weight)) condition.Weight weight
-              normalizedDistanceInt (fst (bounds.WidthPercent) (snd (bounds.WidthPercent)) condition.WidthPercent width
-              normalizedDistance (fst (bounds.OpticalSizePt) (snd (bounds.OpticalSizePt)) condition.OpticalSizePt optical
-              normalizedDistance (fst (bounds.LetterSpacingEm) (snd (bounds.LetterSpacingEm)) condition.LetterSpacingEm letter
-              normalizedDistance (fst (bounds.WordSpacingEm) (snd (bounds.WordSpacingEm)) condition.WordSpacingEm word
-              normalizedDistance (fst (bounds.LineHeight) (snd (bounds.LineHeight)) condition.LineHeight lineHeight
-              normalizedDistanceInt (fst (bounds.LineLengthCh) (snd (bounds.LineLengthCh)) condition.LineLengthCh lineLength
-              normalizedDistance (fst (bounds.ContrastRatio) (snd (bounds.ContrastRatio)) condition.ContrastRatio contrast ]
+            [ normalizedDistance (fst bounds.FontSizePx) (snd bounds.FontSizePx) condition.FontSizePx fontSize
+              normalizedDistanceInt (fst bounds.Weight) (snd bounds.Weight) condition.Weight weight
+              normalizedDistanceInt (fst bounds.WidthPercent) (snd bounds.WidthPercent) condition.WidthPercent width
+              normalizedDistance (fst bounds.OpticalSizePt) (snd bounds.OpticalSizePt) condition.OpticalSizePt optical
+              normalizedDistance (fst bounds.LetterSpacingEm) (snd bounds.LetterSpacingEm) condition.LetterSpacingEm letter
+              normalizedDistance (fst bounds.WordSpacingEm) (snd bounds.WordSpacingEm) condition.WordSpacingEm word
+              normalizedDistance (fst bounds.LineHeight) (snd bounds.LineHeight) condition.LineHeight lineHeight
+              normalizedDistanceInt (fst bounds.LineLengthCh) (snd bounds.LineLengthCh) condition.LineLengthCh lineLength
+              normalizedDistance (fst bounds.ContrastRatio) (snd bounds.ContrastRatio) condition.ContrastRatio contrast ]
 
         distances |> List.average |> clampDecimal 0.0M 1.0M
 
