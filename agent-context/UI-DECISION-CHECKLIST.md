@@ -22,7 +22,8 @@ audiences:
 - What is authoritative for the state, uncertainty, completion, unresolved work, and legal actions this view presents?
 - Which state distinctions change what the user may safely conclude or do?
 - Which semantic scopes must remain distinct rather than being combined into one status?
-- Which visual channels carry consequential meaning, and what happens if hue, iconography, border, or another channel is unavailable?
+- Which visual channels carry consequential meaning, and what happens if hue, iconography, border, position, motion, or another channel is unavailable?
+- What is the Perceptual Failure Boundary for each important or critical semantic state?
 - Is a proposed accessibility preset based on measured need, explicit user choice, or an unsupported assumption about a diagnosis?
 - Does this task contain strong linguistic context, or is it low-context content such as an identifier, code, unfamiliar name, or critical value?
 
@@ -58,7 +59,9 @@ audiences:
 - Color-independent state recognition
 - Grayscale plus protan, deutan, and tritan simulation as screening conditions where color carries categorization
 - Text-spacing overrides where reading content is material
-- Semantic channel dropout for consequential states: remove at least one nonessential visual cue and verify meaning survives
+- Semantic channel dropout for consequential states: remove each declared visible channel independently and verify important and critical meaning survives
+- Run the Visual Engineering robustness manifest when the repository defines important or critical semantic states
+- Review the minimal failure sets and improve low-boundary states when practical
 - Long, missing, and extreme content
 - Screen-reader semantics for critical workflows
 - First-glance hierarchy inspection
@@ -76,3 +79,4 @@ Report:
 - Material deviations and rationale
 - Unresolved evidence or product questions
 - Material semantic-projection assumptions, including the authoritative state source when it is not obvious
+- Perceptual robustness manifest result, failure boundaries, and any accepted low-boundary states

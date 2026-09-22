@@ -145,6 +145,43 @@ module JsonOutput =
                               "detail", JString finding.Detail
                               "remedy", Json.ofStringOption finding.Remedy ] ] ]
 
+    let private robustnessScenario (scenario: ScenarioRobustness) =
+        JObject
+            [ "id", JString scenario.ScenarioId
+              "survives", JBool scenario.Survives
+              "remainingChannels",
+              JArray
+                  [ for channel in scenario.RemainingChannels ->
+                        JString(VisualChannel.toString channel) ]
+              "reasons", Json.ofStrings scenario.Reasons ]
+
+    let private robustnessState (state: StateRobustness) =
+        JObject
+            [ "id", JString state.StateId
+              "criticality", JString(SemanticCriticality.toString state.Criticality)
+              "baselineValid", JBool state.BaselineValid
+              "singleChannelSurvivable", JBool state.SingleChannelSurvivable
+              "programmaticSemantics", JBool state.ProgrammaticSemantics
+              "failureBoundary",
+              (match state.FailureBoundary with
+               | Some boundary -> JInt boundary
+               | None -> JNull)
+              "minimalFailureSets",
+              JArray
+                  [ for failureSet in state.MinimalFailureSets ->
+                        JArray [ for channel in failureSet -> JString(VisualChannel.toString channel) ] ]
+              "scenarios", JArray [ for scenario in state.ScenarioResults -> robustnessScenario scenario ]
+              "findings", Json.ofStrings state.Findings ]
+
+    let robustnessReport (report: RobustnessReport) (exitCode: ExitCode) =
+        envelope
+            "robustness"
+            exitCode
+            [ "passed", JBool report.Passed
+              "stateCount", JInt report.StateCount
+              "scenarioCount", JInt report.ScenarioCount
+              "states", JArray [ for state in report.States -> robustnessState state ] ]
+
     let lifecycle (command: string) (outcome: LifecycleOutcome) (dryRun: bool) (exitCode: ExitCode) =
         envelope
             command

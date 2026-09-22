@@ -26,14 +26,24 @@ Candidate visual channels include:
 
 Programmatic semantics remain a separate required channel for assistive technology.
 
-## Principle
+## Operational principle
+
+Semantic Channel Survivability is **provisionally operational**.
 
 Consequential meaning should not depend on a single fragile visual channel.
+Important and critical states should survive loss of any one declared visible
+channel. Critical states should retain an explicit text or icon cue as well as
+programmatic semantics.
 
-Testing should deliberately remove or degrade channels rather than only inspect the full design.
+Testing should deliberately remove or degrade channels rather than only inspect
+the full design. The executable robustness analyzer implements this rule now;
+future human evidence may tune the thresholds without changing the underlying
+semantic model.
 
 ## Related Documents
 
 - RP-VE-PE-001
 - EX-VE-COL-006
 - REP-VE-COL-001
+
+- Perceptual Failure Boundary

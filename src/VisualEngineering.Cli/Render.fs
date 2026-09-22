@@ -112,6 +112,37 @@ module Render =
 
         Text.lines ([ header ] @ body)
 
+    let robustness (report: RobustnessReport) (verbose: bool) =
+        let headline =
+            if report.Passed then
+                $"Perceptual robustness passed for {report.StateCount} semantic state(s)."
+            else
+                $"Perceptual robustness failed for one or more of {report.StateCount} semantic state(s)."
+
+        let stateLines =
+            [ for state in report.States do
+                  let mark =
+                      if state.BaselineValid
+                         && (state.Criticality = Informational || state.SingleChannelSurvivable)
+                         && (state.ScenarioResults |> List.forall _.Survives) then
+                          "ok"
+                      else
+                          "FAIL"
+
+                  let boundary =
+                      match state.FailureBoundary with
+                      | Some value -> string value
+                      | None -> "unbounded"
+
+                  yield
+                      $"  {mark.PadRight 4} {state.StateId}: {SemanticCriticality.toString state.Criticality}, failure boundary {boundary}"
+
+                  if verbose || mark = "FAIL" then
+                      for finding in state.Findings do
+                          yield $"       - {finding}" ]
+
+        Text.lines ([ headline ] @ stateLines)
+
     let lifecycle (command: string) (outcome: LifecycleOutcome) (dryRun: bool) (check: bool) (verbose: bool) =
         let plan = outcome.Plan
 

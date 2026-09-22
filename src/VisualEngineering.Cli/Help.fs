@@ -33,6 +33,7 @@ module Help =
               "  verify               Validate the installation. Read only."
               "  upgrade              Move an existing installation to this release."
               "  doctor               Explain what is wrong and how to fix it. Read only."
+              "  robustness           Evaluate semantic-channel survivability. Read only."
               ""
               "GLOBAL OPTIONS" ]
             @ globalOptions
@@ -156,6 +157,23 @@ module Help =
             [ "      --strict          Treat warnings as failures." ]
             [ $"  npx {pkg} doctor"; $"  npx {pkg} doctor --json" ]
 
+    let robustness =
+        commandHelp
+            "robustness"
+            (Text.lines
+                [ "Evaluates a repository-authored perceptual robustness manifest."
+                  ""
+                  "The command checks semantic-channel redundancy, declared degradation scenarios,"
+                  "programmatic semantics and the minimum channel-loss combination that breaks"
+                  "each state. It is a deterministic engineering check, not a simulation of a"
+                  "person or a substitute for future human validation." ]
+             |> fun text -> text.TrimEnd '\n')
+            "None. robustness never modifies the repository."
+            [ "      --manifest <path> Repository-relative robustness manifest to evaluate." ]
+            [ $"  npx {pkg} robustness --manifest visual-robustness.json"
+              $"  npx {pkg} robustness --manifest visual-robustness.json --json"
+              $"  npx {pkg} robustness --manifest visual-robustness.json --verbose" ]
+
     let forCommand (topic: string option) =
         match topic with
         | None -> general
@@ -164,4 +182,5 @@ module Help =
         | Some "verify" -> verify
         | Some "upgrade" -> upgrade
         | Some "doctor" -> doctor
+        | Some "robustness" -> robustness
         | Some _ -> general
