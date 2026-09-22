@@ -240,10 +240,23 @@ module Design =
             |> List.filter (fun index -> index < conditions.Length)
 
         let order = taskOrder participantIndex
+        let primary = primarySchedule conditions participantIndex seed
 
         let selected: (int * TypographyCondition * TaskClass) list =
             selectedIndices
             |> List.map (fun index -> index, conditions[index], taskForCondition participantIndex index)
+
+        let differentStimulus task condition localIndex =
+            let original =
+                primary.Assignments
+                |> List.find (fun trial -> trial.Condition.Id = condition.Id)
+
+            let candidate = stimulusId task participantIndex 2 localIndex
+
+            if candidate <> original.StimulusId then
+                candidate
+            else
+                stimulusId task participantIndex 2 (localIndex + 1)
 
         let assignments =
             order
@@ -255,7 +268,7 @@ module Design =
                     blockIndex,
                     task,
                     condition,
-                    stimulusId task participantIndex 2 (localIndex + 4)))
+                    differentStimulus task condition localIndex))
             |> List.concat
             |> List.mapi (fun ordinal (blockIndex, task, condition, stimulus) ->
                 { Ordinal = ordinal + 1
