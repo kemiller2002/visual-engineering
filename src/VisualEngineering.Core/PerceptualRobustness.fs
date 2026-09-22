@@ -212,7 +212,8 @@ module PerceptualRobustness =
 
               for result in scenarioResults do
                   if not result.Survives then
-                      yield $"scenario '{result.ScenarioId}' breaks meaning: {String.Join("; ", result.Reasons)}" ]
+                      let joinedReasons = String.Join("; ", result.Reasons)
+                      yield $"scenario '{result.ScenarioId}' breaks meaning: {joinedReasons}" ]
 
         { StateId = state.Id
           Criticality = state.Criticality
@@ -271,38 +272,43 @@ module PerceptualRobustness =
             if List.isEmpty errors then Ok channels else Error(String.Join("; ", List.rev errors))
 
     let private parseState index (element: JsonElement) =
-        result {
-            let! element = requireObject $"states[{index}]" element
-            let! id = requireString "id" element
-            let! criticalityRaw = requireString "criticality" element
-
-            let! criticality =
-                SemanticCriticality.tryParse criticalityRaw
-                |> Result.ofOption (fun () -> $"unknown criticality '{criticalityRaw}'")
-
-            let! channels = parseChannelArray "channels" element
-
-            let! programmatic =
-                Json.tryBool "programmaticSemantics" element
-                |> Result.ofOption (fun () -> "programmaticSemantics must be true or false")
-
-            return
-                { Id = id
-                  Criticality = criticality
-                  Channels = channels
-                  ProgrammaticSemantics = programmatic }
-        }
+        match requireObject $"states[{index}]" element with
+        | Error error -> Error error
+        | Ok element ->
+            match requireString "id" element with
+            | Error error -> Error error
+            | Ok id ->
+                match requireString "criticality" element with
+                | Error error -> Error error
+                | Ok criticalityRaw ->
+                    match SemanticCriticality.tryParse criticalityRaw with
+                    | None -> Error $"unknown criticality '{criticalityRaw}'"
+                    | Some criticality ->
+                        match parseChannelArray "channels" element with
+                        | Error error -> Error error
+                        | Ok channels ->
+                            match Json.tryBool "programmaticSemantics" element with
+                            | None -> Error "programmaticSemantics must be true or false"
+                            | Some programmatic ->
+                                Ok
+                                    { Id = id
+                                      Criticality = criticality
+                                      Channels = channels
+                                      ProgrammaticSemantics = programmatic }
 
     let private parseScenario index (element: JsonElement) =
-        result {
-            let! element = requireObject $"scenarios[{index}]" element
-            let! id = requireString "id" element
-            let! channels = parseChannelArray "lostChannels" element
-
-            return
-                { Id = id
-                  LostChannels = channels }
-        }
+        match requireObject $"scenarios[{index}]" element with
+        | Error error -> Error error
+        | Ok element ->
+            match requireString "id" element with
+            | Error error -> Error error
+            | Ok id ->
+                match parseChannelArray "lostChannels" element with
+                | Error error -> Error error
+                | Ok channels ->
+                    Ok
+                        { Id = id
+                          LostChannels = channels }
 
     let private collect parser (elements: JsonElement list) =
         elements
