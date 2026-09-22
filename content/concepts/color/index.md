@@ -24,3 +24,5 @@ Canonical concept stub generated from repository inventory.
 - project-atlas-masters-vs-modern-science-02-josef-albers-v0-1.md
 - project-atlas-perceptual-color-genome.md
 - rp-atlas-color-004-munsell-vs-modern-perceptual-color-spaces.md
+- RP-VE-PE-001 Perceptual Envelope and Adaptive Visual Engineering
+- EX-VE-COL-006 CVD Minimax Palette and Semantic Survivability
