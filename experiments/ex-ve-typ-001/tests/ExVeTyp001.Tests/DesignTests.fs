@@ -50,7 +50,7 @@ let schedule_generation_is_deterministic_for_participant_and_seed () =
     let conditions = Design.defaultConditions ()
     let first = Design.primarySchedule conditions 3 98765
     let second = Design.primarySchedule conditions 3 98765
-    Assert.Equal(first, second)
+    Assert.Equal<ParticipantSchedule>(first, second)
 
 [<Fact>]
 let repeatability_session_repeats_eight_condition_task_pairs_with_new_stimuli () =
