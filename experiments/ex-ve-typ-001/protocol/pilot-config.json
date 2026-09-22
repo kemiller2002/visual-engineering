@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "EX-VE-TYP-001",
+  "protocolVersion": "1.0-pilot",
+  "conditionCount": 24,
+  "primaryTrialsPerParticipant": 24,
+  "repeatabilityTrialsPerParticipant": 8,
+  "stimuliPerTask": 8,
+  "seed": 20260922,
+  "bounds": {
+    "fontSizePx": [16.0, 22.0],
+    "weight": [350, 650],
+    "widthPercent": [90, 110],
+    "opticalSizePt": [14.0, 22.0],
+    "letterSpacingEm": [-0.01, 0.06],
+    "wordSpacingEm": [0.0, 0.12],
+    "lineHeight": [1.35, 1.75],
+    "lineLengthCh": [48, 76],
+    "contrastRatio": [7.0, 12.0]
+  },
+  "pilotThresholdStatus": "provisional-pilot-only",
+  "pilotThresholds": {
+    "continuousProse": {
+      "minAccuracy": 0.95,
+      "minComprehension": 0.80,
+      "maxDurationRatioToTaskMedian": 1.10,
+      "maxEffort": 4
+    },
+    "interfaceLabels": {
+      "minAccuracy": 0.98,
+      "minComprehension": null,
+      "maxDurationRatioToTaskMedian": 1.10,
+      "maxEffort": 4
+    },
+    "identifierRecognition": {
+      "minAccuracy": 0.98,
+      "minComprehension": null,
+      "maxDurationRatioToTaskMedian": 1.10,
+      "maxEffort": 4
+    },
+    "denseComparison": {
+      "minAccuracy": 0.95,
+      "minComprehension": 0.80,
+      "maxDurationRatioToTaskMedian": 1.10,
+      "maxEffort": 4
+    }
+  },
+  "dataPolicy": {
+    "allowDiagnosis": false,
+    "allowFreeText": false,
+    "allowNames": false,
+    "allowEmail": false,
+    "publicRepositoryRawParticipantData": false,
+    "participantKey": "study-assigned-pseudonym"
+  }
+}
