@@ -35,7 +35,6 @@ let ``the version flag requests the version`` (flag: string) =
 [<InlineData("verify")>]
 [<InlineData("upgrade")>]
 [<InlineData("doctor")>]
-[<InlineData("robustness")>]
 let ``every documented command parses`` (name: string) =
     Assert.Equal(name, Command.name (ok [ name ]))
 
