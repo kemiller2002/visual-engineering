@@ -128,6 +128,31 @@ These constraints preserve meaning, not visual form. Visual Engineering still de
 - Separate source tokens, semantic tokens, theme mappings, and component consumption.
 - Validate components in real consumer contexts rather than assuming framework interoperability.
 
+## Perceptual robustness operating assumptions
+
+Visual Engineering currently treats Perceptual Envelope, Semantic Channel
+Survivability, and Perceptual Failure Boundary as **provisional engineering
+defaults**. They are sufficiently supported to guide architecture and
+implementation even where complete human validation is unavailable.
+
+- Do not block implementation waiting for perfect experimental certainty.
+- Keep the assumptions explicit, versioned, reversible, and testable.
+- Important and critical semantic states should survive loss of any single
+  declared visible channel.
+- Critical states should retain an explicit text or icon cue and programmatic
+  semantics.
+- Treat the smallest channel-loss combination that breaks meaning as the
+  Perceptual Failure Boundary.
+- Prefer designs with a larger failure boundary when other task requirements are
+  equivalent.
+- Use repository-specific evidence to override these defaults when that evidence
+  is stronger, and record the reason.
+- Never describe the channel model as a simulation of a disability or as proof
+  of individual human performance.
+
+Repositories may encode these assumptions in a Visual Engineering robustness
+manifest and evaluate them with the `robustness` CLI command.
+
 ## Evidence-sensitive decision making
 
 - Distinguish established guidance, supported hypotheses, working theory, and unresolved research.
