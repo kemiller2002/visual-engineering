@@ -4,7 +4,7 @@ open Xunit
 open VisualEngineering.Core
 open VisualEngineering.Cli
 
-let private commands = [ "init"; "status"; "verify"; "upgrade"; "doctor" ]
+let private commands = [ "init"; "status"; "verify"; "upgrade"; "doctor"; "robustness" ]
 
 [<Fact>]
 let ``general help lists every command`` () =
@@ -35,6 +35,7 @@ let ``general help documents every exit code`` () =
 [<InlineData("verify")>]
 [<InlineData("upgrade")>]
 [<InlineData("doctor")>]
+[<InlineData("robustness")>]
 let ``command help names the command, its side effects and an example`` (command: string) =
     let text = Help.forCommand (Some command)
     Assert.Contains($"{Tool.ExecutableName} {command}", text)
@@ -44,7 +45,7 @@ let ``command help names the command, its side effects and an example`` (command
 
 [<Fact>]
 let ``read only commands say so`` () =
-    for command in [ "status"; "verify"; "doctor" ] do
+    for command in [ "status"; "verify"; "doctor"; "robustness" ] do
         Assert.Contains("never modifies the repository", Help.forCommand (Some command))
 
 [<Fact>]
