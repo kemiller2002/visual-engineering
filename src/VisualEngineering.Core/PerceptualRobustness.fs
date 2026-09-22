@@ -162,19 +162,22 @@ module PerceptualRobustness =
         if not (requirements state.Criticality state.Channels state.ProgrammaticSemantics |> List.isEmpty) then
             Some 0, [ [] ]
         else
-            [ 1 .. channels.Length ]
-            |> List.tryPick (fun size ->
-                let failures =
-                    combinations size channels
-                    |> List.filter (fun lost ->
-                        let remaining = Set.difference state.Channels (Set.ofList lost)
+            match
+                [ 1 .. channels.Length ]
+                |> List.tryPick (fun size ->
+                    let failures =
+                        combinations size channels
+                        |> List.filter (fun lost ->
+                            let remaining = Set.difference state.Channels (Set.ofList lost)
 
-                        requirements state.Criticality remaining state.ProgrammaticSemantics
-                        |> List.isEmpty
-                        |> not)
+                            requirements state.Criticality remaining state.ProgrammaticSemantics
+                            |> List.isEmpty
+                            |> not)
 
-                if List.isEmpty failures then None else Some(size, failures))
-            |> Option.defaultValue (None, [])
+                    if List.isEmpty failures then None else Some(size, failures))
+            with
+            | Some(size, failures) -> Some size, failures
+            | None -> None, []
 
     let private scenario (state: SemanticStateEncoding) (scenario: DegradationScenario) =
         let remaining = Set.difference state.Channels scenario.LostChannels
