@@ -182,10 +182,12 @@ install with `--omit=optional`, add the one you need explicitly.
 | `verify` | no | Validate that the installation is correct |
 | `upgrade` | yes | Move an existing installation to this release |
 | `doctor` | no | Explain what is wrong and how to fix it |
+| `robustness` | no | Evaluate semantic-channel survivability and perceptual failure boundaries |
 
 Global options: `--help`, `--version`, `--repo <path>`, `--json`, `--verbose`.
 `init` and `upgrade` also accept `--dry-run`, `--check` and `--force`.
 `verify` and `doctor` also accept `--strict`.
+`robustness` requires `--manifest <repository-relative-path>`.
 
 Full reference: [docs/cli.md](docs/cli.md).
 
@@ -251,10 +253,60 @@ happened rather than leaving the repository half migrated. See
 ```bash
 npx @echelon-foundry/visual-engineering doctor
 npx @echelon-foundry/visual-engineering doctor --json
+npx @echelon-foundry/visual-engineering robustness --manifest visual-robustness.json --json
 ```
 
 `doctor` explains *why* something is wrong and how to fix it. Findings are classified as
 `error`, `warning` or `information`; not every deviation is an error.
+
+### robustness
+
+```bash
+npx @echelon-foundry/visual-engineering robustness --manifest visual-robustness.json
+npx @echelon-foundry/visual-engineering robustness --manifest visual-robustness.json --json
+```
+
+`robustness` evaluates Visual Engineering's provisional perceptual-robustness
+policy without modifying the repository or pretending to simulate a person. A
+manifest declares semantic states, their criticality, the independent visible
+channels carrying each state, programmatic semantics, and optional degradation
+scenarios.
+
+The analyzer reports:
+
+- baseline validity;
+- whether important and critical states survive every single-channel dropout;
+- declared degradation-scenario failures;
+- each state's **Perceptual Failure Boundary**;
+- all minimal channel-loss sets that cause failure.
+
+Example:
+
+```json
+{
+  "schemaVersion": 1,
+  "states": [
+    {
+      "id": "error",
+      "criticality": "critical",
+      "channels": ["hue", "text-label", "icon-shape", "border-shape"],
+      "programmaticSemantics": true
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "no-hue",
+      "lostChannels": ["hue"]
+    }
+  ]
+}
+```
+
+Exit code `0` means the manifest satisfies the current policy. Exit code `3`
+means the manifest is valid but one or more states fail the robustness policy,
+or the manifest itself is invalid. See
+`examples/visual-robustness.example.json` and
+`schemas/visual-robustness.schema.json`.
 
 ### Dry run
 
