@@ -122,7 +122,8 @@ let declared_degradation_scenarios_participate_in_pass_fail () =
     let warning = Assert.Single report.States
 
     Assert.False report.Passed
-    Assert.False(Assert.Single warning.ScenarioResults).Survives
+    let scenario = Assert.Single warning.ScenarioResults
+    Assert.False scenario.Survives
 
 [<Fact>]
 let manifest_parser_accepts_a_valid_operational_manifest () =
