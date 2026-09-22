@@ -24,3 +24,6 @@ Canonical concept stub generated from repository inventory.
 - project-atlas-typography-autonomous-research-report-v1.md
 - project-atlas-visual-information-transfer-foundations-v1-2.md
 - rp-atlas-typo-transfer-001.md
+- RP-VE-PE-001 Perceptual Envelope and Adaptive Visual Engineering
+- EX-VE-TYP-001 Individual Readability Envelope
+- EX-VE-TYP-002 Crowding-Responsive Typography
