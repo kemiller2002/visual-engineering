@@ -2,8 +2,11 @@
 id: EX-VE-TYP-001
 title: Individual Readability Envelope
 project: perceptual-envelope
-status: preregistration-draft
+status: phase-0-implemented
 priority: critical
+implementation:
+  phase_0: experiments/ex-ve-typ-001
+  human_execution: not-started
 hypotheses:
   - HY-VE-PE-002
   - HY-VE-PE-003
@@ -132,3 +135,98 @@ Recruitment should include, but not collapse together:
 ## Success criterion
 
 The experiment succeeds as research even if personalization fails. A useful result is a well-bounded null showing that a universal default performs equivalently within practical tolerances.
+
+
+## Phase 0 Implementation Record — 2026-09-22
+
+The computational preflight is implemented under
+`experiments/ex-ve-typ-001/`.
+
+### Coarse-map design
+
+The pilot uses 24 deterministic space-filling conditions generated from separate
+prime-base Halton sequences rather than an exhaustive factorial. The current
+safe pilot bounds are:
+
+| Variable | Pilot range |
+| --- | --- |
+| Font size | 16–22 px |
+| Weight | 350–650 |
+| Width | 90–110% |
+| Optical size | 14–22 pt |
+| Letter spacing | -0.01–0.06 em |
+| Word spacing | 0–0.12 em |
+| Line height | 1.35–1.75 |
+| Line length | 48–76 ch |
+| Contrast ratio | 7:1–12:1 |
+| Polarity | dark-on-light / light-on-dark |
+
+These bounds are deliberately conservative. Phase 0 is intended to validate
+experimental mechanics before exposing participants to wider or more demanding
+conditions.
+
+### Crossover structure
+
+Each participant receives 24 primary trials, six in each task class. A
+participant-specific rotation assigns every typography condition to exactly one
+task for that session. Across four adjacent cohort indices, every condition is
+tested exactly once in every task class.
+
+Task block order is separately balanced across the same four cohort indices so
+every task occupies every serial position once.
+
+The repeatability session contains eight condition/task probes from session one
+with different stimuli.
+
+### Pilot-only envelope thresholds
+
+The current implementation uses provisional thresholds only to test the
+classification path:
+
+- continuous prose and dense comparison: accuracy >= 0.95 and comprehension >=
+  0.80;
+- labels and identifiers: accuracy >= 0.98;
+- all task classes: duration <= 1.10x the participant/task median and effort <=
+  4/7.
+
+These are **not the preregistered thresholds for the main human study**. The
+instrumented pilot must estimate measurement variance and practical effect sizes
+before final thresholds and sample size are frozen.
+
+### Synthetic dry-run boundary
+
+The F# simulator creates heterogeneous latent typography profiles, task-specific
+optimum shifts, and deterministic noise. It exists solely to test schedule,
+analysis, and data-path behavior.
+
+Synthetic results:
+
+- are not evidence for HY-VE-PE-002, HY-VE-PE-003, or HY-VE-PE-006;
+- may not be reported as human performance;
+- may not be used to claim that personalization works.
+
+### Data contract
+
+The trial record intentionally excludes names, email addresses, diagnosis,
+free-text responses, and other unnecessary personal data. A study-assigned
+pseudonym is the only participant key expected by the protocol.
+
+Raw participant data must not be committed to the public repository.
+
+### Phase 0 exit gate
+
+Phase 0 is complete when all of the following pass:
+
+1. all 24 generated conditions remain within the declared pilot bounds;
+2. condition IDs are unique;
+3. the four-cohort condition/task crossover is exact;
+4. task serial positions balance across four cohorts;
+5. schedule generation is deterministic for a participant and seed;
+6. the repeatability session preserves condition/task pairs while changing
+   stimuli;
+7. synthetic observations remain within schema bounds;
+8. the repository's F# build and automated tests pass;
+9. research, ROS, and Limen repository gates pass.
+
+Completion of this gate authorizes implementation of the browser
+presentation/collection runner. It does not authorize a scientific conclusion.
