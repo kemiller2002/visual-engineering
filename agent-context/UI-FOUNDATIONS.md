@@ -52,8 +52,12 @@ Visual quality is not decoration applied after structure. Architecture, content 
 ## Typography and reading
 
 - Typography must expose hierarchy, grouping, sequence, and status.
-- Optimize measure, line height, weight, and spacing for the actual content and reading task.
-- Preserve user control over text size and reflow.
+- Optimize measure, line height, weight, width, spacing, and size for the actual content and reading task.
+- Distinguish high-context prose from low-context identifiers, codes, names, labels, and safety-critical values. Low-context content has less linguistic error correction and may require stronger glyph distinction.
+- Preserve user control over text size, spacing, reflow, and browser or OS text preferences.
+- Do not assume that a font marketed for dyslexia is generally superior. Current evidence does not support a universal dyslexia-font benefit.
+- When a population is heterogeneous, prefer measuring the relevant bottleneck or offering direct controls over assigning a visual preset from a diagnosis.
+- Treat user preference and measured reading performance as separate evidence.
 - Do not depend on font size alone to establish hierarchy.
 - Avoid low-contrast secondary text that becomes functionally invisible.
 - Use labels and language that reflect the user's domain, not implementation terminology.
@@ -61,10 +65,13 @@ Visual quality is not decoration applied after structure. Architecture, content 
 ## Color
 
 - Treat color as relational and context-dependent; evaluate colors in their actual surroundings.
-- Use perceptually meaningful color spaces and measurable contrast where implementation permits.
+- Use task-appropriate color spaces and measurable contrast, but do not treat color-distance metrics as proof of accessibility.
+- Treat WCAG contrast requirements as mandatory conformance floors, not universal human-performance thresholds.
 - Never use color as the only carrier of state, urgency, selection, or error.
+- Design consequential states for semantic channel survivability: meaning should survive loss of hue or another nonessential visual channel.
+- Use CVD simulation and grayscale as fault-injection screens, not as substitutes for affected-user validation.
 - Reserve high chromatic or luminance contrast for information that earns attention.
-- Validate light, dark, forced-color, and color-vision conditions.
+- Validate light, dark, forced-color, color-vision, low-brightness, and relevant glare conditions.
 - Distinguish semantic color roles from raw palette values.
 
 ## Wayfinding and interaction
@@ -95,10 +102,14 @@ These constraints preserve meaning, not visual form. Visual Engineering still de
 
 - Begin with semantic HTML and native behavior.
 - Components own intrinsic behavior; products still own meaningful labels, page hierarchy, instructions, and contextual correctness.
-- Support keyboard navigation, visible focus, zoom, text scaling, reduced motion, forced colors, and assistive technology.
+- Support keyboard navigation, visible focus, zoom, text scaling, text-spacing overrides, reduced motion, forced colors, and assistive technology.
+- Use strong accessible defaults before introducing personalization.
+- Apply **mechanism before mode**: a disability label may guide research or recruitment, but do not assume it identifies the active visual bottleneck or the correct presentation.
+- Preserve user choice. Adaptive presentation must be inspectable, reversible, and unable to change semantic meaning or legal actions.
 - Treat error prevention and recovery as part of the information architecture.
 - In high-consequence contexts, prioritize unambiguous identification and verification over visual novelty.
 - Test with realistic stress, interruption, density, and degraded-display conditions when those conditions are plausible.
+- Separate standards conformance, preference, comfort, and task performance. Passing one does not prove the others.
 
 ## Responsive behavior
 
