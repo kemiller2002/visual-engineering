@@ -155,7 +155,7 @@ module Simulation =
 
         { ParticipantId = $"SIM-{participantIndex + 1:D3}"
           ParticipantIndex = participantIndex
-          SessionNumber = assignment.Condition.Id.Length |> ignore; 1
+          SessionNumber = 1
           Task = assignment.Task
           ConditionId = assignment.Condition.Id
           StimulusId = assignment.StimulusId
