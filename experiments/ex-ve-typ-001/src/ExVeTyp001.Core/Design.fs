@@ -241,7 +241,7 @@ module Design =
 
         let order = taskOrder participantIndex
 
-        let selected =
+        let selected: (int * TypographyCondition * TaskClass) list =
             selectedIndices
             |> List.map (fun index -> index, conditions[index], taskForCondition participantIndex index)
 
