@@ -19,15 +19,15 @@ Commands:
 Synthetic output is never scientific evidence and must not be used to resolve a hypothesis.
 """
 
-let private parseNonNegative name raw =
+let private parseNonNegative (name: string) (raw: string) : Result<int, string> =
     match Int32.TryParse raw with
-    | true, value when value >= 0 -> Ok value
-    | _ -> Error $"{name} must be a non-negative integer"
+    | true, value when value >= 0 -> Result.Ok value
+    | _ -> Result.Error $"{name} must be a non-negative integer"
 
-let private parsePositive name raw =
+let private parsePositive (name: string) (raw: string) : Result<int, string> =
     match Int32.TryParse raw with
-    | true, value when value > 0 -> Ok value
-    | _ -> Error $"{name} must be a positive integer"
+    | true, value when value > 0 -> Result.Ok value
+    | _ -> Result.Error $"{name} must be a positive integer"
 
 [<EntryPoint>]
 let main argv =
@@ -43,20 +43,20 @@ let main argv =
     | [ "schedule"; participantRaw ]
     | [ "schedule"; participantRaw; "1" ] ->
         match parseNonNegative "participant index" participantRaw with
-        | Error message ->
+        | Result.Error message ->
             Console.Error.WriteLine message
             2
-        | Ok participantIndex ->
+        | Result.Ok participantIndex ->
             let schedule = Design.primarySchedule conditions participantIndex Design.DefaultSeed
             Console.Out.Write(Output.schedule schedule)
             0
 
     | [ "schedule"; participantRaw; "2" ] ->
         match parseNonNegative "participant index" participantRaw with
-        | Error message ->
+        | Result.Error message ->
             Console.Error.WriteLine message
             2
-        | Ok participantIndex ->
+        | Result.Ok participantIndex ->
             let schedule = Design.repeatabilitySchedule conditions participantIndex Design.DefaultSeed
             Console.Out.Write(Output.schedule schedule)
             0
@@ -68,10 +68,10 @@ let main argv =
 
     | [ "simulate"; participantRaw ] ->
         match parsePositive "participant count" participantRaw with
-        | Error message ->
+        | Result.Error message ->
             Console.Error.WriteLine message
             2
-        | Ok participants ->
+        | Result.Ok participants ->
             let observations = Simulation.simulateCohort participants Design.DefaultSeed conditions
             Console.Out.Write(Output.simulation (Simulation.summarize participants observations))
             0
