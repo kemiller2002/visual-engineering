@@ -9,7 +9,7 @@ let synthetic_dry_run_produces_bounded_deterministic_observations () =
     let first = Simulation.simulateCohort 8 Design.DefaultSeed conditions
     let second = Simulation.simulateCohort 8 Design.DefaultSeed conditions
 
-    Assert.Equal(first, second)
+    Assert.Equal<TrialObservation list>(first, second)
     Assert.Equal(8 * 24, first.Length)
 
     Assert.All(
