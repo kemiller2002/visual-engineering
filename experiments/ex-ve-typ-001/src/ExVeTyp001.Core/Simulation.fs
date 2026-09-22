@@ -42,7 +42,7 @@ module Simulation =
         intAt bounds.LineLengthCh 59,
         decimalAt bounds.ContrastRatio 61
 
-    let private taskAdjustedIdeal task participantIndex =
+    let private taskAdjustedIdeal (task: TaskClass) participantIndex =
         let fontSize, weight, width, optical, letter, word, lineHeight, lineLength, contrast =
             participantIdeal participantIndex
 
@@ -88,38 +88,40 @@ module Simulation =
             max 48 (lineLength - 10),
             contrast
 
-    let private distance task participantIndex condition =
+    let private distance (task: TaskClass) participantIndex (condition: TypographyCondition) =
         let bounds = DesignBounds.pilot
 
         let fontSize, weight, width, optical, letter, word, lineHeight, lineLength, contrast =
             taskAdjustedIdeal task participantIndex
 
         let distances =
-            [ normalizedDistance (fst bounds.FontSizePx) (snd bounds.FontSizePx) condition.FontSizePx fontSize
-              normalizedDistanceInt (fst bounds.Weight) (snd bounds.Weight) condition.Weight weight
-              normalizedDistanceInt (fst bounds.WidthPercent) (snd bounds.WidthPercent) condition.WidthPercent width
-              normalizedDistance (fst bounds.OpticalSizePt) (snd bounds.OpticalSizePt) condition.OpticalSizePt optical
-              normalizedDistance (fst bounds.LetterSpacingEm) (snd bounds.LetterSpacingEm) condition.LetterSpacingEm letter
-              normalizedDistance (fst bounds.WordSpacingEm) (snd bounds.WordSpacingEm) condition.WordSpacingEm word
-              normalizedDistance (fst bounds.LineHeight) (snd bounds.LineHeight) condition.LineHeight lineHeight
-              normalizedDistanceInt (fst bounds.LineLengthCh) (snd bounds.LineLengthCh) condition.LineLengthCh lineLength
-              normalizedDistance (fst bounds.ContrastRatio) (snd bounds.ContrastRatio) condition.ContrastRatio contrast ]
+            [ normalizedDistance (fst (bounds.FontSizePx) (snd (bounds.FontSizePx)) condition.FontSizePx fontSize
+              normalizedDistanceInt (fst (bounds.Weight) (snd (bounds.Weight)) condition.Weight weight
+              normalizedDistanceInt (fst (bounds.WidthPercent) (snd (bounds.WidthPercent)) condition.WidthPercent width
+              normalizedDistance (fst (bounds.OpticalSizePt) (snd (bounds.OpticalSizePt)) condition.OpticalSizePt optical
+              normalizedDistance (fst (bounds.LetterSpacingEm) (snd (bounds.LetterSpacingEm)) condition.LetterSpacingEm letter
+              normalizedDistance (fst (bounds.WordSpacingEm) (snd (bounds.WordSpacingEm)) condition.WordSpacingEm word
+              normalizedDistance (fst (bounds.LineHeight) (snd (bounds.LineHeight)) condition.LineHeight lineHeight
+              normalizedDistanceInt (fst (bounds.LineLengthCh) (snd (bounds.LineLengthCh)) condition.LineLengthCh lineLength
+              normalizedDistance (fst (bounds.ContrastRatio) (snd (bounds.ContrastRatio)) condition.ContrastRatio contrast ]
 
         distances |> List.average |> clampDecimal 0.0M 1.0M
 
-    let private baseDuration = function
+    let private baseDuration (task: TaskClass) =
+        match task with
         | ContinuousProse -> 15_000
         | InterfaceLabels -> 3_000
         | IdentifierRecognition -> 4_000
         | DenseComparison -> 8_000
 
-    let private hasComprehension = function
+    let private hasComprehension (task: TaskClass) =
+        match task with
         | ContinuousProse
         | DenseComparison -> true
         | InterfaceLabels
         | IdentifierRecognition -> false
 
-    let simulateAssignment participantIndex (rng: StableRandom) assignment =
+    let simulateAssignment participantIndex (rng: StableRandom) (assignment: TrialAssignment) : TrialObservation =
         let d = distance assignment.Task participantIndex assignment.Condition
         let noise = rng.NextSigned 0.035M
 
@@ -173,7 +175,7 @@ module Simulation =
             | _ -> None
           Abandoned = abandoned }
 
-    let simulateCohort participantCount seed conditions =
+    let simulateCohort participantCount seed (conditions: TypographyCondition list) : TrialObservation list =
         if participantCount <= 0 then
             invalidArg (nameof participantCount) "participant count must be positive"
 
@@ -184,7 +186,7 @@ module Simulation =
               for assignment in schedule.Assignments do
                   yield simulateAssignment participantIndex rng assignment ]
 
-    let summarize participantCount observations =
+    let summarize participantCount (observations: TrialObservation list) : SimulationSummary =
         let classifications = Analysis.classify observations
 
         let participantsWithAllTasks =
