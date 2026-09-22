@@ -30,12 +30,12 @@
         "experiment"
       ],
       "priority": "high",
-      "status": "ready",
+      "status": "complete",
       "attachments": [
         "content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-001-individual-readability-envelope.md"
       ],
       "createdAt": "2026-09-22T07:44:00Z",
-      "updatedAt": "2026-09-22T07:58:00Z",
+      "updatedAt": "2026-09-22T08:26:30Z",
       "createdBy": "agent:chatgpt",
       "source": "user-request",
       "sourceReference": "EX-VE-TYP-001"

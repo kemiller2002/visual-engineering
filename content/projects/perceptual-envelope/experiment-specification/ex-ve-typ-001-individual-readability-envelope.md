@@ -2,7 +2,7 @@
 id: EX-VE-TYP-001
 title: Individual Readability Envelope
 project: perceptual-envelope
-status: phase-0-implemented
+status: phase-0-complete
 priority: critical
 implementation:
   phase_0: experiments/ex-ve-typ-001
@@ -230,3 +230,22 @@ Phase 0 is complete when all of the following pass:
 
 Completion of this gate authorizes implementation of the browser
 presentation/collection runner. It does not authorize a scientific conclusion.
+
+
+## Phase 0 Completion Validation
+
+Phase 0 completed on 2026-09-22.
+
+- F# build: 0 warnings, 0 errors.
+- EX-VE-TYP-001 tests: 11/11 passed.
+- Existing Visual Engineering tests: 80/80 passed.
+- Research validation: passed.
+- ROS validation: passed.
+- Limen strict verification: passed.
+- Visual Engineering package matrix: passed on Ubuntu, macOS, and Windows with
+  Node 20 and Node 24.
+- A repeatability-stimulus collision discovered by testing was corrected and
+  retained as negative knowledge in JR-VE-TYP-001-P0.
+
+This completes the computational preflight only. No human-subject result or
+hypothesis conclusion is implied.
