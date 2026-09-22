@@ -39,6 +39,28 @@
       "createdBy": "agent:chatgpt",
       "source": "user-request",
       "sourceReference": "EX-VE-TYP-001"
+    },
+    {
+      "id": "VE-ROBUSTNESS-OPERATIONAL-2026-09-22",
+      "title": "Operationalize perceptual robustness assumptions",
+      "description": "Promote Perceptual Envelope, Semantic Channel Survivability, and Perceptual Failure Boundary into provisional Visual Engineering rules and executable semantic robustness analysis.",
+      "tags": [
+        "visual-engineering",
+        "accessibility",
+        "perceptual-robustness",
+        "tooling"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [
+        "content/concepts/perceptual-envelope/index.md",
+        "content/concepts/semantic-channel-survivability/index.md"
+      ],
+      "createdAt": "2026-09-22T19:10:00Z",
+      "updatedAt": "2026-09-22T19:10:00Z",
+      "createdBy": "agent:chatgpt",
+      "source": "user-request",
+      "sourceReference": "assume-mostly-correct-move-forward"
     }
   ]
 }
