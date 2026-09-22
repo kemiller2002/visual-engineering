@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>ExVeTyp001.Core</AssemblyName>
+    <RootNamespace>ExVeTyp001.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Domain.fs" />
+    <Compile Include="Design.fs" />
+    <Compile Include="Analysis.fs" />
+    <Compile Include="Simulation.fs" />
+    <Compile Include="Preflight.fs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>ex-ve-typ-001</AssemblyName>
+    <RootNamespace>ExVeTyp001.Runner</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Output.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExVeTyp001.Core\ExVeTyp001.Core.fsproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "EX-VE-TYP-001",
+  "version": "stimuli-v1",
+  "license": "original-experiment-material",
+  "continuousProse": [
+    {
+      "id": "PROSE-S01",
+      "text": "A neighborhood library changed the way it handled returned books during a renovation. Instead of sending every item directly to the shelves, staff placed returns on mobile carts organized by floor. Each cart moved only when it was nearly full. The change reduced repeated elevator trips and gave staff a predictable time to inspect damaged covers. After two weeks, the library kept the cart system even though the renovation had ended because the routine made reshelving easier to coordinate.",
+      "question": "Why did the library keep the cart system?",
+      "options": ["It reduced book purchases.", "It made reshelving easier to coordinate.", "It eliminated damaged books.", "It kept visitors away from elevators."],
+      "answerIndex": 1
+    },
+    {
+      "id": "PROSE-S02",
+      "text": "A small greenhouse tested two watering schedules for the same variety of tomato. One group received a little water every morning, while the second received a larger amount every third day. The total weekly volume was the same. Plants on the daily schedule grew slightly taller, but the less frequent schedule produced deeper roots and needed fewer emergency waterings during a hot weekend. The growers decided that root depth mattered more than early height for the next trial.",
+      "question": "What mattered most to the growers for the next trial?",
+      "options": ["Early height", "Root depth", "Leaf color", "Daily watering"],
+      "answerIndex": 1
+    },
+    {
+      "id": "PROSE-S03",
+      "text": "A museum replaced a single long audio tour with short recordings tied to individual rooms. Visitors could choose a room in any order and replay only the sections they wanted. Staff expected the new format to shorten visits, but average visit length stayed almost unchanged. Interviews suggested that people skipped topics they did not care about and spent the saved time on favorite exhibits. The museum concluded that flexibility changed how time was used rather than how much time visitors spent.",
+      "question": "What did the museum conclude?",
+      "options": ["Visits became much shorter.", "Visitors stopped using audio.", "Flexibility changed how visit time was allocated.", "Every exhibit received equal attention."],
+      "answerIndex": 2
+    },
+    {
+      "id": "PROSE-S04",
+      "text": "A delivery team noticed that drivers often called the office to confirm apartment entrances that were difficult to find. The team added a short landmark note to each stop, such as 'blue gate beside pharmacy.' Call volume fell immediately, but route time improved only after the notes were reviewed and vague descriptions were removed. The team learned that adding more information was not enough; the information had to be specific enough to support a decision while the driver was approaching the stop.",
+      "question": "What made the landmark notes effective?",
+      "options": ["Making every note longer", "Making descriptions specific enough for decisions", "Removing all phone contact", "Changing the delivery vehicles"],
+      "answerIndex": 1
+    },
+    {
+      "id": "PROSE-S05",
+      "text": "An office moved its shared printer from a quiet side room to a central hallway. Printing became faster for most staff because fewer people had to cross the building, but the hallway also became noisy during large print jobs. Rather than moving the printer back, the facilities team scheduled bulk printing before the busiest meeting hours and added a nearby pickup shelf. The final arrangement kept the shorter walking distance while reducing the interruptions that had appeared after the move.",
+      "question": "How was the new printer location made workable?",
+      "options": ["By moving it back", "By eliminating large print jobs", "By scheduling bulk jobs and adding a pickup shelf", "By closing the hallway"],
+      "answerIndex": 2
+    },
+    {
+      "id": "PROSE-S06",
+      "text": "A community garden tracked which tools were most often left outside overnight. The original sign asked volunteers to return all tools, but the message had little effect. A revised sign showed three silhouettes: shovel, rake, and hose nozzle, matching the items most often forgotten. The number of missing tools dropped even though the new sign contained fewer words. Organizers believed the improvement came from making the expected action concrete at the place where volunteers put equipment away.",
+      "question": "Why did the revised sign work better?",
+      "options": ["It used more words.", "It listed every tool.", "It made the expected action concrete.", "It was posted outside the garden."],
+      "answerIndex": 2
+    },
+    {
+      "id": "PROSE-S07",
+      "text": "A repair shop began photographing complex assemblies before taking them apart. Mechanics had always written notes, but small cable routes and washer positions were easy to omit. The photographs did not replace written measurements or torque values. Instead, they served as a visual reference during reassembly. The shop later standardized which angles to photograph because random pictures sometimes hid the very detail a mechanic needed. The useful change was not simply taking photos, but taking consistent photos for a known purpose.",
+      "question": "What was the main lesson from the repair shop?",
+      "options": ["Photographs should replace measurements.", "Consistent purposeful photographs were more useful than random ones.", "Cable routes never need documentation.", "Fewer records always improve repair work."],
+      "answerIndex": 1
+    },
+    {
+      "id": "PROSE-S08",
+      "text": "A bakery tested a new pickup shelf for prepaid orders. At first, bags were arranged alphabetically by customer name. Staff still answered many questions because customers scanned the entire shelf before noticing the labels. The bakery then divided the shelf into four large letter ranges and kept names alphabetical inside each range. Pickup errors did not change, but customers found orders faster. The improvement came from adding a visible first step to the search rather than changing the underlying ordering rule.",
+      "question": "What improved order pickup?",
+      "options": ["Removing alphabetical order", "Adding visible letter-range groups", "Using smaller labels", "Moving orders behind the counter"],
+      "answerIndex": 1
+    }
+  ],
+  "interfaceLabels": [
+    {"id":"LABEL-S01","prompt":"Select the control labeled 'Export report'.","target":"Export report","distractors":["Export data","Import report","Share report"]},
+    {"id":"LABEL-S02","prompt":"Select the control labeled 'Archive project'.","target":"Archive project","distractors":["Active projects","Archive record","Remove project"]},
+    {"id":"LABEL-S03","prompt":"Select the control labeled 'Review changes'.","target":"Review changes","distractors":["Revert changes","Review charges","Recent changes"]},
+    {"id":"LABEL-S04","prompt":"Select the control labeled 'Save draft'.","target":"Save draft","distractors":["Saved drafts","Send draft","Save copy"]},
+    {"id":"LABEL-S05","prompt":"Select the control labeled 'Retry upload'.","target":"Retry upload","distractors":["Retry update","Cancel upload","Resume upload"]},
+    {"id":"LABEL-S06","prompt":"Select the control labeled 'Open history'.","target":"Open history","distractors":["Order history","Open summary","Clear history"]},
+    {"id":"LABEL-S07","prompt":"Select the control labeled 'Apply filter'.","target":"Apply filter","distractors":["Applied filters","Clear filter","Apply folder"]},
+    {"id":"LABEL-S08","prompt":"Select the control labeled 'Verify identity'.","target":"Verify identity","distractors":["View identity","Verify account","Identity settings"]}
+  ],
+  "identifierRecognition": [
+    {"id":"IDENT-S01","target":"B8Q0I1S5","candidates":["B8Q0I1S5","B8O0I1S5","B8QO11S5","B8Q0IlS5"]},
+    {"id":"IDENT-S02","target":"RNM4WVV7","candidates":["RNM4WVV7","RNN4WVV7","RNM4WVY7","RNM4WVW7"]},
+    {"id":"IDENT-S03","target":"CL1-0O7-Z","candidates":["CL1-0O7-Z","CLI-0O7-Z","CL1-OO7-Z","CL1-0OZ-Z"]},
+    {"id":"IDENT-S04","target":"5S2Z8B6G","candidates":["5S2Z8B6G","SS2Z8B6G","5S2Z8BGG","5S2Z886G"]},
+    {"id":"IDENT-S05","target":"I0L1-MN8","candidates":["I0L1-MN8","IOL1-MN8","I0I1-MN8","I0L1-NM8"]},
+    {"id":"IDENT-S06","target":"VXW-7731","candidates":["VXW-7731","VXV-7731","VXW-7713","VWX-7731"]},
+    {"id":"IDENT-S07","target":"QP6-9G08","candidates":["QP6-9G08","QP6-9GO8","QPG-9G08","QP6-G908"]},
+    {"id":"IDENT-S08","target":"H3K8-RM11","candidates":["H3K8-RM11","H3KB-RM11","H3K8-RN11","H3K8-RMIl"]}
+  ],
+  "denseComparison": [
+    {"id":"DENSE-S01","prompt":"Which row has the lowest latency among rows with errorRate below 1.0?","rows":[["A12",220,0.6],["B07",180,1.2],["C19",195,0.8],["D04",205,0.5]],"answer":"C19"},
+    {"id":"DENSE-S02","prompt":"Which row has the highest throughput among rows with latency below 250?","rows":[["F02",240,92],["F11",260,110],["F18",225,105],["F23",210,99]],"answer":"F18"},
+    {"id":"DENSE-S03","prompt":"Which row has the smallest cost among rows scoring at least 90?","rows":[["J14",88,42],["J21",91,47],["J33",94,45],["J40",90,39]],"answer":"J40"},
+    {"id":"DENSE-S04","prompt":"Which row has the fewest retries among rows completed in under 8 minutes?","rows":[["K03",7.4,3],["K17",8.1,1],["K22",6.9,2],["K31",7.7,1]],"answer":"K31"},
+    {"id":"DENSE-S05","prompt":"Which row has the highest confidence among rows with at least 12 observations?","rows":[["M05",11,0.94],["M16",14,0.91],["M27",12,0.96],["M38",15,0.93]],"answer":"M27"},
+    {"id":"DENSE-S06","prompt":"Which row has the lowest variance among rows with a mean above 50?","rows":[["P08",52,4.2],["P13",49,2.1],["P26",57,3.4],["P39",54,2.8]],"answer":"P39"},
+    {"id":"DENSE-S07","prompt":"Which row has the largest reserve among rows with utilization below 80?","rows":[["R04",76,18],["R15",81,25],["R24",72,21],["R37",79,20]],"answer":"R24"},
+    {"id":"DENSE-S08","prompt":"Which row has the highest quality score among rows with fewer than 4 defects?","rows":[["T09",3,88],["T18",5,95],["T25",2,92],["T34",1,90]],"answer":"T25"}
+  ]
+}

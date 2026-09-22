@@ -18,6 +18,27 @@
       "createdBy": "agent:chatgpt",
       "source": "agent-discovery",
       "sourceReference": "public-repository-upgrade-2026-09-21"
+    },
+    {
+      "id": "EX-VE-TYP-001-IMPLEMENTATION",
+      "title": "Implement EX-VE-TYP-001 Individual Readability Envelope preflight",
+      "description": "Build deterministic condition generation, task balancing, simulation, envelope classification, data contracts, and analysis scaffolding for the first Perceptual Envelope experiment.",
+      "tags": [
+        "research",
+        "typography",
+        "perceptual-envelope",
+        "experiment"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [
+        "content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-001-individual-readability-envelope.md"
+      ],
+      "createdAt": "2026-09-22T07:44:00Z",
+      "updatedAt": "2026-09-22T08:26:30Z",
+      "createdBy": "agent:chatgpt",
+      "source": "user-request",
+      "sourceReference": "EX-VE-TYP-001"
     }
   ]
 }
