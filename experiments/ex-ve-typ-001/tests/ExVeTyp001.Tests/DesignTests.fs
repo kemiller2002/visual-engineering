@@ -55,19 +55,21 @@ let schedule_generation_is_deterministic_for_participant_and_seed () =
 [<Fact>]
 let repeatability_session_repeats_eight_condition_task_pairs_with_new_stimuli () =
     let conditions = Design.defaultConditions ()
-    let primary = Design.primarySchedule conditions 1 Design.DefaultSeed
-    let repeatability = Design.repeatabilitySchedule conditions 1 Design.DefaultSeed
 
-    Assert.Equal(8, repeatability.Assignments.Length)
-    Assert.All(repeatability.Assignments, fun trial -> Assert.True trial.IsRepeatabilityProbe)
+    for participantIndex in 0 .. 15 do
+        let primary = Design.primarySchedule conditions participantIndex Design.DefaultSeed
+        let repeatability = Design.repeatabilitySchedule conditions participantIndex Design.DefaultSeed
 
-    for repeated in repeatability.Assignments do
-        let original =
-            primary.Assignments
-            |> List.find (fun trial -> trial.Condition.Id = repeated.Condition.Id)
+        Assert.Equal(8, repeatability.Assignments.Length)
+        Assert.All(repeatability.Assignments, fun trial -> Assert.True trial.IsRepeatabilityProbe)
 
-        Assert.Equal(original.Task, repeated.Task)
-        Assert.NotEqual<string>(original.StimulusId, repeated.StimulusId)
+        for repeated in repeatability.Assignments do
+            let original =
+                primary.Assignments
+                |> List.find (fun trial -> trial.Condition.Id = repeated.Condition.Id)
+
+            Assert.Equal(original.Task, repeated.Task)
+            Assert.NotEqual<string>(original.StimulusId, repeated.StimulusId)
 
 [<Fact>]
 let preflight_invariants_are_green_for_default_design () =
