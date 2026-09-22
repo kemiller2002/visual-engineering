@@ -22,6 +22,9 @@ audiences:
 - What is authoritative for the state, uncertainty, completion, unresolved work, and legal actions this view presents?
 - Which state distinctions change what the user may safely conclude or do?
 - Which semantic scopes must remain distinct rather than being combined into one status?
+- Which visual channels carry consequential meaning, and what happens if hue, iconography, border, or another channel is unavailable?
+- Is a proposed accessibility preset based on measured need, explicit user choice, or an unsupported assumption about a diagnosis?
+- Does this task contain strong linguistic context, or is it low-context content such as an identifier, code, unfamiliar name, or critical value?
 
 ## During implementation
 
@@ -39,6 +42,10 @@ audiences:
 - Where authoritative capabilities or legal actions exist, do controls derive from them rather than recreate legality locally?
 - Do summaries preserve the scope and uncertainty of the facts they aggregate?
 - Is decision-relevant unresolved work visible enough that users do not have to infer it from missing controls or generic errors?
+- Does consequential state remain identifiable without hue alone?
+- If CVD simulation is used, is it treated as screening rather than proof?
+- If presentation adapts to a user profile, are semantic meaning, legal actions, reading order, and programmatic state unchanged?
+- Are user preference and measured performance being kept distinct when either is used to justify a design decision?
 
 ## Required verification
 
@@ -49,6 +56,9 @@ audiences:
 - Reduced motion
 - Forced colors or high contrast
 - Color-independent state recognition
+- Grayscale plus protan, deutan, and tritan simulation as screening conditions where color carries categorization
+- Text-spacing overrides where reading content is material
+- Semantic channel dropout for consequential states: remove at least one nonessential visual cue and verify meaning survives
 - Long, missing, and extreme content
 - Screen-reader semantics for critical workflows
 - First-glance hierarchy inspection
