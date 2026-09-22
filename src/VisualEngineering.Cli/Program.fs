@@ -60,6 +60,64 @@ let private runDoctor (session: Session) (options: DoctorOptions) =
 
     code
 
+let private runRobustness (options: RobustnessOptions) =
+    match RepoPath.tryCreate options.Manifest with
+    | Error message ->
+        let code = ExitCode.UsageError
+
+        if options.Common.Json then
+            out (JsonOutput.serialize (JsonOutput.error "robustness" code [ message ]))
+        else
+            err ($"{Tool.ExecutableName}: {message}\n")
+
+        code
+    | Ok manifestPath ->
+        if not (System.IO.Directory.Exists options.Common.Repository) then
+            let code = ExitCode.EnvironmentError
+            let message = $"{options.Common.Repository} is not a directory"
+
+            if options.Common.Json then
+                out (JsonOutput.serialize (JsonOutput.error "robustness" code [ message ]))
+            else
+                err ($"{Tool.ExecutableName}: {message}\n")
+
+            code
+        else
+            match Files.tryReadText options.Common.Repository manifestPath with
+            | None ->
+                let code = ExitCode.EnvironmentError
+                let message = $"robustness manifest {RepoPath.value manifestPath} was not found"
+
+                if options.Common.Json then
+                    out (JsonOutput.serialize (JsonOutput.error "robustness" code [ message ]))
+                else
+                    err ($"{Tool.ExecutableName}: {message}\n")
+
+                code
+            | Some manifestText ->
+                match Api.evaluateRobustness manifestText with
+                | Error messages ->
+                    let code = ExitCode.VerificationFailed
+
+                    if options.Common.Json then
+                        out (JsonOutput.serialize (JsonOutput.error "robustness" code messages))
+                    else
+                        for message in messages do
+                            err ($"{Tool.ExecutableName}: {message}\n")
+
+                    code
+                | Ok report ->
+                    let code =
+                        if report.Passed then
+                            ExitCode.Success
+                        else
+                            ExitCode.VerificationFailed
+
+                    emit options.Common (JsonOutput.robustnessReport report code) (fun () ->
+                        Render.robustness report options.Common.Verbose)
+
+                    code
+
 let private runLifecycle
     (name: string)
     (session: Session)
@@ -86,6 +144,7 @@ let private dispatch (command: Command) =
     | Command.Version ->
         out (Versioning.cliVersion + "\n")
         ExitCode.Success
+    | Robustness options -> runRobustness options
     | _ ->
 
     let common =
@@ -119,6 +178,7 @@ let private dispatch (command: Command) =
             runLifecycle "init" session options.Common options.DryRun options.Check options.Force Api.initialize
         | Upgrade options ->
             runLifecycle "upgrade" session options.Common options.DryRun options.Check options.Force Api.performUpgrade
+        | Robustness _
         | Help _
         | Command.Version -> ExitCode.Success
 
