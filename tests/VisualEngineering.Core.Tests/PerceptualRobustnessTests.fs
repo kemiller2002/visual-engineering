@@ -110,8 +110,8 @@ let declared_degradation_scenarios_participate_in_pass_fail () =
         { SchemaVersion = 1
           States =
             [ state
-                  "warning"
-                  Important
+                  "error"
+                  Critical
                   [ TextLabel; IconShape; Hue; BorderShape ]
                   true ]
           Scenarios =
@@ -119,10 +119,10 @@ let declared_degradation_scenarios_participate_in_pass_fail () =
                 LostChannels = Set.ofList [ TextLabel; IconShape ] } ] }
 
     let report = PerceptualRobustness.evaluate manifest
-    let warning = Assert.Single report.States
+    let error = Assert.Single report.States
 
     Assert.False report.Passed
-    let scenario = Assert.Single warning.ScenarioResults
+    let scenario = Assert.Single error.ScenarioResults
     Assert.False scenario.Survives
 
 [<Fact>]
