@@ -94,16 +94,26 @@ module Simulation =
         let fontSize, weight, width, optical, letter, word, lineHeight, lineLength, contrast =
             taskAdjustedIdeal task participantIndex
 
+        let minFontSize, maxFontSize = bounds.FontSizePx
+        let minWeight, maxWeight = bounds.Weight
+        let minWidth, maxWidth = bounds.WidthPercent
+        let minOptical, maxOptical = bounds.OpticalSizePt
+        let minLetter, maxLetter = bounds.LetterSpacingEm
+        let minWord, maxWord = bounds.WordSpacingEm
+        let minLineHeight, maxLineHeight = bounds.LineHeight
+        let minLineLength, maxLineLength = bounds.LineLengthCh
+        let minContrast, maxContrast = bounds.ContrastRatio
+
         let distances =
-            [ normalizedDistance (fst bounds.FontSizePx) (snd bounds.FontSizePx) condition.FontSizePx fontSize
-              normalizedDistanceInt (fst bounds.Weight) (snd bounds.Weight) condition.Weight weight
-              normalizedDistanceInt (fst bounds.WidthPercent) (snd bounds.WidthPercent) condition.WidthPercent width
-              normalizedDistance (fst bounds.OpticalSizePt) (snd bounds.OpticalSizePt) condition.OpticalSizePt optical
-              normalizedDistance (fst bounds.LetterSpacingEm) (snd bounds.LetterSpacingEm) condition.LetterSpacingEm letter
-              normalizedDistance (fst bounds.WordSpacingEm) (snd bounds.WordSpacingEm) condition.WordSpacingEm word
-              normalizedDistance (fst bounds.LineHeight) (snd bounds.LineHeight) condition.LineHeight lineHeight
-              normalizedDistanceInt (fst bounds.LineLengthCh) (snd bounds.LineLengthCh) condition.LineLengthCh lineLength
-              normalizedDistance (fst bounds.ContrastRatio) (snd bounds.ContrastRatio) condition.ContrastRatio contrast ]
+            [ normalizedDistance minFontSize maxFontSize condition.FontSizePx fontSize
+              normalizedDistanceInt minWeight maxWeight condition.Weight weight
+              normalizedDistanceInt minWidth maxWidth condition.WidthPercent width
+              normalizedDistance minOptical maxOptical condition.OpticalSizePt optical
+              normalizedDistance minLetter maxLetter condition.LetterSpacingEm letter
+              normalizedDistance minWord maxWord condition.WordSpacingEm word
+              normalizedDistance minLineHeight maxLineHeight condition.LineHeight lineHeight
+              normalizedDistanceInt minLineLength maxLineLength condition.LineLengthCh lineLength
+              normalizedDistance minContrast maxContrast condition.ContrastRatio contrast ]
 
         distances |> List.average |> clampDecimal 0.0M 1.0M
 
