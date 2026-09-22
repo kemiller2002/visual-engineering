@@ -67,7 +67,7 @@ let repeatability_session_repeats_eight_condition_task_pairs_with_new_stimuli ()
             |> List.find (fun trial -> trial.Condition.Id = repeated.Condition.Id)
 
         Assert.Equal(original.Task, repeated.Task)
-        Assert.NotEqual(original.StimulusId, repeated.StimulusId)
+        Assert.NotEqual<string>(original.StimulusId, repeated.StimulusId)
 
 [<Fact>]
 let preflight_invariants_are_green_for_default_design () =
