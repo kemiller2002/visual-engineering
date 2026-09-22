@@ -362,12 +362,15 @@ module PerceptualRobustness =
                         |> List.filter (fun (_, count) -> count > 1)
                         |> List.map fst
 
+                    let duplicateStateText = String.Join(", ", duplicateStates)
+                    let duplicateScenarioText = String.Join(", ", duplicateScenarios)
+
                     let errors =
                         [ if not (List.isEmpty duplicateStates) then
-                              $"duplicate state ids: {String.Join(", ", duplicateStates)}"
+                              $"duplicate state ids: {duplicateStateText}"
 
                           if not (List.isEmpty duplicateScenarios) then
-                              $"duplicate scenario ids: {String.Join(", ", duplicateScenarios)}" ]
+                              $"duplicate scenario ids: {duplicateScenarioText}" ]
 
                     if List.isEmpty errors then
                         Ok
