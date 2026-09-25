@@ -1,0 +1,78 @@
+{
+  "id": "THM-0008",
+  "name": "Cobalt Citrus",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "canvas": "#F7F8FB",
+    "surface": "#FFFFFF",
+    "ink": "#172033",
+    "muted": "#566176",
+    "accent": "#174EA6",
+    "secondary": "#A14F00",
+    "edge": "#AEB8C9"
+  },
+  "semanticTokens": {
+    "background": "canvas",
+    "surface": "surface",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "accent",
+    "secondaryAccent": "secondary",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "data-visualization"
+  ],
+  "tags": [
+    "opponent-like",
+    "blue-orange",
+    "dual-accent"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "vivid"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "notes": "Designed as part of the second Visual Engineering perceptual combination matrix."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires computed semantic-pair and non-text contrast evaluation before evaluated status."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text",
+      "dual-accent relationship"
+    ],
+    "path": "content/themes/specimens/THM-0008.json"
+  },
+  "fingerprint": "#172033|#174EA6|#566176|#A14F00|#AEB8C9|#F7F8FB|#FFFFFF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "predicted",
+    "activationAssociation": "high",
+    "valenceAssociation": "mixed",
+    "weightAssociation": "light",
+    "confidence": "low",
+    "population": "Not yet product-context validated.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Hypothesis specimen pending measured contrast evaluation.",
+      "Affective labels are associations, not induced-emotion claims.",
+      "Combination-level harmony and salience require specimen testing."
+    ]
+  }
+}
