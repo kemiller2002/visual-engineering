@@ -1,0 +1,104 @@
+{
+  "id": "THM-0001",
+  "name": "Quiet Fjord",
+  "status": "evaluated",
+  "mode": "light",
+  "palette": {
+    "fog": "#F4F7F8",
+    "white": "#FFFFFF",
+    "ink": "#17252A",
+    "slate": "#52666D",
+    "fjord": "#176B87",
+    "mist": "#AABBC1"
+  },
+  "semanticTokens": {
+    "background": "fog",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "slate",
+    "primaryAccent": "fjord",
+    "border": "mist"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "accessibility"
+  ],
+  "tags": [
+    "cool",
+    "restrained",
+    "low-activation-candidate"
+  ],
+  "facets": {
+    "temperature": "cool",
+    "contrastCharacter": "moderate",
+    "chromaCharacter": "muted"
+  },
+  "provenance": {
+    "kind": "designed",
+    "notes": "Visual Engineering baseline specimen designed to test a perceptual combination family."
+  },
+  "accessibility": {
+    "status": "partial",
+    "contrastPairs": [
+      {
+        "foreground": "ink",
+        "background": "fog",
+        "ratio": 14.62,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "slate",
+        "background": "fog",
+        "ratio": 5.61,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "fjord",
+        "background": "fog",
+        "ratio": 5.59,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "ink",
+        "background": "white",
+        "ratio": 15.74,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      }
+    ],
+    "redundantStateEncoding": null,
+    "notes": "Primary text-related pairs screened. Border/non-text token is intentionally not certified; current subtle border may be below 3:1 against page background."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text"
+    ],
+    "path": "content/themes/specimens/THM-0001.json"
+  },
+  "fingerprint": "#17252A|#176B87|#52666D|#AABBC1|#F4F7F8|#FFFFFF",
+  "perception": {
+    "temperature": "cool",
+    "figureGroundSalience": "moderate",
+    "harmony": "predicted",
+    "activationAssociation": "low",
+    "valenceAssociation": "positive",
+    "weightAssociation": "light",
+    "confidence": "moderate",
+    "population": "General cross-cultural evidence baseline; not validated for a product-specific population.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Affective labels are associations, not claims of induced emotion.",
+      "No product-context user study has been run.",
+      "Border/non-text discriminability requires separate evaluation."
+    ]
+  }
+}
