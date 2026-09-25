@@ -1,0 +1,104 @@
+{
+  "id": "THM-0003",
+  "name": "Night Ember",
+  "status": "evaluated",
+  "mode": "dark",
+  "palette": {
+    "night": "#171311",
+    "surface": "#231C18",
+    "ivory": "#F6EEE7",
+    "ash": "#C7B7AA",
+    "ember": "#FF7043",
+    "edge": "#55453B"
+  },
+  "semanticTokens": {
+    "background": "night",
+    "surface": "surface",
+    "text": "ivory",
+    "mutedText": "ash",
+    "primaryAccent": "ember",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "marketing"
+  ],
+  "tags": [
+    "dark",
+    "warm",
+    "high-salience-accent"
+  ],
+  "facets": {
+    "temperature": "warm",
+    "contrastCharacter": "high",
+    "chromaCharacter": "vivid"
+  },
+  "provenance": {
+    "kind": "designed",
+    "notes": "Visual Engineering baseline specimen designed to test a perceptual combination family."
+  },
+  "accessibility": {
+    "status": "partial",
+    "contrastPairs": [
+      {
+        "foreground": "ivory",
+        "background": "night",
+        "ratio": 16.09,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "ash",
+        "background": "night",
+        "ratio": 9.48,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "ember",
+        "background": "night",
+        "ratio": 6.72,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "ivory",
+        "background": "surface",
+        "ratio": 14.63,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      }
+    ],
+    "redundantStateEncoding": null,
+    "notes": "Primary text-related pairs screened. Border/non-text token is intentionally not certified; current subtle border may be below 3:1 against page background."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text"
+    ],
+    "path": "content/themes/specimens/THM-0003.json"
+  },
+  "fingerprint": "#171311|#231C18|#55453B|#C7B7AA|#F6EEE7|#FF7043",
+  "perception": {
+    "temperature": "warm",
+    "figureGroundSalience": "high",
+    "harmony": "predicted",
+    "activationAssociation": "high",
+    "valenceAssociation": "mixed",
+    "weightAssociation": "heavy",
+    "confidence": "moderate",
+    "population": "General cross-cultural evidence baseline; not validated for a product-specific population.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Affective labels are associations, not claims of induced emotion.",
+      "No product-context user study has been run.",
+      "Border/non-text discriminability requires separate evaluation."
+    ]
+  }
+}
