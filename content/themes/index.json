@@ -2,6 +2,85 @@
   "catalogVersion": "1.0.0",
   "schemaVersion": "1.0.0",
   "description": "Indexed Visual Engineering theme specimens. Palette and semantic mapping are intentionally separate.",
-  "nextId": "THM-0001",
-  "themes": []
+  "nextId": "THM-0007",
+  "themes": [
+    {
+      "id": "THM-0001",
+      "name": "Quiet Fjord",
+      "status": "evaluated",
+      "mode": "light",
+      "temperature": "cool",
+      "contexts": [
+        "application",
+        "dashboard",
+        "accessibility"
+      ],
+      "path": "content/themes/specimens/THM-0001.json"
+    },
+    {
+      "id": "THM-0002",
+      "name": "Ember Paper",
+      "status": "evaluated",
+      "mode": "light",
+      "temperature": "warm",
+      "contexts": [
+        "marketing",
+        "document",
+        "application"
+      ],
+      "path": "content/themes/specimens/THM-0002.json"
+    },
+    {
+      "id": "THM-0003",
+      "name": "Night Ember",
+      "status": "evaluated",
+      "mode": "dark",
+      "temperature": "warm",
+      "contexts": [
+        "application",
+        "dashboard",
+        "marketing"
+      ],
+      "path": "content/themes/specimens/THM-0003.json"
+    },
+    {
+      "id": "THM-0004",
+      "name": "Deep Current",
+      "status": "evaluated",
+      "mode": "dark",
+      "temperature": "cool",
+      "contexts": [
+        "application",
+        "dashboard",
+        "data-visualization"
+      ],
+      "path": "content/themes/specimens/THM-0004.json"
+    },
+    {
+      "id": "THM-0005",
+      "name": "Heather Field",
+      "status": "evaluated",
+      "mode": "light",
+      "temperature": "mixed",
+      "contexts": [
+        "application",
+        "document",
+        "white-label"
+      ],
+      "path": "content/themes/specimens/THM-0005.json"
+    },
+    {
+      "id": "THM-0006",
+      "name": "Signal Neutral",
+      "status": "evaluated",
+      "mode": "light",
+      "temperature": "neutral",
+      "contexts": [
+        "application",
+        "dashboard",
+        "accessibility"
+      ],
+      "path": "content/themes/specimens/THM-0006.json"
+    }
+  ]
 }
