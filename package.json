@@ -16,7 +16,10 @@
     "tool:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./npm",
     "tool:preflight": "node scripts/preflight-npm-publish.mjs",
     "tool:test-package": "node scripts/test-tool-package.mjs",
-    "tool:test": "dotnet test VisualEngineering.sln"
+    "tool:test": "dotnet test VisualEngineering.sln",
+    "polish:gate": "node scripts/application-polish-gate.mjs",
+    "polish:test": "node --test scripts/test-application-polish-gate.mjs",
+    "polish:example": "node scripts/application-polish-gate.mjs examples/application-polish-evidence.json --json"
   },
   "engines": {
     "node": ">=24 <25"
