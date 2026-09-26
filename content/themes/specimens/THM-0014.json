@@ -1,0 +1,76 @@
+{
+  "id": "THM-0014",
+  "name": "Quiet Fjord Vivid",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "fog": "#F4F7F8",
+    "white": "#FFFFFF",
+    "ink": "#17252A",
+    "slate": "#52666D",
+    "fjord": "#007CA6",
+    "mist": "#AABBC1"
+  },
+  "semanticTokens": {
+    "background": "fog",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "slate",
+    "primaryAccent": "fjord",
+    "border": "mist"
+  },
+  "contexts": [
+    "application",
+    "dashboard"
+  ],
+  "tags": [
+    "controlled-variant",
+    "higher-chroma",
+    "quiet-fjord"
+  ],
+  "facets": {
+    "temperature": "cool",
+    "contrastCharacter": "high",
+    "chromaCharacter": "vivid"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "source": "THM-0001",
+    "notes": "Controlled variant of THM-0001; intended independent variable: accent chroma. Other perceptual properties should be normalized/measured before causal comparison."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires automated semantic-pair, non-text, focus, status, and CVD evaluation."
+  },
+  "specimen": {
+    "surfaces": [
+      "reference UI",
+      "forms and focus",
+      "table",
+      "status set",
+      "small chart"
+    ],
+    "path": "content/themes/specimens/THM-0014.json"
+  },
+  "fingerprint": "#007CA6|#17252A|#52666D|#AABBC1|#F4F7F8|#FFFFFF",
+  "perception": {
+    "temperature": "cool",
+    "figureGroundSalience": "unknown",
+    "harmony": "unknown",
+    "activationAssociation": "unknown",
+    "valenceAssociation": "unknown",
+    "weightAssociation": "light",
+    "confidence": "unknown",
+    "population": "Controlled Visual Engineering experiment; no population result yet.",
+    "evidence": [
+      "content/themes/research/theme-perception-experiment-matrix.md"
+    ],
+    "caveats": [
+      "Experimental variable: accent chroma.",
+      "Do not infer causal effect until confounds are measured/controlled.",
+      "No user/context validation yet."
+    ]
+  }
+}
