@@ -4,11 +4,11 @@ open System.Text.Json
 open VisualEngineering.ThemeMeasure
 open VisualEngineering.ThemeMeasure.ColorMath
 
-let round n x = Math.Round(x, n)
-let prop (e:JsonElement) name = e.GetProperty(name)
-let str (e:JsonElement) name = (prop e name).GetString()
+let round (n: int) (x: float) = Math.Round(x, n)
+let prop (e: JsonElement) (name: string) = e.GetProperty(name)
+let str (e: JsonElement) (name: string) = (prop e name).GetString()
 
-let evaluate path =
+let evaluate (path: string) =
     use doc = JsonDocument.Parse(File.ReadAllText path)
     let root = doc.RootElement
     let palette = prop root "palette"
@@ -26,7 +26,8 @@ let evaluate path =
           "text","surface"; "border","background"; "border","surface" ]
         |> List.choose(fun (fg,bg) ->
             if tokens.TryGetProperty(fg) |> fst && tokens.TryGetProperty(bg) |> fst then
-                let fn,bn = str tokens fg, str tokens bg
+                let fn: string = str tokens fg
+                let bn: string = str tokens bg
                 Some {| foregroundToken=fg; backgroundToken=bg; foreground=fn; background=bn;
                         ratio=round 2 (contrast colorMap[fn] colorMap[bn]) |}
             else None)
