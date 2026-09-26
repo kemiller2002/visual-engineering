@@ -1,0 +1,48 @@
+name: Application Polish Gate
+
+on:
+  pull_request:
+    paths:
+      - "scripts/application-polish-gate.mjs"
+      - "scripts/test-application-polish-gate.mjs"
+      - "schemas/application-polish-evidence.schema.json"
+      - "registries/application-polish-fixtures.json"
+      - "examples/application-polish-evidence.json"
+      - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
+      - "docs/application-polish-requirements.md"
+      - "agent-context/APPLICATION-POLISH.md"
+      - "package.json"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/application-polish-gate.mjs"
+      - "scripts/test-application-polish-gate.mjs"
+      - "schemas/application-polish-evidence.schema.json"
+      - "registries/application-polish-fixtures.json"
+      - "examples/application-polish-evidence.json"
+      - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
+      - "docs/application-polish-requirements.md"
+      - "agent-context/APPLICATION-POLISH.md"
+      - "package.json"
+
+permissions:
+  contents: read
+
+jobs:
+  test-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm run polish:test
+      - name: Verify incomplete evidence cannot pass
+        run: |
+          set +e
+          npm run polish:example
+          code=$?
+          set -e
+          test "$code" -eq 3
