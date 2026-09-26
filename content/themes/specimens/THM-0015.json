@@ -1,0 +1,76 @@
+{
+  "id": "THM-0015",
+  "name": "Quiet Fjord Warm Shift",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "fog": "#FAF5EE",
+    "white": "#FFFFFF",
+    "ink": "#2A2119",
+    "slate": "#665B50",
+    "fjord": "#9A571B",
+    "mist": "#C6B7A5"
+  },
+  "semanticTokens": {
+    "background": "fog",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "slate",
+    "primaryAccent": "fjord",
+    "border": "mist"
+  },
+  "contexts": [
+    "application",
+    "dashboard"
+  ],
+  "tags": [
+    "controlled-variant",
+    "warm-shift",
+    "quiet-fjord"
+  ],
+  "facets": {
+    "temperature": "warm",
+    "contrastCharacter": "high",
+    "chromaCharacter": "muted"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "source": "THM-0001",
+    "notes": "Controlled variant of THM-0001; intended independent variable: temperature. Other perceptual properties should be normalized/measured before causal comparison."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires automated semantic-pair, non-text, focus, status, and CVD evaluation."
+  },
+  "specimen": {
+    "surfaces": [
+      "reference UI",
+      "forms and focus",
+      "table",
+      "status set",
+      "small chart"
+    ],
+    "path": "content/themes/specimens/THM-0015.json"
+  },
+  "fingerprint": "#2A2119|#665B50|#9A571B|#C6B7A5|#FAF5EE|#FFFFFF",
+  "perception": {
+    "temperature": "warm",
+    "figureGroundSalience": "unknown",
+    "harmony": "unknown",
+    "activationAssociation": "unknown",
+    "valenceAssociation": "unknown",
+    "weightAssociation": "light",
+    "confidence": "unknown",
+    "population": "Controlled Visual Engineering experiment; no population result yet.",
+    "evidence": [
+      "content/themes/research/theme-perception-experiment-matrix.md"
+    ],
+    "caveats": [
+      "Experimental variable: temperature.",
+      "Do not infer causal effect until confounds are measured/controlled.",
+      "No user/context validation yet."
+    ]
+  }
+}
