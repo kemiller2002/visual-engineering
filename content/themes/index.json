@@ -2,7 +2,7 @@
   "catalogVersion": "1.0.0",
   "schemaVersion": "1.0.0",
   "description": "Indexed Visual Engineering theme specimens. Palette and semantic mapping are intentionally separate.",
-  "nextId": "THM-0013",
+  "nextId": "THM-0018",
   "themes": [
     {
       "id": "THM-0001",
@@ -159,6 +159,69 @@
         "data-visualization"
       ],
       "path": "content/themes/specimens/THM-0012.json"
+    },
+    {
+      "id": "THM-0013",
+      "name": "Quiet Fjord Functional Edge",
+      "status": "draft",
+      "mode": "light",
+      "temperature": "cool",
+      "contexts": [
+        "application",
+        "dashboard",
+        "accessibility"
+      ],
+      "path": "content/themes/specimens/THM-0013.json"
+    },
+    {
+      "id": "THM-0014",
+      "name": "Quiet Fjord Vivid",
+      "status": "draft",
+      "mode": "light",
+      "temperature": "cool",
+      "contexts": [
+        "application",
+        "dashboard"
+      ],
+      "path": "content/themes/specimens/THM-0014.json"
+    },
+    {
+      "id": "THM-0015",
+      "name": "Quiet Fjord Warm Shift",
+      "status": "draft",
+      "mode": "light",
+      "temperature": "warm",
+      "contexts": [
+        "application",
+        "dashboard"
+      ],
+      "path": "content/themes/specimens/THM-0015.json"
+    },
+    {
+      "id": "THM-0016",
+      "name": "Heather Separated",
+      "status": "draft",
+      "mode": "light",
+      "temperature": "mixed",
+      "contexts": [
+        "application",
+        "document",
+        "white-label"
+      ],
+      "path": "content/themes/specimens/THM-0016.json"
+    },
+    {
+      "id": "THM-0017",
+      "name": "Signal Dual Accent",
+      "status": "draft",
+      "mode": "light",
+      "temperature": "mixed",
+      "contexts": [
+        "application",
+        "dashboard",
+        "data-visualization"
+      ],
+      "path": "content/themes/specimens/THM-0017.json"
     }
   ]
 }
