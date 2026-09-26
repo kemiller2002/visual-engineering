@@ -1,0 +1,36 @@
+name: Theme measurement validation
+
+on:
+  pull_request:
+    paths:
+      - 'content/themes/**'
+      - 'tools/theme-measure*/**'
+      - '.github/workflows/theme-measure.yml'
+  push:
+    branches: [ main ]
+    paths:
+      - 'content/themes/**'
+      - 'tools/theme-measure*/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build measurement library
+        run: dotnet build tools/theme-measure-lib/theme-measure-lib.fsproj --configuration Release
+      - name: Build evaluator
+        run: dotnet build tools/theme-measure/theme-measure.fsproj --configuration Release
+      - name: Run production-math invariants
+        run: dotnet run --project tools/theme-measure-tests/theme-measure-tests.fsproj --configuration Release
+      - name: Evaluate every theme specimen
+        shell: bash
+        run: |
+          mapfile -t themes < <(find content/themes/specimens -maxdepth 1 -name 'THM-*.json' -type f | sort)
+          test "${#themes[@]}" -gt 0
+          dotnet run --project tools/theme-measure/theme-measure.fsproj --configuration Release -- "${themes[@]}" > /tmp/theme-evidence.json
+          python -m json.tool /tmp/theme-evidence.json > /dev/null
+          echo "Evaluated ${#themes[@]} theme specimens."
