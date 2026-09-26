@@ -77,6 +77,17 @@ audiences:
 - Is there evidence behind a zero-finding review?
 - Have recurring defect classes been pushed upstream into shared components, rules or fixtures where appropriate?
 
+## Application polish gate
+
+- Have applicable polish dimensions been identified?
+- Have reachable non-happy states been exercised rather than inferred?
+- Have high-risk state and environment seams been tested?
+- Have pathological content and boundary fixtures been used?
+- Does persistence presentation tell the truth about local, pending, persisted, failed and conflicting state?
+- Are untested environments and states recorded as unknown rather than passed?
+- Is there evidence behind a zero-finding review?
+- Have recurring defect classes been pushed upstream into shared components, rules or fixtures where appropriate?
+
 ## Agent handoff
 
 Report:
