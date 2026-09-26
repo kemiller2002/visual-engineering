@@ -24,3 +24,4 @@ Pass multiple specimen files to produce one JSON array. Generated output is evid
 - source hex remains authoritative;
 - computed, simulated, observed, and studied evidence remain distinct;
 - changing formulas requires a measurement-version change and re-evaluation of derived evidence.
+- null or malformed authored color values fail evaluation rather than being coerced.
