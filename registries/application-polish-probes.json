@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "probes": [
+    {
+      "id": "layout-horizontal-overflow",
+      "kind": "automated",
+      "covers": [
+        "responsive",
+        "visual-precision"
+      ],
+      "evidenceFor": [
+        "environments"
+      ],
+      "claim": "Detect unintended document-level horizontal overflow at an exercised viewport.",
+      "limitations": "Does not prove local clipping, intended scrollers, or visual quality."
+    },
+    {
+      "id": "focus-visible",
+      "kind": "automated-assisted",
+      "covers": [
+        "accessibility",
+        "interaction"
+      ],
+      "evidenceFor": [
+        "environments",
+        "seams"
+      ],
+      "claim": "Exercise keyboard focus and detect missing or obscured focus on exercised controls.",
+      "limitations": "Cannot prove logical focus order for every workflow without scenario knowledge."
+    },
+    {
+      "id": "zoom-reflow",
+      "kind": "automated-assisted",
+      "covers": [
+        "responsive",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "environments",
+        "fixtures"
+      ],
+      "claim": "Exercise configured zoom or equivalent constrained CSS viewport and detect overflow/overlap assertions.",
+      "limitations": "Browser zoom semantics vary; retain environment metadata."
+    },
+    {
+      "id": "reduced-motion",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "environments",
+        "fixtures"
+      ],
+      "claim": "Exercise reduced-motion preference and assert configured motion invariants.",
+      "limitations": "Cannot judge whether remaining motion is cognitively appropriate."
+    },
+    {
+      "id": "rapid-repeat",
+      "kind": "scenario",
+      "covers": [
+        "interaction",
+        "data-integrity"
+      ],
+      "evidenceFor": [
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Repeat a consequential action rapidly and verify domain operation cardinality and UI state.",
+      "limitations": "Requires application-specific observation of the domain effect."
+    },
+    {
+      "id": "persistence-truth",
+      "kind": "scenario",
+      "covers": [
+        "state-completeness",
+        "data-integrity",
+        "feedback"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams"
+      ],
+      "claim": "Observe local, pending, persisted, rejected and conflicting transitions against authoritative persistence state.",
+      "limitations": "Requires an application adapter or test seam exposing authoritative state."
+    },
+    {
+      "id": "offline-recovery",
+      "kind": "scenario",
+      "covers": [
+        "resilience",
+        "state-completeness"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Interrupt connectivity, exercise recovery, and verify valid work and truthful status.",
+      "limitations": "Requires a workflow with a network dependency."
+    },
+    {
+      "id": "session-expiry",
+      "kind": "scenario",
+      "covers": [
+        "security-ux",
+        "resilience",
+        "state-completeness"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Expire authentication during work and verify safe recovery and permitted work preservation.",
+      "limitations": "Requires controllable authentication."
+    }
+  ]
+}
