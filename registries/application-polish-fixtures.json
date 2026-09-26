@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "id": "text-empty",
+      "category": "content",
+      "purpose": "empty text"
+    },
+    {
+      "id": "text-one-character",
+      "category": "content",
+      "purpose": "minimum non-empty text"
+    },
+    {
+      "id": "text-long-unbroken",
+      "category": "content",
+      "purpose": "overflow and wrapping"
+    },
+    {
+      "id": "text-unicode-emoji",
+      "category": "content",
+      "purpose": "Unicode, mixed script and emoji handling"
+    },
+    {
+      "id": "text-rtl",
+      "category": "content",
+      "purpose": "RTL behavior"
+    },
+    {
+      "id": "number-zero",
+      "category": "numeric",
+      "purpose": "zero boundary"
+    },
+    {
+      "id": "number-negative",
+      "category": "numeric",
+      "purpose": "negative boundary"
+    },
+    {
+      "id": "number-large",
+      "category": "numeric",
+      "purpose": "large-value formatting"
+    },
+    {
+      "id": "collection-empty",
+      "category": "collection",
+      "purpose": "empty state"
+    },
+    {
+      "id": "network-slow",
+      "category": "dependency",
+      "purpose": "loading and interruption"
+    },
+    {
+      "id": "network-offline",
+      "category": "dependency",
+      "purpose": "offline state and recovery"
+    },
+    {
+      "id": "dependency-error",
+      "category": "dependency",
+      "purpose": "recoverable or terminal failure"
+    },
+    {
+      "id": "session-expired",
+      "category": "auth",
+      "purpose": "safe reauthentication and work preservation"
+    },
+    {
+      "id": "rapid-double-action",
+      "category": "interaction",
+      "purpose": "idempotency and duplicate prevention"
+    },
+    {
+      "id": "zoom-200",
+      "category": "viewport",
+      "purpose": "reflow at 200 percent"
+    },
+    {
+      "id": "zoom-400",
+      "category": "viewport",
+      "purpose": "extreme reflow"
+    },
+    {
+      "id": "viewport-narrow",
+      "category": "viewport",
+      "purpose": "constrained width"
+    },
+    {
+      "id": "viewport-landscape",
+      "category": "viewport",
+      "purpose": "height constraint"
+    },
+    {
+      "id": "reduced-motion",
+      "category": "preference",
+      "purpose": "motion accessibility"
+    },
+    {
+      "id": "forced-colors",
+      "category": "preference",
+      "purpose": "system color resilience"
+    },
+    {
+      "id": "stale-conflict",
+      "category": "data",
+      "purpose": "conflict handling"
+    },
+    {
+      "id": "refresh-during-mutation",
+      "category": "data",
+      "purpose": "interruption and persistence truth"
+    }
+  ],
+  "note": "Semantic fixtures. Implementations choose platform-appropriate mechanics and retain evidence."
+}
