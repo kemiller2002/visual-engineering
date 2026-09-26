@@ -34,4 +34,4 @@ module ColorMath =
         let raw = Math.Atan2(lab.B, lab.A) * 180.0 / Math.PI
         { L=lab.L; C=c; H=if raw < 0.0 then raw + 360.0 else raw }
 
-    let delta a b = sqrt ((a.L-b.L)**2.0 + (a.A-b.A)**2.0 + (a.B-b.B)**2.0)
+    let delta (a: Oklab) (b: Oklab) = sqrt ((a.L-b.L)**2.0 + (a.A-b.A)**2.0 + (a.B-b.B)**2.0)
