@@ -1,0 +1,79 @@
+{
+  "id": "THM-0017",
+  "name": "Signal Dual Accent",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "canvas": "#F7F7F5",
+    "white": "#FFFFFF",
+    "ink": "#20211F",
+    "muted": "#5F625D",
+    "signal": "#005FCC",
+    "second": "#A33B20",
+    "edge": "#B9BCB5"
+  },
+  "semanticTokens": {
+    "background": "canvas",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "signal",
+    "secondaryAccent": "second",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "data-visualization"
+  ],
+  "tags": [
+    "controlled-variant",
+    "dual-accent",
+    "signal-neutral"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "moderate"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "source": "THM-0006",
+    "notes": "Controlled variant of THM-0006; intended independent variable: accent competition. Other perceptual properties should be normalized/measured before causal comparison."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires automated semantic-pair, non-text, focus, status, and CVD evaluation."
+  },
+  "specimen": {
+    "surfaces": [
+      "reference UI",
+      "forms and focus",
+      "table",
+      "status set",
+      "small chart"
+    ],
+    "path": "content/themes/specimens/THM-0017.json"
+  },
+  "fingerprint": "#005FCC|#20211F|#5F625D|#A33B20|#B9BCB5|#F7F7F5|#FFFFFF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "unknown",
+    "activationAssociation": "unknown",
+    "valenceAssociation": "unknown",
+    "weightAssociation": "light",
+    "confidence": "unknown",
+    "population": "Controlled Visual Engineering experiment; no population result yet.",
+    "evidence": [
+      "content/themes/research/theme-perception-experiment-matrix.md"
+    ],
+    "caveats": [
+      "Experimental variable: accent competition.",
+      "Do not infer causal effect until confounds are measured/controlled.",
+      "No user/context validation yet."
+    ]
+  }
+}

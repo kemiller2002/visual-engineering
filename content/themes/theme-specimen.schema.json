@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://echelonfoundry.com/visual-engineering/theme-specimen.schema.json",
+  "title": "Visual Engineering Theme Specimen",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "status",
+    "mode",
+    "palette",
+    "semanticTokens",
+    "contexts",
+    "tags",
+    "provenance",
+    "accessibility",
+    "specimen",
+    "fingerprint"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^THM-[0-9]{4}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "evaluated",
+        "accepted",
+        "deprecated"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "light",
+        "dark",
+        "mixed",
+        "print"
+      ]
+    },
+    "palette": {
+      "type": "object",
+      "description": "Role-free normalized colors.",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+      }
+    },
+    "semanticTokens": {
+      "type": "object",
+      "required": [
+        "background",
+        "surface",
+        "text",
+        "mutedText",
+        "primaryAccent",
+        "border"
+      ],
+      "properties": {
+        "background": {
+          "type": "string"
+        },
+        "surface": {
+          "type": "string"
+        },
+        "elevatedSurface": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "mutedText": {
+          "type": "string"
+        },
+        "primaryAccent": {
+          "type": "string"
+        },
+        "secondaryAccent": {
+          "type": "string"
+        },
+        "border": {
+          "type": "string"
+        },
+        "success": {
+          "type": "string"
+        },
+        "warning": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contexts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "application",
+          "dashboard",
+          "marketing",
+          "document",
+          "print",
+          "data-visualization",
+          "accessibility",
+          "white-label"
+        ]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "facets": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "enum": [
+            "warm",
+            "cool",
+            "neutral",
+            "mixed"
+          ]
+        },
+        "contrastCharacter": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "mixed"
+          ]
+        },
+        "chromaCharacter": {
+          "enum": [
+            "muted",
+            "moderate",
+            "vivid",
+            "mixed"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "observed",
+            "designed",
+            "derived",
+            "imported",
+            "experimental"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "accessibility": {
+      "type": "object",
+      "required": [
+        "status",
+        "contrastPairs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not-evaluated",
+            "partial",
+            "evaluated"
+          ]
+        },
+        "contrastPairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "foreground",
+              "background",
+              "ratio",
+              "criterion"
+            ],
+            "properties": {
+              "foreground": {
+                "type": "string"
+              },
+              "background": {
+                "type": "string"
+              },
+              "ratio": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 21
+              },
+              "criterion": {
+                "type": "string"
+              },
+              "passes": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "redundantStateEncoding": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "specimen": {
+      "type": "object",
+      "required": [
+        "surfaces"
+      ],
+      "properties": {
+        "surfaces": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replaces": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^THM-[0-9]{4}$"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "perception": {
+      "type": "object",
+      "description": "Evidence-qualified perceptual/affective descriptors. Associations are not claims of induced emotion.",
+      "properties": {
+        "temperature": {
+          "enum": [
+            "warm",
+            "cool",
+            "neutral",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "figureGroundSalience": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "unknown"
+          ]
+        },
+        "harmony": {
+          "enum": [
+            "measured",
+            "predicted",
+            "unknown"
+          ]
+        },
+        "activationAssociation": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "valenceAssociation": {
+          "enum": [
+            "positive",
+            "neutral",
+            "negative",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "weightAssociation": {
+          "enum": [
+            "light",
+            "neutral",
+            "heavy",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "moderate",
+            "low",
+            "unknown"
+          ]
+        },
+        "population": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "caveats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

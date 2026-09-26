@@ -1,0 +1,78 @@
+{
+  "id": "THM-0012",
+  "name": "Electric Night",
+  "status": "draft",
+  "mode": "dark",
+  "palette": {
+    "canvas": "#0F1117",
+    "surface": "#191D27",
+    "ink": "#F2F5FF",
+    "muted": "#B4BCD0",
+    "accent": "#6FD3FF",
+    "secondary": "#F3A6FF",
+    "edge": "#485166"
+  },
+  "semanticTokens": {
+    "background": "canvas",
+    "surface": "surface",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "accent",
+    "secondaryAccent": "secondary",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "data-visualization"
+  ],
+  "tags": [
+    "dark",
+    "high-chroma-accent",
+    "attention-competition"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "vivid"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "notes": "Designed as part of the second Visual Engineering perceptual combination matrix."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires computed semantic-pair and non-text contrast evaluation before evaluated status."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text",
+      "dual-accent relationship"
+    ],
+    "path": "content/themes/specimens/THM-0012.json"
+  },
+  "fingerprint": "#0F1117|#191D27|#485166|#6FD3FF|#B4BCD0|#F2F5FF|#F3A6FF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "predicted",
+    "activationAssociation": "high",
+    "valenceAssociation": "positive",
+    "weightAssociation": "heavy",
+    "confidence": "low",
+    "population": "Not yet product-context validated.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Hypothesis specimen pending measured contrast evaluation.",
+      "Affective labels are associations, not induced-emotion claims.",
+      "Combination-level harmony and salience require specimen testing."
+    ]
+  }
+}
