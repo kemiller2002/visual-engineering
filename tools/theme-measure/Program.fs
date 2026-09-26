@@ -6,7 +6,10 @@ open VisualEngineering.ThemeMeasure.ColorMath
 
 let round (n: int) (x: float) = Math.Round(x, n)
 let prop (e: JsonElement) (name: string) = e.GetProperty(name)
-let str (e: JsonElement) (name: string) = (prop e name).GetString()
+let str (e: JsonElement) (name: string) =
+    match (prop e name).GetString() with
+    | null -> invalidArg name "Expected a non-null JSON string"
+    | value -> value
 
 let evaluate (path: string) =
     use doc = JsonDocument.Parse(File.ReadAllText path)
@@ -16,9 +19,13 @@ let evaluate (path: string) =
     let colors =
         palette.EnumerateObject()
         |> Seq.map (fun p ->
-            let rgb = hexToRgb (p.Value.GetString())
+            let hex =
+                match p.Value.GetString() with
+                | null -> invalidArg p.Name "Expected a non-null palette color"
+                | value -> value
+            let rgb = hexToRgb hex
             let lab = oklab rgb
-            p.Name, p.Value.GetString(), rgb, lab, oklch lab)
+            p.Name, hex, rgb, lab, oklch lab)
         |> Seq.toArray
     let colorMap = colors |> Seq.map(fun (n,_,r,_,_) -> n,r) |> Map.ofSeq
     let tokenPairs =
