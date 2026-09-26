@@ -68,3 +68,24 @@ test("a false declared pass is rejected", () => {
   assert.equal(result.disposition, "fail");
   assert.match(result.errors.join("\n"), /does not match/);
 });
+
+test("profile missing required coverage is incomplete", async () => {
+  const { resolveProfile } = await import("./application-polish-gate.mjs");
+  const profile = resolveProfile({profiles:[{id:"test",requiredDimensions:["interaction","accessibility"],requiredFixtures:["rapid-double-action"]}]},"test");
+  const doc = evidence({ profile:"test", disposition:"incomplete", fixtures:[] });
+  const result = evaluatePolishEvidence(doc, profile);
+  assert.equal(result.disposition, "incomplete");
+  assert.deepEqual(result.missing.dimensions, ["accessibility"]);
+  assert.deepEqual(result.missing.fixtures, ["rapid-double-action"]);
+});
+
+test("profile inheritance combines obligations", async () => {
+  const { resolveProfile } = await import("./application-polish-gate.mjs");
+  const registry={profiles:[
+    {id:"base",requiredDimensions:["interaction"],requiredFixtures:["viewport-narrow"]},
+    {id:"child",extends:"base",requiredDimensions:["accessibility"],requiredFixtures:["reduced-motion"]}
+  ]};
+  const profile=resolveProfile(registry,"child");
+  assert.deepEqual(profile.requiredDimensions,["interaction","accessibility"]);
+  assert.deepEqual(profile.requiredFixtures,["viewport-narrow","reduced-motion"]);
+});
