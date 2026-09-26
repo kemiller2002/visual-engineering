@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Application Polish Evidence",
+  "type": "object",
+  "required": ["schemaVersion","surface","dimensions","states","seams","environments","fixtures","unknowns","findings","disposition"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "surface": {"type":"string","minLength":1},
+    "dimensions": {"type":"array","uniqueItems":true,"minItems":1,"items":{"type":"string"}},
+    "states": {"type":"array","items":{"$ref":"#/$defs/coverage"}},
+    "seams": {"type":"array","items":{"$ref":"#/$defs/coverage"}},
+    "environments": {"type":"array","items":{"$ref":"#/$defs/coverage"}},
+    "fixtures": {"type":"array","items":{"$ref":"#/$defs/coverage"}},
+    "unknowns": {"type":"array","items":{"type":"string","minLength":1}},
+    "findings": {"type":"array","items":{"type":"object","required":["id","severity","status","summary"],"properties":{"id":{"type":"string"},"severity":{"enum":["critical","high","medium","low"]},"status":{"enum":["open","resolved","accepted"]},"summary":{"type":"string"},"invariant":{"type":"string"},"evidence":{"type":"array","items":{"type":"string"}}}}},
+    "disposition": {"enum":["pass","fail","incomplete"]}
+  },
+  "$defs": {"coverage":{"type":"object","required":["id","status"],"properties":{"id":{"type":"string"},"status":{"enum":["passed","failed","untested","not-applicable"]},"evidence":{"type":"array","items":{"type":"string"}},"rationale":{"type":"string"}}}}
+}
