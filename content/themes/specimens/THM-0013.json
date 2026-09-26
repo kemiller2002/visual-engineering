@@ -1,0 +1,77 @@
+{
+  "id": "THM-0013",
+  "name": "Quiet Fjord Functional Edge",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "fog": "#F4F7F8",
+    "white": "#FFFFFF",
+    "ink": "#17252A",
+    "slate": "#52666D",
+    "fjord": "#176B87",
+    "edge": "#6B7D83"
+  },
+  "semanticTokens": {
+    "background": "fog",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "slate",
+    "primaryAccent": "fjord",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "dashboard",
+    "accessibility"
+  ],
+  "tags": [
+    "controlled-variant",
+    "functional-boundary",
+    "quiet-fjord"
+  ],
+  "facets": {
+    "temperature": "cool",
+    "contrastCharacter": "high",
+    "chromaCharacter": "muted"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "source": "THM-0001",
+    "notes": "Controlled variant of THM-0001; intended independent variable: boundary contrast. Other perceptual properties should be normalized/measured before causal comparison."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires automated semantic-pair, non-text, focus, status, and CVD evaluation."
+  },
+  "specimen": {
+    "surfaces": [
+      "reference UI",
+      "forms and focus",
+      "table",
+      "status set",
+      "small chart"
+    ],
+    "path": "content/themes/specimens/THM-0013.json"
+  },
+  "fingerprint": "#17252A|#176B87|#52666D|#6B7D83|#F4F7F8|#FFFFFF",
+  "perception": {
+    "temperature": "cool",
+    "figureGroundSalience": "unknown",
+    "harmony": "unknown",
+    "activationAssociation": "unknown",
+    "valenceAssociation": "unknown",
+    "weightAssociation": "light",
+    "confidence": "unknown",
+    "population": "Controlled Visual Engineering experiment; no population result yet.",
+    "evidence": [
+      "content/themes/research/theme-perception-experiment-matrix.md"
+    ],
+    "caveats": [
+      "Experimental variable: boundary contrast.",
+      "Do not infer causal effect until confounds are measured/controlled.",
+      "No user/context validation yet."
+    ]
+  }
+}
