@@ -1,0 +1,77 @@
+{
+  "id": "THM-0016",
+  "name": "Heather Separated",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "field": "#F6F3F8",
+    "white": "#FFFFFF",
+    "ink": "#29232D",
+    "muted": "#675C6D",
+    "heather": "#176A73",
+    "edge": "#CFC4D3"
+  },
+  "semanticTokens": {
+    "background": "field",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "heather",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "document",
+    "white-label"
+  ],
+  "tags": [
+    "controlled-variant",
+    "hue-separated",
+    "heather-field"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "muted"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "source": "THM-0005",
+    "notes": "Controlled variant of THM-0005; intended independent variable: hue separation. Other perceptual properties should be normalized/measured before causal comparison."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires automated semantic-pair, non-text, focus, status, and CVD evaluation."
+  },
+  "specimen": {
+    "surfaces": [
+      "reference UI",
+      "forms and focus",
+      "table",
+      "status set",
+      "small chart"
+    ],
+    "path": "content/themes/specimens/THM-0016.json"
+  },
+  "fingerprint": "#176A73|#29232D|#675C6D|#CFC4D3|#F6F3F8|#FFFFFF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "unknown",
+    "activationAssociation": "unknown",
+    "valenceAssociation": "unknown",
+    "weightAssociation": "light",
+    "confidence": "unknown",
+    "population": "Controlled Visual Engineering experiment; no population result yet.",
+    "evidence": [
+      "content/themes/research/theme-perception-experiment-matrix.md"
+    ],
+    "caveats": [
+      "Experimental variable: hue separation.",
+      "Do not infer causal effect until confounds are measured/controlled.",
+      "No user/context validation yet."
+    ]
+  }
+}
