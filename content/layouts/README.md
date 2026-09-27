@@ -57,8 +57,12 @@ A record must state:
 
 `observed` → `partial` → `supported` → `verified`. A Visual Engineering record
 is `observed` when the relationships are evidence-backed but no conforming
-implementation has been verified. `verified` requires a recorded conformance
-run of an implementation (Forma records these in its own catalog).
+implementation has been verified, and `supported` when an implementation
+reproduces them and has passed a recorded conformance run (the record's
+`implementations` field names it). `verified` follows the implementation's
+own promotion to `verified` (Forma records these in its own catalog); a
+Visual Engineering record never claims a higher state than its
+implementation records.
 
 ## Relationship to Forma
 
@@ -72,7 +76,7 @@ not copy its prose.
 
 | ID | Name | Status |
 | --- | --- | --- |
-| LAY-TERMINAL-CHARACTER-GRID | Terminal / character grid | observed |
+| LAY-TERMINAL-CHARACTER-GRID | Terminal / character grid | supported |
 
 Families already verified in Forma (`LAY-FORM-SECTIONED` and others) predate
 this catalog and have not been back-filled here. See decision
