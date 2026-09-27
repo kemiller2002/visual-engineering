@@ -32,6 +32,21 @@ jobs:
         id: research-validate
         run: npm run research:validate
 
+      - name: Validate layout catalog
+        run: npm run layouts:validate
+
+      - name: Test layout catalog validator
+        run: npm run layouts:test
+
+      - name: Test SequentialReveal reference model
+        run: npm run reveal:test
+
+      - name: Validate reference workflows
+        run: npm run workflows:validate
+
+      - name: Test character-grid layout validator
+        run: npm run workflows:test
+
       - name: Build research site
         id: research-build
         run: npm run research:build

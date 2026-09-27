@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visual.echelonfoundry.com/schemas/layout-family-1.0.0.json",
+  "title": "Visual Engineering layout family",
+  "type": "object",
+  "required": [
+    "id", "name", "catalogVersion", "status", "summary", "tasks", "semanticRegions",
+    "sourceOrder", "recognitionPath", "verificationRegions", "composition", "navigation",
+    "preservedRelationships", "responsive", "content", "accessibility", "formaPrimitives",
+    "assumptions", "verification", "narrowRecomposition", "evidence", "gaps"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^LAY-[A-Z0-9-]+$" },
+    "name": { "type": "string", "minLength": 1 },
+    "catalogVersion": { "type": "string" },
+    "status": { "enum": ["observed", "partial", "supported", "verified"] },
+    "summary": { "type": "string", "minLength": 1 },
+    "tasks": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "semanticRegions": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["id", "purpose", "required"] }
+    },
+    "sourceOrder": { "type": "object", "required": ["rule"] },
+    "recognitionPath": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "verificationRegions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "composition": { "type": "object" },
+    "navigation": { "type": "object", "required": ["keyboardOrder", "focusOrder", "visualOrder", "readingOrder", "decisionPoints"] },
+    "preservedRelationships": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "responsive": { "type": "object", "required": ["wide", "narrow", "zoom", "noPageOverflow"] },
+    "content": { "type": "object", "required": ["long", "missing", "extreme", "localization"] },
+    "accessibility": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "formaPrimitives": { "type": "object", "required": ["required", "knownGaps"] },
+    "assumptions": { "type": "array", "items": { "type": "object", "required": ["id", "text"] } },
+    "verification": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["id", "check", "kind"] } },
+    "narrowRecomposition": { "type": "string" },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "hypotheses": { "type": "array", "items": { "type": "string" } },
+    "gaps": { "type": "array", "items": { "type": "string" } }
+  }
+}

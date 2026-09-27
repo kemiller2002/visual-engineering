@@ -1,0 +1,14 @@
+{
+  "catalogVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "description": "Visual Engineering layout-family catalog. Entries describe relationships that implementations must preserve, with evidence, assumptions, and verification requirements. Field names are a superset of Forma catalog/layouts.json family records.",
+  "supportStates": ["observed", "partial", "supported", "verified"],
+  "families": [
+    {
+      "id": "LAY-TERMINAL-CHARACTER-GRID",
+      "name": "Terminal / character grid",
+      "status": "observed",
+      "path": "content/layouts/families/LAY-TERMINAL-CHARACTER-GRID.json"
+    }
+  ]
+}

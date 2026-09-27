@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "agent:chatgpt",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-27T05:51:57.000Z",
+  "updatedAt": "2026-09-27T06:51:55.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -102,6 +102,98 @@
         "EXE-20260927T053935272Z-2c8eb969"
       ],
       "completedAt": "2026-09-27T05:51:57.000Z"
+    },
+    {
+      "id": "GH-17",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md"
+        },
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/evidence-registry/terminal-character-grid-evidence-v1.md"
+        }
+      ],
+      "updatedAt": "2026-09-27T06:38:49.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T063048377Z-bb41d476"
+      ],
+      "completedAt": "2026-09-27T06:38:49.000Z",
+      "conclusion": "inconclusive"
+    },
+    {
+      "id": "GH-18",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "content/layouts/families/LAY-TERMINAL-CHARACTER-GRID.json"
+        },
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-layout-catalog.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-27T06:43:26.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T064003507Z-26ebd01d"
+      ],
+      "completedAt": "2026-09-27T06:43:26.000Z",
+      "conclusion": "inconclusive"
+    },
+    {
+      "id": "GH-19",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-sequential-reveal.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-27T06:46:05.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T064425247Z-cf2f7d75"
+      ],
+      "completedAt": "2026-09-27T06:46:05.000Z",
+      "conclusion": "inconclusive"
+    },
+    {
+      "id": "GH-20",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-character-grid-layout.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-27T06:51:55.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T064714735Z-fddc1b8a"
+      ],
+      "completedAt": "2026-09-27T06:51:55.000Z",
+      "conclusion": "supported"
     }
   ]
 }
