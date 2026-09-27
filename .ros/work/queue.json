@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 1,
+  "nextSeq": 2,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -39,6 +39,22 @@
       "createdBy": "agent:chatgpt",
       "source": "user-request",
       "sourceReference": "EX-VE-TYP-001"
+    },
+    {
+      "id": "WI-0001",
+      "title": "Build indexed theme specimen catalog and automated perceptual measurement",
+      "description": null,
+      "tags": [
+        "visual-engineering,color,themes,research"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-27T05:09:06.685Z",
+      "updatedAt": "2026-09-27T05:10:25.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }
