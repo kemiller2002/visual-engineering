@@ -19,19 +19,66 @@
     "touch-first casual use"
   ],
   "semanticRegions": [
-    { "id": "screen-identity", "purpose": "Names the screen and, where used, its transaction or panel identifier.", "required": true, "html": "heading", "position": "top rows" },
-    { "id": "context", "purpose": "Protected context the operator must verify before acting (system, date, user, record key).", "required": false, "html": "protected text / description list", "position": "top rows" },
-    { "id": "body", "purpose": "Positioned protected text and editable fields for the task.", "required": true, "html": "grid of positioned runs inside a form when any field is editable", "position": "middle rows" },
-    { "id": "repeated-rows", "purpose": "Dense repeated records with aligned columns.", "required": false, "html": "table (column headers + rows) placed in the grid", "position": "middle rows" },
-    { "id": "message", "purpose": "Validation, error, warning, information, and success messages about the current screen.", "required": true, "html": "live region (status or alert)", "position": "reserved row near bottom" },
-    { "id": "system-status", "purpose": "Terminal/system state such as input inhibited, waiting, or insert mode.", "required": false, "html": "live region (status)", "position": "reserved row, usually last" },
-    { "id": "actions", "purpose": "Named action affordances (Enter, Clear, Reset, PF/F keys, named actions).", "required": true, "html": "group of native buttons with visible names", "position": "reserved row(s) at bottom" }
+    {
+      "id": "screen-identity",
+      "purpose": "Names the screen and, where used, its transaction or panel identifier.",
+      "required": true,
+      "html": "heading",
+      "position": "top rows"
+    },
+    {
+      "id": "context",
+      "purpose": "Protected context the operator must verify before acting (system, date, user, record key).",
+      "required": false,
+      "html": "protected text / description list",
+      "position": "top rows"
+    },
+    {
+      "id": "body",
+      "purpose": "Positioned protected text and editable fields for the task.",
+      "required": true,
+      "html": "grid of positioned runs inside a form when any field is editable",
+      "position": "middle rows"
+    },
+    {
+      "id": "repeated-rows",
+      "purpose": "Dense repeated records with aligned columns.",
+      "required": false,
+      "html": "table (column headers + rows) placed in the grid",
+      "position": "middle rows"
+    },
+    {
+      "id": "message",
+      "purpose": "Validation, error, warning, information, and success messages about the current screen.",
+      "required": true,
+      "html": "live region (status or alert)",
+      "position": "reserved row near bottom"
+    },
+    {
+      "id": "system-status",
+      "purpose": "Terminal/system state such as input inhibited, waiting, or insert mode.",
+      "required": false,
+      "html": "live region (status)",
+      "position": "reserved row, usually last"
+    },
+    {
+      "id": "actions",
+      "purpose": "Named action affordances (Enter, Clear, Reset, PF/F keys, named actions).",
+      "required": true,
+      "html": "group of native buttons with visible names",
+      "position": "reserved row(s) at bottom"
+    }
   ],
   "sourceOrder": {
     "rule": "Positioned runs appear in ascending row-major order (row x columns + column). Reserved regions keep this rule because they occupy the bottom rows.",
     "consequence": "DOM order, reading order, focus order, and visual order are the same sequence without tabindex.",
     "exceptions": "None inside the grid. Content outside the grid (page chrome) follows normal page order.",
-    "evidence": ["EV-VE-TCG-2026-CA91", "EV-VE-TCG-2026-3E25", "EV-VE-TCG-2026-FEFD", "EV-VE-TCG-2026-E22E"]
+    "evidence": [
+      "EV-VE-TCG-2026-CA91",
+      "EV-VE-TCG-2026-3E25",
+      "EV-VE-TCG-2026-FEFD",
+      "EV-VE-TCG-2026-E22E"
+    ]
   },
   "recognitionPath": [
     "screen identity",
@@ -88,7 +135,9 @@
       "contained": "The grid keeps its geometry inside a horizontally scrollable, keyboard-focusable region with an accessible name. The page itself never overflows horizontally. Focus moving to a field scrolls it into view.",
       "reflow": "Opt-in alternative for screens whose positions carry no meaning: runs are presented in source order as a single column; labels stay with fields; action keys wrap. Positions are not preserved.",
       "choice": "Authors must justify contained against WCAG 1.4.10: the exception applies only where two-dimensional layout is required for usage or meaning, and text inside cells must still be readable.",
-      "evidence": ["EV-VE-TCG-2026-62B1"],
+      "evidence": [
+        "EV-VE-TCG-2026-62B1"
+      ],
       "hypothesis": "HY-VE-TCG-2026-8750"
     },
     "zoom": "At 200% text size the grid grows proportionally and remains contained; no characters are clipped or overlapped. Text-spacing overrides (WCAG 1.4.12) may widen cells; the grid must grow rather than clip.",
@@ -115,15 +164,89 @@
       "id": "SequentialReveal",
       "optional": true,
       "classification": "new Echelon behavior; not authentic 3270",
-      "definition": "Defined by GH-19."
+      "definition": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md",
+      "referenceModel": "scripts/sequential-reveal.mjs",
+      "summary": "Optional visual-only row-major staging of already-present text; immediate under reduced motion; never stages fields, actions, messages, status, or consequential values; any input completes it without being consumed."
     }
   ],
   "profiles": [
-    { "id": "ibm-3270", "role": "first reference profile", "geometries": ["24x80", "32x80", "43x80", "27x132"], "actions": ["Enter", "Clear", "PA1-PA3", "PF1-PF24", "Reset (local)"], "evidence": ["EV-VE-TCG-2026-DFA5", "EV-VE-TCG-2026-21B3", "EV-VE-TCG-2026-D0F7"] },
-    { "id": "ibm-5250", "role": "comparison profile", "geometries": ["24x80", "27x132"], "actions": ["Enter", "F1-F24", "Help", "Roll Up/Down", "Field Exit", "Reset (local)"], "evidence": ["EV-VE-TCG-2026-2966"] },
-    { "id": "dos-text-mode", "role": "assumed profile", "geometries": ["80x25 (assumed)"], "actions": ["F1-F10/F12 (assumed)"], "evidence": [], "assumption": "A-2" },
-    { "id": "bbs-ansi", "role": "assumed profile", "geometries": ["80x24 or 80x25 (assumed)"], "actions": ["single-key menus (assumed)"], "evidence": [], "assumption": "A-2" },
-    { "id": "modern-grid", "role": "assumed profile", "geometries": ["author-defined"], "actions": ["named actions"], "evidence": [], "assumption": "A-2" }
+    {
+      "id": "ibm-3270",
+      "role": "first reference profile",
+      "geometries": [
+        "24x80",
+        "32x80",
+        "43x80",
+        "27x132"
+      ],
+      "actions": [
+        "Enter",
+        "Clear",
+        "PA1-PA3",
+        "PF1-PF24",
+        "Reset (local)"
+      ],
+      "evidence": [
+        "EV-VE-TCG-2026-DFA5",
+        "EV-VE-TCG-2026-21B3",
+        "EV-VE-TCG-2026-D0F7"
+      ]
+    },
+    {
+      "id": "ibm-5250",
+      "role": "comparison profile",
+      "geometries": [
+        "24x80",
+        "27x132"
+      ],
+      "actions": [
+        "Enter",
+        "F1-F24",
+        "Help",
+        "Roll Up/Down",
+        "Field Exit",
+        "Reset (local)"
+      ],
+      "evidence": [
+        "EV-VE-TCG-2026-2966"
+      ]
+    },
+    {
+      "id": "dos-text-mode",
+      "role": "assumed profile",
+      "geometries": [
+        "80x25 (assumed)"
+      ],
+      "actions": [
+        "F1-F10/F12 (assumed)"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    },
+    {
+      "id": "bbs-ansi",
+      "role": "assumed profile",
+      "geometries": [
+        "80x24 or 80x25 (assumed)"
+      ],
+      "actions": [
+        "single-key menus (assumed)"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    },
+    {
+      "id": "modern-grid",
+      "role": "assumed profile",
+      "geometries": [
+        "author-defined"
+      ],
+      "actions": [
+        "named actions"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    }
   ],
   "formaPrimitives": {
     "required": [
@@ -137,12 +260,36 @@
       "profile layer for palette, typeface, boundary glyphs, and cursor treatment"
     ],
     "knownGaps": [
-      { "id": "GAP-TCG-01", "gap": "Forma had no character-cell positioning primitive; existing layouts are flow/grid compositions measured in rem, not cells.", "owner": "Forma #38" },
-      { "id": "GAP-TCG-02", "gap": "No Forma contract ties a field's rendered width to its maximum length in characters.", "owner": "Forma #39" },
-      { "id": "GAP-TCG-03", "gap": "No Forma contract presents named keyboard actions (key + label) separately from their behavior.", "owner": "Forma #40" },
-      { "id": "GAP-TCG-04", "gap": "No Forma contract for a staged text reveal with a static fallback.", "owner": "Forma #41" },
-      { "id": "GAP-TCG-05", "gap": "No contained-scroll viewport contract that is keyboard-focusable and named.", "owner": "Forma #38" },
-      { "id": "GAP-TCG-06", "gap": "No rule for wide-glyph (two-cell) characters or right-to-left grids.", "owner": "unassigned; research needed" }
+      {
+        "id": "GAP-TCG-01",
+        "gap": "Forma had no character-cell positioning primitive; existing layouts are flow/grid compositions measured in rem, not cells.",
+        "owner": "Forma #38"
+      },
+      {
+        "id": "GAP-TCG-02",
+        "gap": "No Forma contract ties a field's rendered width to its maximum length in characters.",
+        "owner": "Forma #39"
+      },
+      {
+        "id": "GAP-TCG-03",
+        "gap": "No Forma contract presents named keyboard actions (key + label) separately from their behavior.",
+        "owner": "Forma #40"
+      },
+      {
+        "id": "GAP-TCG-04",
+        "gap": "No Forma contract for a staged text reveal with a static fallback.",
+        "owner": "Forma #41"
+      },
+      {
+        "id": "GAP-TCG-05",
+        "gap": "No contained-scroll viewport contract that is keyboard-focusable and named.",
+        "owner": "Forma #38"
+      },
+      {
+        "id": "GAP-TCG-06",
+        "gap": "No rule for wide-glyph (two-cell) characters or right-to-left grids.",
+        "owner": "unassigned; research needed"
+      }
     ]
   },
   "antiPatterns": [
@@ -156,25 +303,93 @@
     "Describing SequentialReveal, green phosphor, or wraparound Tab as authentic 3270 behavior."
   ],
   "assumptions": [
-    { "id": "A-1", "text": "Users of modern keyboard-first grid applications expect row-major field order.", "test": "HY-VE-TCG-2026-9151" },
-    { "id": "A-2", "text": "DOS text-mode, BBS, and modern TUIs share the grid invariants.", "test": "primary-source verification" },
-    { "id": "A-3", "text": "The 3270 status line sits below the application rows.", "test": "IBM display-station documentation" },
-    { "id": "A-4", "text": "Dense cell-aligned presentation supports expert scanning.", "test": "HY-VE-TCG-2026-3D56" },
-    { "id": "A-5", "text": "1ch of a monospaced face is a stable cell width across engines and zoom.", "test": "Forma #44 browser verification" }
+    {
+      "id": "A-1",
+      "text": "Users of modern keyboard-first grid applications expect row-major field order.",
+      "test": "HY-VE-TCG-2026-9151"
+    },
+    {
+      "id": "A-2",
+      "text": "DOS text-mode, BBS, and modern TUIs share the grid invariants.",
+      "test": "primary-source verification"
+    },
+    {
+      "id": "A-3",
+      "text": "The 3270 status line sits below the application rows.",
+      "test": "IBM display-station documentation"
+    },
+    {
+      "id": "A-4",
+      "text": "Dense cell-aligned presentation supports expert scanning.",
+      "test": "HY-VE-TCG-2026-3D56"
+    },
+    {
+      "id": "A-5",
+      "text": "1ch of a monospaced face is a stable cell width across engines and zoom.",
+      "test": "Forma #44 browser verification"
+    }
   ],
   "verification": [
-    { "id": "V-01", "check": "Every positioned run is within bounds and does not cross the right edge.", "kind": "static" },
-    { "id": "V-02", "check": "No two runs share a cell.", "kind": "static" },
-    { "id": "V-03", "check": "Source order equals row-major order of runs.", "kind": "static" },
-    { "id": "V-04", "check": "Every editable run has a label and a length; its maxlength equals its length.", "kind": "static + DOM" },
-    { "id": "V-05", "check": "Protected runs are not focusable form controls.", "kind": "DOM" },
-    { "id": "V-06", "check": "Tab and Shift+Tab visit editable fields and actions in row-major order.", "kind": "browser" },
-    { "id": "V-07", "check": "Rendered cell position equals declared position for 24x80 and 32x80.", "kind": "browser" },
-    { "id": "V-08", "check": "No page-level horizontal overflow at 320 and 390 CSS px; the contained region is focusable and named.", "kind": "browser" },
-    { "id": "V-09", "check": "At 200% text size no characters are clipped and positions still correspond.", "kind": "browser" },
-    { "id": "V-10", "check": "Forced colors keep field boundaries, focus, and state cues visible.", "kind": "browser" },
-    { "id": "V-11", "check": "With reduced motion requested, revealed content is present and visible immediately.", "kind": "browser" },
-    { "id": "V-12", "check": "Message and state cues are not conveyed by color alone.", "kind": "review" }
+    {
+      "id": "V-01",
+      "check": "Every positioned run is within bounds and does not cross the right edge.",
+      "kind": "static"
+    },
+    {
+      "id": "V-02",
+      "check": "No two runs share a cell.",
+      "kind": "static"
+    },
+    {
+      "id": "V-03",
+      "check": "Source order equals row-major order of runs.",
+      "kind": "static"
+    },
+    {
+      "id": "V-04",
+      "check": "Every editable run has a label and a length; its maxlength equals its length.",
+      "kind": "static + DOM"
+    },
+    {
+      "id": "V-05",
+      "check": "Protected runs are not focusable form controls.",
+      "kind": "DOM"
+    },
+    {
+      "id": "V-06",
+      "check": "Tab and Shift+Tab visit editable fields and actions in row-major order.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-07",
+      "check": "Rendered cell position equals declared position for 24x80 and 32x80.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-08",
+      "check": "No page-level horizontal overflow at 320 and 390 CSS px; the contained region is focusable and named.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-09",
+      "check": "At 200% text size no characters are clipped and positions still correspond.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-10",
+      "check": "Forced colors keep field boundaries, focus, and state cues visible.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-11",
+      "check": "With reduced motion requested, revealed content is present and visible immediately.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-12",
+      "check": "Message and state cues are not conveyed by color alone.",
+      "kind": "review"
+    }
   ],
   "narrowRecomposition": "contained horizontal scroll preserving the grid by default; opt-in reflow to a single column in source order when positions carry no meaning; never page-level overflow",
   "evidence": [

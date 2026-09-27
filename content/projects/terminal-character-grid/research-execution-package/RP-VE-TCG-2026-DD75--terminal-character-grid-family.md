@@ -72,7 +72,7 @@ Limen, and Ordo (CN-VE-TCG-2026-6CA0, rule B-1).
 | --- | --- |
 | GH-17 | [CN-VE-TCG-2026-6CA0](../concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md), [EVR-VE-TCG-001](../evidence-registry/terminal-character-grid-evidence-v1.md), [HYR-VE-TCG-001](../hypothesis-registry/terminal-character-grid-hypotheses-v1.md), [JR-VE-TCG-2026-2E0E](../research-journal/JR-VE-TCG-2026-2E0E--evidence-and-abstraction-boundary.md) |
 | GH-18 | [`LAY-TERMINAL-CHARACTER-GRID`](../../../layouts/families/LAY-TERMINAL-CHARACTER-GRID.json) in the new [layout catalog](../../../layouts/README.md); [DF-VE-TCG-2026-2DD5](../decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md) |
-| GH-19 | SequentialReveal behavior definition |
+| GH-19 | [CN-VE-TCG-2026-F9F1](../concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md) and reference model `scripts/sequential-reveal.mjs` |
 | GH-20 | Reference workflow validation report |
 
 ## Status
