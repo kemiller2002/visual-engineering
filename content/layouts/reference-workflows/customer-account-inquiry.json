@@ -1,0 +1,1332 @@
+{
+  "id": "RW-TCG-CUSTOMER-ACCOUNT-INQUIRY",
+  "family": "LAY-TERMINAL-CHARACTER-GRID",
+  "profile": "ibm-3270",
+  "description": "Customer Inquiry -> Account Detail -> Transaction History reference workflow (GH-20). Data are fictitious.",
+  "geometry": {
+    "rows": 24,
+    "columns": 80
+  },
+  "reserved": {
+    "messageRow": 21,
+    "actionRows": [
+      22,
+      23
+    ],
+    "statusRow": 24
+  },
+  "screens": [
+    {
+      "id": "CINQ",
+      "title": "Customer Inquiry",
+      "purpose": "Find one customer by one or more criteria.",
+      "reveal": {
+        "regions": [
+          "title"
+        ],
+        "when": "first display in a session",
+        "behavior": "CN-VE-TCG-2026-F9F1"
+      },
+      "runs": [
+        {
+          "kind": "text",
+          "id": "code",
+          "row": 1,
+          "column": 2,
+          "text": "CINQ"
+        },
+        {
+          "kind": "heading",
+          "id": "title",
+          "row": 1,
+          "column": 33,
+          "text": "CUSTOMER INQUIRY",
+          "level": 1
+        },
+        {
+          "kind": "text",
+          "id": "l-date",
+          "row": 1,
+          "column": 64,
+          "text": "Date:"
+        },
+        {
+          "kind": "value",
+          "id": "v-date",
+          "row": 1,
+          "column": 70,
+          "length": 10,
+          "text": "2026-09-27",
+          "labelledBy": "l-date"
+        },
+        {
+          "kind": "text",
+          "id": "l-system",
+          "row": 2,
+          "column": 2,
+          "text": "System:"
+        },
+        {
+          "kind": "value",
+          "id": "v-system",
+          "row": 2,
+          "column": 10,
+          "length": 8,
+          "text": "ECHT01",
+          "labelledBy": "l-system"
+        },
+        {
+          "kind": "text",
+          "id": "l-oper",
+          "row": 2,
+          "column": 60,
+          "text": "Operator:"
+        },
+        {
+          "kind": "value",
+          "id": "v-oper",
+          "row": 2,
+          "column": 70,
+          "length": 8,
+          "text": "OP0142",
+          "labelledBy": "l-oper"
+        },
+        {
+          "kind": "text",
+          "id": "intro",
+          "row": 4,
+          "column": 2,
+          "text": "Enter one or more search criteria, then press Enter."
+        },
+        {
+          "kind": "text",
+          "id": "l-custno",
+          "row": 6,
+          "column": 2,
+          "text": "Customer number . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-custno",
+          "row": 6,
+          "column": 26,
+          "length": 10,
+          "labelledBy": "l-custno",
+          "inputMode": "numeric"
+        },
+        {
+          "kind": "text",
+          "id": "l-last",
+          "row": 7,
+          "column": 2,
+          "text": "Last name . . . . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-last",
+          "row": 7,
+          "column": 26,
+          "length": 20,
+          "labelledBy": "l-last"
+        },
+        {
+          "kind": "text",
+          "id": "l-first",
+          "row": 8,
+          "column": 2,
+          "text": "First name  . . . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-first",
+          "row": 8,
+          "column": 26,
+          "length": 15,
+          "labelledBy": "l-first"
+        },
+        {
+          "kind": "text",
+          "id": "l-dob",
+          "row": 9,
+          "column": 2,
+          "text": "Date of birth . . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-dob",
+          "row": 9,
+          "column": 26,
+          "length": 10,
+          "labelledBy": "l-dob",
+          "describedBy": "dob-hint"
+        },
+        {
+          "kind": "text",
+          "id": "dob-hint",
+          "row": 9,
+          "column": 38,
+          "text": "(YYYY-MM-DD)"
+        },
+        {
+          "kind": "text",
+          "id": "l-postal",
+          "row": 10,
+          "column": 2,
+          "text": "Postal code . . . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-postal",
+          "row": 10,
+          "column": 26,
+          "length": 10,
+          "labelledBy": "l-postal"
+        },
+        {
+          "kind": "text",
+          "id": "l-acct",
+          "row": 11,
+          "column": 2,
+          "text": "Account number  . . . ."
+        },
+        {
+          "kind": "field",
+          "id": "f-acct",
+          "row": 11,
+          "column": 26,
+          "length": 14,
+          "labelledBy": "l-acct"
+        },
+        {
+          "kind": "text",
+          "id": "rule",
+          "row": 13,
+          "column": 2,
+          "text": "At least one criterion is required. Last names match from the first letter."
+        },
+        {
+          "kind": "message",
+          "id": "msg",
+          "row": 21,
+          "column": 2,
+          "length": 78,
+          "severity": "information",
+          "text": "CINQ000I Type search criteria and press Enter."
+        },
+        {
+          "kind": "action",
+          "id": "a-enter",
+          "row": 22,
+          "column": 2,
+          "key": "Enter",
+          "label": "Search"
+        },
+        {
+          "kind": "action",
+          "id": "a-clear",
+          "row": 22,
+          "column": 16,
+          "key": "Clear",
+          "label": "Erase"
+        },
+        {
+          "kind": "action",
+          "id": "a-reset",
+          "row": 22,
+          "column": 29,
+          "key": "Reset",
+          "label": "Unlock"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf1",
+          "row": 22,
+          "column": 43,
+          "key": "PF1",
+          "label": "Help"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf3",
+          "row": 22,
+          "column": 53,
+          "key": "PF3",
+          "label": "Exit"
+        },
+        {
+          "kind": "status",
+          "id": "sys",
+          "row": 24,
+          "column": 2,
+          "length": 78,
+          "text": "READY"
+        }
+      ],
+      "states": [
+        {
+          "id": "validation",
+          "runs": [
+            {
+              "id": "f-dob",
+              "value": "2026-02-30",
+              "invalid": true,
+              "describedBy": [
+                "dob-hint",
+                "msg"
+              ]
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "validation",
+              "text": "CINQ003E Date of birth 2026-02-30 is not a valid date. Use YYYY-MM-DD."
+            }
+          ]
+        },
+        {
+          "id": "no-criteria",
+          "runs": [
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "error",
+              "text": "CINQ001E Enter at least one search criterion."
+            }
+          ]
+        },
+        {
+          "id": "not-found",
+          "runs": [
+            {
+              "id": "f-last",
+              "value": "QUINTANILLA-OKONKWO"
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "warning",
+              "text": "CINQ002W No customer matches. Check the spelling or search by account number."
+            }
+          ]
+        },
+        {
+          "id": "busy",
+          "runs": [
+            {
+              "kind": "status",
+              "id": "sys",
+              "row": 24,
+              "column": 2,
+              "length": 78,
+              "text": "X SYSTEM  WAITING FOR HOST"
+            }
+          ]
+        },
+        {
+          "id": "maximum-input",
+          "runs": [
+            {
+              "id": "f-custno",
+              "value": "9999999999"
+            },
+            {
+              "id": "f-last",
+              "value": "WOLFESCHLEGELSTEINHA"
+            },
+            {
+              "id": "f-first",
+              "value": "MARIA-ALEXANDRI"
+            },
+            {
+              "id": "f-acct",
+              "value": "99999-9999-999"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ACCD",
+      "title": "Account Detail",
+      "purpose": "Verify the customer and account before choosing an action.",
+      "runs": [
+        {
+          "kind": "text",
+          "id": "code",
+          "row": 1,
+          "column": 2,
+          "text": "ACCD"
+        },
+        {
+          "kind": "heading",
+          "id": "title",
+          "row": 1,
+          "column": 34,
+          "text": "ACCOUNT DETAIL",
+          "level": 1
+        },
+        {
+          "kind": "text",
+          "id": "l-date",
+          "row": 1,
+          "column": 64,
+          "text": "Date:"
+        },
+        {
+          "kind": "value",
+          "id": "v-date",
+          "row": 1,
+          "column": 70,
+          "length": 10,
+          "text": "2026-09-27",
+          "labelledBy": "l-date"
+        },
+        {
+          "kind": "text",
+          "id": "l-system",
+          "row": 2,
+          "column": 2,
+          "text": "System:"
+        },
+        {
+          "kind": "value",
+          "id": "v-system",
+          "row": 2,
+          "column": 10,
+          "length": 8,
+          "text": "ECHT01",
+          "labelledBy": "l-system"
+        },
+        {
+          "kind": "text",
+          "id": "l-oper",
+          "row": 2,
+          "column": 60,
+          "text": "Operator:"
+        },
+        {
+          "kind": "value",
+          "id": "v-oper",
+          "row": 2,
+          "column": 70,
+          "length": 8,
+          "text": "OP0142",
+          "labelledBy": "l-oper"
+        },
+        {
+          "kind": "text",
+          "id": "l-cust",
+          "row": 4,
+          "column": 2,
+          "text": "Customer  . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-cust",
+          "row": 4,
+          "column": 20,
+          "length": 10,
+          "text": "0001042778",
+          "labelledBy": "l-cust"
+        },
+        {
+          "kind": "text",
+          "id": "l-name",
+          "row": 4,
+          "column": 34,
+          "text": "Name . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-name",
+          "row": 4,
+          "column": 47,
+          "length": 30,
+          "text": "RIVERA, ALEX J",
+          "labelledBy": "l-name"
+        },
+        {
+          "kind": "text",
+          "id": "l-addr",
+          "row": 5,
+          "column": 2,
+          "text": "Address . . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-addr1",
+          "row": 5,
+          "column": 20,
+          "length": 40,
+          "text": "1200 HARBOR VIEW DRIVE APT 4B",
+          "labelledBy": "l-addr"
+        },
+        {
+          "kind": "value",
+          "id": "v-addr2",
+          "row": 6,
+          "column": 20,
+          "length": 40,
+          "text": "PORTLAND OR 97209-3311",
+          "labelledBy": "l-addr"
+        },
+        {
+          "kind": "text",
+          "id": "l-phone",
+          "row": 7,
+          "column": 2,
+          "text": "Phone . . . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-phone",
+          "row": 7,
+          "column": 20,
+          "length": 14,
+          "text": "not on file",
+          "labelledBy": "l-phone",
+          "missing": true
+        },
+        {
+          "kind": "heading",
+          "id": "h-acct",
+          "row": 9,
+          "column": 2,
+          "text": "ACCOUNT",
+          "level": 2
+        },
+        {
+          "kind": "text",
+          "id": "l-acctno",
+          "row": 10,
+          "column": 2,
+          "text": "Account number  :"
+        },
+        {
+          "kind": "value",
+          "id": "v-acctno",
+          "row": 10,
+          "column": 20,
+          "length": 14,
+          "text": "00417-2231-09",
+          "labelledBy": "l-acctno"
+        },
+        {
+          "kind": "text",
+          "id": "l-type",
+          "row": 10,
+          "column": 42,
+          "text": "Type . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-type",
+          "row": 10,
+          "column": 55,
+          "length": 12,
+          "text": "CHECKING",
+          "labelledBy": "l-type"
+        },
+        {
+          "kind": "text",
+          "id": "l-status",
+          "row": 11,
+          "column": 2,
+          "text": "Status  . . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-status",
+          "row": 11,
+          "column": 20,
+          "length": 10,
+          "text": "ACTIVE",
+          "labelledBy": "l-status"
+        },
+        {
+          "kind": "text",
+          "id": "l-opened",
+          "row": 11,
+          "column": 42,
+          "text": "Opened . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-opened",
+          "row": 11,
+          "column": 55,
+          "length": 10,
+          "text": "2014-03-11",
+          "labelledBy": "l-opened"
+        },
+        {
+          "kind": "text",
+          "id": "l-curr",
+          "row": 12,
+          "column": 2,
+          "text": "Currency  . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-curr",
+          "row": 12,
+          "column": 20,
+          "length": 3,
+          "text": "USD",
+          "labelledBy": "l-curr"
+        },
+        {
+          "kind": "heading",
+          "id": "h-bal",
+          "row": 14,
+          "column": 2,
+          "text": "BALANCES",
+          "level": 2
+        },
+        {
+          "kind": "text",
+          "id": "l-ledger",
+          "row": 15,
+          "column": 2,
+          "text": "Ledger balance  :"
+        },
+        {
+          "kind": "value",
+          "id": "v-ledger",
+          "row": 15,
+          "column": 20,
+          "length": 15,
+          "text": "12,480.55",
+          "labelledBy": "l-ledger",
+          "align": "end"
+        },
+        {
+          "kind": "text",
+          "id": "l-avail",
+          "row": 15,
+          "column": 42,
+          "text": "Available  :"
+        },
+        {
+          "kind": "value",
+          "id": "v-avail",
+          "row": 15,
+          "column": 55,
+          "length": 15,
+          "text": "12,230.55",
+          "labelledBy": "l-avail",
+          "align": "end"
+        },
+        {
+          "kind": "text",
+          "id": "l-holds",
+          "row": 16,
+          "column": 2,
+          "text": "Holds . . . . . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-holds",
+          "row": 16,
+          "column": 20,
+          "length": 15,
+          "text": "250.00",
+          "labelledBy": "l-holds",
+          "align": "end"
+        },
+        {
+          "kind": "text",
+          "id": "l-od",
+          "row": 16,
+          "column": 42,
+          "text": "Overdraft  :"
+        },
+        {
+          "kind": "value",
+          "id": "v-od",
+          "row": 16,
+          "column": 55,
+          "length": 15,
+          "text": "1,000.00",
+          "labelledBy": "l-od",
+          "align": "end"
+        },
+        {
+          "kind": "text",
+          "id": "l-stmt",
+          "row": 18,
+          "column": 2,
+          "text": "Last statement  :"
+        },
+        {
+          "kind": "value",
+          "id": "v-stmt",
+          "row": 18,
+          "column": 20,
+          "length": 10,
+          "text": "2026-08-31",
+          "labelledBy": "l-stmt"
+        },
+        {
+          "kind": "message",
+          "id": "msg",
+          "row": 21,
+          "column": 2,
+          "length": 78,
+          "severity": "information",
+          "text": "ACCD000I Account 00417-2231-09 displayed."
+        },
+        {
+          "kind": "action",
+          "id": "a-enter",
+          "row": 22,
+          "column": 2,
+          "key": "Enter",
+          "label": "Refresh"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf3",
+          "row": 22,
+          "column": 17,
+          "key": "PF3",
+          "label": "Return"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf5",
+          "row": 22,
+          "column": 29,
+          "key": "PF5",
+          "label": "Transactions"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf12",
+          "row": 22,
+          "column": 47,
+          "key": "PF12",
+          "label": "Inquiry"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf1",
+          "row": 22,
+          "column": 61,
+          "key": "PF1",
+          "label": "Help"
+        },
+        {
+          "kind": "status",
+          "id": "sys",
+          "row": 24,
+          "column": 2,
+          "length": 78,
+          "text": "READY"
+        }
+      ],
+      "states": [
+        {
+          "id": "restricted",
+          "runs": [
+            {
+              "id": "v-status",
+              "text": "RESTRICTED"
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "warning",
+              "text": "ACCD010W Account is restricted. Debits require supervisor approval."
+            }
+          ]
+        },
+        {
+          "id": "extreme-values",
+          "runs": [
+            {
+              "id": "v-name",
+              "text": "VAN DER WESTHUIZEN-OKAFOR, MAR"
+            },
+            {
+              "id": "v-ledger",
+              "text": "-999,999,999.99"
+            },
+            {
+              "id": "v-avail",
+              "text": "-999,999,999.99"
+            },
+            {
+              "id": "v-addr1",
+              "text": "PO BOX 99999 RURAL ROUTE 12 STATION MAIN"
+            }
+          ]
+        },
+        {
+          "id": "missing-values",
+          "runs": [
+            {
+              "id": "v-od",
+              "text": "none"
+            },
+            {
+              "id": "v-stmt",
+              "text": "none yet",
+              "missing": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TRNH",
+      "title": "Transaction History",
+      "purpose": "Scan and verify recent transactions for one account.",
+      "runs": [
+        {
+          "kind": "text",
+          "id": "code",
+          "row": 1,
+          "column": 2,
+          "text": "TRNH"
+        },
+        {
+          "kind": "heading",
+          "id": "title",
+          "row": 1,
+          "column": 31,
+          "text": "TRANSACTION HISTORY",
+          "level": 1
+        },
+        {
+          "kind": "text",
+          "id": "l-date",
+          "row": 1,
+          "column": 64,
+          "text": "Date:"
+        },
+        {
+          "kind": "value",
+          "id": "v-date",
+          "row": 1,
+          "column": 70,
+          "length": 10,
+          "text": "2026-09-27",
+          "labelledBy": "l-date"
+        },
+        {
+          "kind": "text",
+          "id": "l-system",
+          "row": 2,
+          "column": 2,
+          "text": "System:"
+        },
+        {
+          "kind": "value",
+          "id": "v-system",
+          "row": 2,
+          "column": 10,
+          "length": 8,
+          "text": "ECHT01",
+          "labelledBy": "l-system"
+        },
+        {
+          "kind": "text",
+          "id": "l-oper",
+          "row": 2,
+          "column": 60,
+          "text": "Operator:"
+        },
+        {
+          "kind": "value",
+          "id": "v-oper",
+          "row": 2,
+          "column": 70,
+          "length": 8,
+          "text": "OP0142",
+          "labelledBy": "l-oper"
+        },
+        {
+          "kind": "text",
+          "id": "l-acct",
+          "row": 3,
+          "column": 2,
+          "text": "Account . :"
+        },
+        {
+          "kind": "value",
+          "id": "v-acct",
+          "row": 3,
+          "column": 14,
+          "length": 14,
+          "text": "00417-2231-09",
+          "labelledBy": "l-acct"
+        },
+        {
+          "kind": "text",
+          "id": "l-from",
+          "row": 3,
+          "column": 32,
+          "text": "From  . . :"
+        },
+        {
+          "kind": "field",
+          "id": "f-from",
+          "row": 3,
+          "column": 44,
+          "length": 10,
+          "labelledBy": "l-from",
+          "value": "2026-08-01",
+          "required": true
+        },
+        {
+          "kind": "text",
+          "id": "l-to",
+          "row": 3,
+          "column": 57,
+          "text": "To :"
+        },
+        {
+          "kind": "field",
+          "id": "f-to",
+          "row": 3,
+          "column": 62,
+          "length": 10,
+          "labelledBy": "l-to",
+          "value": "2026-09-27",
+          "required": true
+        },
+        {
+          "kind": "table",
+          "id": "t-tx",
+          "row": 5,
+          "maxRows": 12,
+          "caption": "Transactions, newest first",
+          "columns": [
+            {
+              "id": "date",
+              "header": "Date",
+              "column": 2,
+              "length": 10
+            },
+            {
+              "id": "desc",
+              "header": "Description",
+              "column": 14,
+              "length": 27
+            },
+            {
+              "id": "amount",
+              "header": "Amount",
+              "column": 43,
+              "length": 12,
+              "align": "end"
+            },
+            {
+              "id": "balance",
+              "header": "Balance",
+              "column": 57,
+              "length": 12,
+              "align": "end"
+            },
+            {
+              "id": "status",
+              "header": "Status",
+              "column": 71,
+              "length": 8
+            }
+          ],
+          "records": [
+            {
+              "date": "2026-09-26",
+              "desc": "PAYROLL DEPOSIT ACME CORP",
+              "amount": "2,450.00",
+              "balance": "12,480.55",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-25",
+              "desc": "CARD 4411 CITY MARKET",
+              "amount": "-86.12",
+              "balance": "10,030.55",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-25",
+              "desc": "CARD 4411 FUEL STOP 118",
+              "amount": "-52.40",
+              "balance": "10,116.67",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-24",
+              "desc": "TRANSFER TO SAVINGS 7710",
+              "amount": "-500.00",
+              "balance": "10,169.07",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-23",
+              "desc": "CHECK 1043",
+              "amount": "-1,200.00",
+              "balance": "10,669.07",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-22",
+              "desc": "ACH ELECTRIC UTILITY",
+              "amount": "-143.88",
+              "balance": "11,869.07",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-22",
+              "desc": "CARD 4411 BOOKSHOP",
+              "amount": "-24.99",
+              "balance": "12,012.95",
+              "status": "PENDING"
+            },
+            {
+              "date": "2026-09-20",
+              "desc": "ATM WITHDRAWAL 0931",
+              "amount": "-200.00",
+              "balance": "12,037.94",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-19",
+              "desc": "CHECK 1041",
+              "amount": "-310.00",
+              "balance": "12,237.94",
+              "status": "RETURNED"
+            },
+            {
+              "date": "2026-09-18",
+              "desc": "ONLINE PAYMENT CREDIT CARD",
+              "amount": "-640.00",
+              "balance": "12,547.94",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-17",
+              "desc": "INTEREST CREDIT",
+              "amount": "1.37",
+              "balance": "13,187.94",
+              "status": "POSTED"
+            },
+            {
+              "date": "2026-09-15",
+              "desc": "CARD 4411 PHARMACY",
+              "amount": "-18.45",
+              "balance": "13,186.57",
+              "status": "REVERSED"
+            }
+          ],
+          "emptyText": "No transactions in the selected period."
+        },
+        {
+          "kind": "text",
+          "id": "rows",
+          "row": 19,
+          "column": 2,
+          "text": "Rows 1-12 of 37"
+        },
+        {
+          "kind": "text",
+          "id": "more",
+          "row": 19,
+          "column": 72,
+          "text": "More: +"
+        },
+        {
+          "kind": "message",
+          "id": "msg",
+          "row": 21,
+          "column": 2,
+          "length": 78,
+          "severity": "information",
+          "text": "TRNH000I 37 transactions from 2026-08-01 to 2026-09-27."
+        },
+        {
+          "kind": "action",
+          "id": "a-enter",
+          "row": 22,
+          "column": 2,
+          "key": "Enter",
+          "label": "Apply dates"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf3",
+          "row": 22,
+          "column": 21,
+          "key": "PF3",
+          "label": "Return"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf7",
+          "row": 22,
+          "column": 33,
+          "key": "PF7",
+          "label": "Back"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf8",
+          "row": 22,
+          "column": 43,
+          "key": "PF8",
+          "label": "Forward"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf12",
+          "row": 22,
+          "column": 56,
+          "key": "PF12",
+          "label": "Inquiry"
+        },
+        {
+          "kind": "action",
+          "id": "a-reset",
+          "row": 23,
+          "column": 2,
+          "key": "Reset",
+          "label": "Unlock"
+        },
+        {
+          "kind": "action",
+          "id": "a-pf1",
+          "row": 23,
+          "column": 17,
+          "key": "PF1",
+          "label": "Help"
+        },
+        {
+          "kind": "status",
+          "id": "sys",
+          "row": 24,
+          "column": 2,
+          "length": 78,
+          "text": "READY"
+        }
+      ],
+      "states": [
+        {
+          "id": "empty",
+          "runs": [
+            {
+              "id": "f-from",
+              "value": "2026-09-20"
+            },
+            {
+              "id": "t-tx",
+              "records": []
+            },
+            {
+              "id": "rows",
+              "text": "Rows 0 of 0"
+            },
+            {
+              "id": "more",
+              "text": "More: -"
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "information",
+              "text": "TRNH004I No transactions between 2026-09-20 and 2026-09-27."
+            }
+          ]
+        },
+        {
+          "id": "error",
+          "runs": [
+            {
+              "id": "t-tx",
+              "records": [],
+              "emptyText": "Transaction history is unavailable."
+            },
+            {
+              "id": "rows",
+              "text": "Rows unavailable"
+            },
+            {
+              "id": "more",
+              "text": "More: -"
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "error",
+              "text": "TRNH009E Transaction service did not respond. Press Reset, then Enter to retry"
+            },
+            {
+              "kind": "status",
+              "id": "sys",
+              "row": 24,
+              "column": 2,
+              "length": 78,
+              "text": "X SYSTEM  INPUT INHIBITED"
+            }
+          ]
+        },
+        {
+          "id": "validation",
+          "runs": [
+            {
+              "id": "f-from",
+              "value": "2026-09-30",
+              "invalid": true,
+              "describedBy": "msg"
+            },
+            {
+              "kind": "message",
+              "id": "msg",
+              "row": 21,
+              "column": 2,
+              "length": 78,
+              "severity": "validation",
+              "text": "TRNH002E From date must not be later than To date."
+            }
+          ]
+        },
+        {
+          "id": "last-page",
+          "runs": [
+            {
+              "id": "t-tx",
+              "records": [
+                {
+                  "date": "2026-09-26",
+                  "desc": "PAYROLL DEPOSIT ACME CORP",
+                  "amount": "2,450.00",
+                  "balance": "12,480.55",
+                  "status": "POSTED"
+                }
+              ]
+            },
+            {
+              "id": "rows",
+              "text": "Rows 37-37 of 37"
+            },
+            {
+              "id": "more",
+              "text": "More: -"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "applicationTransitions": {
+    "owner": "consuming application / Limen",
+    "note": "Not part of the layout family. Included only to check that every transition is triggered by an action the screen presents. Domain legality (e.g. whether a restricted account may be viewed) belongs to Ordo/the application domain.",
+    "transitions": [
+      {
+        "from": "CINQ",
+        "action": "a-enter",
+        "to": "ACCD",
+        "when": "exactly one customer matches"
+      },
+      {
+        "from": "CINQ",
+        "action": "a-enter",
+        "to": "CINQ",
+        "when": "validation fails or no match; message updated"
+      },
+      {
+        "from": "CINQ",
+        "action": "a-clear",
+        "to": "CINQ",
+        "when": "fields erased (local erase plus notification)"
+      },
+      {
+        "from": "CINQ",
+        "action": "a-reset",
+        "to": "CINQ",
+        "when": "local unlock; nothing sent"
+      },
+      {
+        "from": "CINQ",
+        "action": "a-pf3",
+        "to": null,
+        "when": "leave the application"
+      },
+      {
+        "from": "ACCD",
+        "action": "a-enter",
+        "to": "ACCD",
+        "when": "refresh"
+      },
+      {
+        "from": "ACCD",
+        "action": "a-pf5",
+        "to": "TRNH"
+      },
+      {
+        "from": "ACCD",
+        "action": "a-pf3",
+        "to": "CINQ"
+      },
+      {
+        "from": "ACCD",
+        "action": "a-pf12",
+        "to": "CINQ"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-enter",
+        "to": "TRNH",
+        "when": "apply the date range"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-pf7",
+        "to": "TRNH",
+        "when": "previous page"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-pf8",
+        "to": "TRNH",
+        "when": "next page"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-pf3",
+        "to": "ACCD"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-pf12",
+        "to": "CINQ"
+      },
+      {
+        "from": "TRNH",
+        "action": "a-reset",
+        "to": "TRNH",
+        "when": "local unlock after error"
+      }
+    ]
+  }
+}

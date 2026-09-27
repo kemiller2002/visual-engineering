@@ -289,6 +289,30 @@
         "id": "GAP-TCG-06",
         "gap": "No rule for wide-glyph (two-cell) characters or right-to-left grids.",
         "owner": "unassigned; research needed"
+      },
+      {
+        "id": "GAP-TCG-07",
+        "gap": "No positioned repeated-row table whose columns are measured in cells, whose numeric columns end-align within fixed runs, and which keeps header-to-cell association.",
+        "owner": "Forma #38/#43",
+        "foundBy": "EX-VE-TCG-2026-5437"
+      },
+      {
+        "id": "GAP-TCG-08",
+        "gap": "No contract for a field to reference both a hint and the grid message region (aria-describedby with several IDs).",
+        "owner": "Forma #39/#40",
+        "foundBy": "EX-VE-TCG-2026-5437"
+      },
+      {
+        "id": "GAP-TCG-09",
+        "gap": "No declared overflow policy for runtime-generated messages longer than the message region.",
+        "owner": "Visual Engineering family rule, then Forma #40",
+        "foundBy": "EX-VE-TCG-2026-5437"
+      },
+      {
+        "id": "GAP-TCG-10",
+        "gap": "No verified rule for per-row selection fields inside dense repeated rows.",
+        "owner": "unassigned; research needed",
+        "foundBy": "EX-VE-TCG-2026-5437"
       }
     ]
   },
@@ -423,6 +447,18 @@
     "GAP-TCG-03",
     "GAP-TCG-04",
     "GAP-TCG-05",
-    "GAP-TCG-06"
+    "GAP-TCG-06",
+    "GAP-TCG-07",
+    "GAP-TCG-08",
+    "GAP-TCG-09",
+    "GAP-TCG-10"
+  ],
+  "referenceWorkflows": [
+    {
+      "id": "RW-TCG-CUSTOMER-ACCOUNT-INQUIRY",
+      "path": "content/layouts/reference-workflows/customer-account-inquiry.json",
+      "report": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md",
+      "result": "valid in 15 screen states; supported with gaps"
+    }
   ]
 }

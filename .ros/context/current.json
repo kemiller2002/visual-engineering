@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "agent:chatgpt",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-27T06:46:05.000Z",
+  "updatedAt": "2026-09-27T06:51:55.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -151,6 +151,28 @@
       ],
       "completedAt": "2026-09-27T06:46:05.000Z",
       "conclusion": "inconclusive"
+    },
+    {
+      "id": "GH-20",
+      "type": "research",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "research-record",
+          "path": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-character-grid-layout.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-27T06:51:55.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T064714735Z-fddc1b8a"
+      ],
+      "completedAt": "2026-09-27T06:51:55.000Z",
+      "conclusion": "supported"
     }
   ]
 }

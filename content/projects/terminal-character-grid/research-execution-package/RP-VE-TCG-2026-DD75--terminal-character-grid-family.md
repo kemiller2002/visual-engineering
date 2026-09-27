@@ -9,7 +9,7 @@ discipline: Visual Engineering
 author_agent: Anthropic Claude
 version: 1.0
 confidence: medium
-completion: in-progress
+completion: complete
 priority: high
 work_items:
   - GH-15
@@ -73,12 +73,16 @@ Limen, and Ordo (CN-VE-TCG-2026-6CA0, rule B-1).
 | GH-17 | [CN-VE-TCG-2026-6CA0](../concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md), [EVR-VE-TCG-001](../evidence-registry/terminal-character-grid-evidence-v1.md), [HYR-VE-TCG-001](../hypothesis-registry/terminal-character-grid-hypotheses-v1.md), [JR-VE-TCG-2026-2E0E](../research-journal/JR-VE-TCG-2026-2E0E--evidence-and-abstraction-boundary.md) |
 | GH-18 | [`LAY-TERMINAL-CHARACTER-GRID`](../../../layouts/families/LAY-TERMINAL-CHARACTER-GRID.json) in the new [layout catalog](../../../layouts/README.md); [DF-VE-TCG-2026-2DD5](../decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md) |
 | GH-19 | [CN-VE-TCG-2026-F9F1](../concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md) and reference model `scripts/sequential-reveal.mjs` |
-| GH-20 | Reference workflow validation report |
+| GH-20 | [EX-VE-TCG-2026-5437](../experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md); fixture `content/layouts/reference-workflows/customer-account-inquiry.json`; validator `scripts/character-grid-layout.mjs` |
 
 ## Status
 
-GH-17 complete as of 2026-09-27. Later rows are updated by their own work
-items.
+GH-17, GH-18, GH-19, and GH-20 complete as of 2026-09-27. The family is
+`observed`: evidence-backed and mechanically validated against a reference
+workflow, with no conforming implementation verified yet. Conclusion of
+EX-VE-TCG-2026-5437: **supported with gaps** (GAP-TCG-07 to GAP-TCG-10).
+Next: Forma #37 implementation and browser verification; user tests of
+HY-VE-TCG-2026-9151 and -8750.
 
 ## Evidence standard
 
