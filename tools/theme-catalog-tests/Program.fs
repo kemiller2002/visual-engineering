@@ -45,10 +45,11 @@ let twinTokens =
       "border", "hairline" ]
 
 let rec findRepositoryRoot (directory: DirectoryInfo) =
-    match directory with
-    | null -> None
-    | d when File.Exists(Path.Combine(d.FullName, "content", "themes", "index.json")) -> Some d.FullName
-    | d -> findRepositoryRoot d.Parent
+    if File.Exists(Path.Combine(directory.FullName, "content", "themes", "index.json")) then Some directory.FullName
+    else
+        match directory.Parent with
+        | null -> None
+        | parent -> findRepositoryRoot parent
 
 let tests =
     [ test "valid catalog passes" (expectValid valid)
@@ -213,7 +214,7 @@ let tests =
       test "replaces an existing theme and null replaces are valid"
           (valid
            |> editSpecimen "THM-0002.json" (set [ "replaces" ] (str "THM-0001"))
-           |> editSpecimen "THM-0001.json" (set [ "replaces" ] nul)
+           |> editSpecimen "THM-0001.json" (setNull [ "replaces" ])
            |> expectValid)
 
       test "a theme replacing itself fails"
@@ -236,7 +237,7 @@ let tests =
            |> expectErrors [ "specimen-path-mismatch" ])
 
       test "null required specimen string fails cleanly"
-          (valid |> editSpecimen "THM-0002.json" (set [ "name" ] nul) |> expectErrors [ "invalid-field" ])
+          (valid |> editSpecimen "THM-0002.json" (setNull [ "name" ]) |> expectErrors [ "invalid-field" ])
 
       test "empty required specimen string fails cleanly"
           (valid |> editSpecimen "THM-0002.json" (set [ "mode" ] (str "  ")) |> expectErrors [ "invalid-field" ])
@@ -251,7 +252,7 @@ let tests =
           (valid |> editSpecimen "THM-0002.json" (set [ "palette"; "glow" ] (str "amber")) |> expectErrors [ "invalid-palette-color" ])
 
       test "null index string fails cleanly"
-          (valid |> editIndex (set [ "themes"; "0"; "name" ] nul) |> expectErrors [ "invalid-field" ])
+          (valid |> editIndex (setNull [ "themes"; "0"; "name" ]) |> expectErrors [ "invalid-field" ])
 
       test "malformed specimen JSON fails without being reported missing"
           (valid |> withSpecimen "THM-0002.json" (Raw "{ \"id\": \"THM-0002\", ") |> expectErrors [ "malformed-json" ])

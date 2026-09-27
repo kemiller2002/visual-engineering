@@ -7,17 +7,22 @@ open System.IO
 open System.Text.Json.Nodes
 open VisualEngineering.ThemeCatalog
 
-let str (value: string) : JsonNode = JsonValue.Create value
-let nul: JsonNode = null
-let num (value: int) : JsonNode = JsonValue.Create value
+/// Unwraps a possibly-null JSON API result; a fixture that navigates to nothing is a test bug.
+let private nonNull context node =
+    match Option.ofObj node with
+    | Some value -> value
+    | None -> failwithf "fixture %s is null or missing" context
+
+let str (value: string) : JsonNode = (JsonValue.Create value |> nonNull "string value") :> JsonNode
+let num (value: int) : JsonNode = (JsonValue.Create value |> nonNull "number value") :> JsonNode
 let arr (items: JsonNode list) : JsonNode = JsonArray(Array.ofList items)
 let obj (members: (string * JsonNode) list) : JsonNode =
     JsonObject(members |> List.map KeyValuePair) :> JsonNode
 
 let private child (node: JsonNode) (key: string) : JsonNode =
     match node with
-    | :? JsonArray as items -> items[int key]
-    | _ -> node[key]
+    | :? JsonArray as items -> items[int key] |> nonNull key
+    | _ -> node[key] |> nonNull key
 
 let private cloned (change: JsonNode -> unit) (node: JsonNode) : JsonNode =
     let copy = node.DeepClone()
@@ -29,10 +34,13 @@ let private parentOf (path: string list) (root: JsonNode) = path |> List.take (p
 /// Sets (or adds) the member or array element at path. Values are cloned so they can be reused.
 let set (path: string list) (value: JsonNode) : JsonNode -> JsonNode =
     cloned (fun root ->
-        let copy = if isNull value then null else value.DeepClone()
         match parentOf path root with
-        | :? JsonArray as items -> items[int (List.last path)] <- copy
-        | parent -> parent[List.last path] <- copy)
+        | :? JsonArray as items -> items[int (List.last path)] <- value.DeepClone()
+        | parent -> parent[List.last path] <- value.DeepClone())
+
+/// Sets the member at path to JSON null.
+let setNull (path: string list) : JsonNode -> JsonNode =
+    cloned (fun root -> (parentOf path root)[List.last path] <- null)
 
 let remove (path: string list) : JsonNode -> JsonNode =
     cloned (fun root -> (parentOf path root).AsObject().Remove(List.last path) |> ignore)

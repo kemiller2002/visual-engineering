@@ -15,11 +15,8 @@ module ThemeId =
 
     /// Parses a string that is, in its entirety, a THM-NNNN identifier.
     let tryParse (value: string) : ThemeId option =
-        match value with
-        | null -> None
-        | text ->
-            let m = pattern.Match text
-            if m.Success then Some(ThemeId(int m.Groups[1].Value)) else None
+        let m = pattern.Match value
+        if m.Success then Some(ThemeId(int m.Groups[1].Value)) else None
 
     let number (id: ThemeId) = id.Number
     let format (id: ThemeId) = id.ToString()

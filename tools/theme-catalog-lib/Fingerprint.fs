@@ -11,17 +11,14 @@ module Fingerprint =
     /// #RRGGBBFF collapsed to #RRGGBB so one color has exactly one spelling.
     /// Any other alpha is retained because it denotes a different color.
     let normalizeHex (value: string) : CanonicalHex option =
-        match value with
-        | null -> None
-        | text ->
-            let m = hexPattern.Match text
-            if not m.Success then None
-            else
-                let rgb = m.Groups[1].Value.ToUpperInvariant()
-                let alpha = m.Groups[2].Value.ToUpperInvariant()
-                match alpha with
-                | "" | "FF" -> Some(CanonicalHex("#" + rgb))
-                | a -> Some(CanonicalHex("#" + rgb + a))
+        let m = hexPattern.Match value
+        if not m.Success then None
+        else
+            let rgb = m.Groups[1].Value.ToUpperInvariant()
+            match m.Groups[2].Value.ToUpperInvariant() with
+            | ""
+            | "FF" -> Some(CanonicalHex("#" + rgb))
+            | alpha -> Some(CanonicalHex("#" + rgb + alpha))
 
     let hexText (CanonicalHex hex) = hex
 

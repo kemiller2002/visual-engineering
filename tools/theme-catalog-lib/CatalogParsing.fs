@@ -178,11 +178,16 @@ module CatalogParsing =
         | Some value -> stringArray ctx "contexts" value |> Result.map Set.ofList
         | None -> invalid ctx InvalidField "contexts" "is required"
 
+    let private fileStem (path: string) =
+        match Path.GetFileNameWithoutExtension path with
+        | null -> ""
+        | stem -> stem
+
     /// The filename's own THM identifier, when the filename is THM-NNNN.json.
-    let fileThemeId (path: string) = ThemeId.tryParse (Path.GetFileNameWithoutExtension path)
+    let fileThemeId (path: string) = ThemeId.tryParse (fileStem path)
 
     let parseSpecimen (file: SourceFile) : Validated<Specimen> =
-        let ctx = { Path = file.Path; ThemeId = Some(Path.GetFileNameWithoutExtension file.Path) }
+        let ctx = { Path = file.Path; ThemeId = Some(fileStem file.Path) }
         parseDocument ctx file.Text (fun root ->
             let make id name status mode palette tokens contexts temperature source replaces specimenPath fingerprint : Specimen =
                 { Id = id
