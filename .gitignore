@@ -11,6 +11,8 @@ src/**/bin/
 src/**/obj/
 tests/**/bin/
 tests/**/obj/
+tools/**/bin/
+tools/**/obj/
 
 # Staged npm package artifacts for @echelon-foundry/visual-engineering
 npm/payload/
