@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 2,
+  "nextSeq": 3,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -55,6 +55,25 @@
       "attachments": [],
       "createdAt": "2026-09-27T05:11:59.687Z",
       "updatedAt": "2026-09-27T05:12:00.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0002",
+      "title": "Enforce theme catalog structural integrity",
+      "description": "Deterministic dependency-free F# validator for theme catalog identity, index consistency, exact palette fingerprints, semantic token references and THM references, enforced in CI before perceptual measurement.",
+      "tags": [
+        "visual-engineering",
+        "color",
+        "themes",
+        "validation"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-27T05:39:30.420Z",
+      "updatedAt": "2026-09-27T05:51:57.000Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
