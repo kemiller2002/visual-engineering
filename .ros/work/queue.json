@@ -45,13 +45,16 @@
       "title": "Build indexed theme specimen catalog and automated perceptual measurement",
       "description": null,
       "tags": [
-        "visual-engineering,color,themes,research"
+        "visual-engineering",
+        "color",
+        "themes",
+        "research"
       ],
       "priority": "high",
       "status": "complete",
       "attachments": [],
-      "createdAt": "2026-09-27T05:09:06.685Z",
-      "updatedAt": "2026-09-27T05:10:25.000Z",
+      "createdAt": "2026-09-27T05:11:59.687Z",
+      "updatedAt": "2026-09-27T05:12:00.000Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
