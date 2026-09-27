@@ -71,7 +71,7 @@ Limen, and Ordo (CN-VE-TCG-2026-6CA0, rule B-1).
 | Work item | Artifact |
 | --- | --- |
 | GH-17 | [CN-VE-TCG-2026-6CA0](../concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md), [EVR-VE-TCG-001](../evidence-registry/terminal-character-grid-evidence-v1.md), [HYR-VE-TCG-001](../hypothesis-registry/terminal-character-grid-hypotheses-v1.md), [JR-VE-TCG-2026-2E0E](../research-journal/JR-VE-TCG-2026-2E0E--evidence-and-abstraction-boundary.md) |
-| GH-18 | Layout catalog entry `LAY-TERMINAL-CHARACTER-GRID` (see `content/layouts/`) |
+| GH-18 | [`LAY-TERMINAL-CHARACTER-GRID`](../../../layouts/families/LAY-TERMINAL-CHARACTER-GRID.json) in the new [layout catalog](../../../layouts/README.md); [DF-VE-TCG-2026-2DD5](../decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md) |
 | GH-19 | SequentialReveal behavior definition |
 | GH-20 | Reference workflow validation report |
 

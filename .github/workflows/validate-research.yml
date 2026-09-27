@@ -32,6 +32,12 @@ jobs:
         id: research-validate
         run: npm run research:validate
 
+      - name: Validate layout catalog
+        run: npm run layouts:validate
+
+      - name: Test layout catalog validator
+        run: npm run layouts:test
+
       - name: Build research site
         id: research-build
         run: npm run research:build

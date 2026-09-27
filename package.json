@@ -19,7 +19,9 @@
     "tool:test": "dotnet test VisualEngineering.sln",
     "polish:gate": "node scripts/application-polish-gate.mjs",
     "polish:test": "node --test scripts/test-application-polish-gate.mjs",
-    "polish:example": "node scripts/application-polish-gate.mjs examples/application-polish-evidence.json --json"
+    "polish:example": "node scripts/application-polish-gate.mjs examples/application-polish-evidence.json --json",
+    "layouts:validate": "node scripts/layout-catalog.mjs",
+    "layouts:test": "node --test scripts/test-layout-catalog.mjs"
   },
   "engines": {
     "node": ">=24 <25"

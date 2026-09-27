@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 2,
+  "nextSeq": 3,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -55,6 +55,22 @@
       "attachments": [],
       "createdAt": "2026-09-27T05:11:59.687Z",
       "updatedAt": "2026-09-27T05:12:00.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0002",
+      "title": "Back-fill Forma-verified LAY-* layout families into the Visual Engineering layout catalog (content/layouts)",
+      "description": null,
+      "tags": [
+        "layouts,catalog"
+      ],
+      "priority": "medium",
+      "status": "captured",
+      "attachments": [],
+      "createdAt": "2026-09-27T06:43:25.925Z",
+      "updatedAt": "2026-09-27T06:43:25.925Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
