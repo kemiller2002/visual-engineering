@@ -144,7 +144,7 @@
     "noPageOverflow": true
   },
   "content": {
-    "long": "Protected text longer than its declared length is an authoring error found by validation. Editable input is limited by maxlength. Long lists are paged (PF7/PF8-style or named actions) or continue in a separately scrollable region; they do not push the action row off the grid.",
+    "long": "Protected text longer than its declared length is an authoring error found by validation. Editable input is limited by maxlength. Long lists are paged (PF7/PF8-style or named actions) or continue in a separately scrollable region; they do not push the action row off the grid. Runtime messages follow DF-VE-TCG-2026-DD05: they wrap within a reserved message region, are never truncated or clipped, and grow the region rather than overlap the rows below.",
     "missing": "Missing protected values render as an explicit placeholder with text meaning (e.g. 'n/a' or 'not on file'), never as silent blanks that look like zero or empty fields.",
     "extreme": "Maximum-length values fill their run exactly; amounts at the maximum digit count still fit; an empty repeated-row set shows an explicit empty-state message inside the rows region.",
     "localization": "Translated labels change length; each label run must be sized for the longest supported translation or the layout must be re-authored per locale. Wide-glyph scripts (CJK) commonly occupy two cells per glyph; the family has no verified rule for them. Right-to-left grids are not researched."
@@ -314,7 +314,8 @@
         "id": "GAP-TCG-09",
         "gap": "No declared overflow policy for runtime-generated messages longer than the message region.",
         "owner": "Visual Engineering family rule, then Forma #40",
-        "foundBy": "EX-VE-TCG-2026-5437"
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Decided by DF-VE-TCG-2026-DD05: never truncate or clip; a message region reserves one or more rows and grows when a message exceeds them; message length is application content. Forma verifies growth without overlap (pull request #47)."
       },
       {
         "id": "GAP-TCG-10",

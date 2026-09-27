@@ -188,5 +188,6 @@ verify consequential data.
 
 - Forma implements the primitives and closes or records GAP-TCG-01…09.
 - Decide the message overflow policy (GAP-TCG-09) in the family entry.
+  Done: DF-VE-TCG-2026-DD05 (never truncate; reserved rows; the region grows).
 - Test HY-VE-TCG-2026-9151 and -8750 with users once Forma renders the
   reference screens.
