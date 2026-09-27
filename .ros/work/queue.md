@@ -7,3 +7,4 @@
 | ROS-INSTALL-3-1-1 | ROS-INSTALL-3-1-1 | complete |  |  |
 | VE-PERCEPTUAL-ENVELOPE-2026-09-22 | VE-PERCEPTUAL-ENVELOPE-2026-09-22 | complete |  |  |
 | WI-0001 | Build indexed theme specimen catalog and automated perceptual measurement | complete | visual-engineering, color, themes, research | high |
+| WI-0002 | Enforce theme catalog structural integrity | complete | visual-engineering, color, themes, validation | high |

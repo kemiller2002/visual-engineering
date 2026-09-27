@@ -9,6 +9,8 @@ It computes:
 
 It intentionally does **not** assign emotional meaning and does not claim CVD accessibility. Those require separate evidence layers.
 
+It also does not check catalog structure. CI runs [`theme-catalog-validate`](../theme-catalog-validate/README.md) first, so measurement only ever sees a structurally valid catalog.
+
 ## Run
 
 ```bash

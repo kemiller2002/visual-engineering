@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Domain.fs" />
+    <Compile Include="Fingerprint.fs" />
+    <Compile Include="CatalogParsing.fs" />
+    <Compile Include="CatalogIntegrity.fs" />
+    <Compile Include="CatalogFiles.fs" />
+  </ItemGroup>
+</Project>
