@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "agent:chatgpt",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-27T20:35:55.000Z",
+  "updatedAt": "2026-09-27T20:38:08.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -248,6 +248,27 @@
         "EXE-20260927T203503900Z-34c1ba5b"
       ],
       "completedAt": "2026-09-27T20:35:55.000Z"
+    },
+    {
+      "id": "WI-0006",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "content/projects/terminal-character-grid/experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-layout-catalog.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-27T20:38:08.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260927T203658007Z-1ed99c03"
+      ],
+      "completedAt": "2026-09-27T20:38:08.000Z"
     }
   ]
 }

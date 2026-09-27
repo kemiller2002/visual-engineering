@@ -84,6 +84,15 @@ EX-VE-TCG-2026-5437: **supported with gaps** (GAP-TCG-07 to GAP-TCG-10).
 Next: Forma #37 implementation and browser verification; user tests of
 HY-VE-TCG-2026-9151 and -8750.
 
+Update (WI-0004 to WI-0006, 2026-09-27): Forma #46 implements the family
+and passed cross-engine conformance, so the family is `supported`.
+Reachable-source evidence was added for the 3270 OIA, DOS text mode, and
+5250 per-row selection (EV-VE-TCG-2026-1EB5, -D9CB, -8081); GAP-TCG-09 is
+decided (DF-VE-TCG-2026-DD05); GAP-TCG-10 and GAP-TCG-11 are closed in
+Forma pull request #47; GAP-TCG-12 (status row versus OIA) is open. The
+user tests have a preregistration draft (EX-VE-TCG-2026-319C) and have not
+been run.
+
 ## Evidence standard
 
 Claims cite `EV-VE-TCG-2026-*`. Background that was not verified in an opened
