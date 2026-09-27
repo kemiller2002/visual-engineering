@@ -27,3 +27,11 @@ HY-VE-PE-001 through HY-VE-PE-008 are defined in the
 They test mechanism-aware accessibility, individualized readability envelopes,
 task-specific typography, semantic channel survivability, adaptive presentation,
 preference versus performance, CVD minimax optimization, and compensation cost.
+
+## Terminal / Character-Grid
+
+HY-VE-TCG-2026-9151, -8750, -A94C, -2A59, and -3D56 are defined in the
+[Terminal / Character-Grid Hypothesis Registry](../../projects/terminal-character-grid/hypothesis-registry/terminal-character-grid-hypotheses-v1.md).
+They test row-major focus order, contained scrolling versus reflow at narrow
+widths, the cost of SequentialReveal, explicit field boundaries, and fixed
+status regions. None has been tested.
