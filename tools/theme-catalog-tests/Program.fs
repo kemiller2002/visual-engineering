@@ -194,6 +194,27 @@ let tests =
       test "an identical definition retained under a deprecated ID is not an active duplicate"
           (withTwin "THM-0003" "deprecated" twinTokens |> expect [] [ "duplicate-palette" ])
 
+      test "index entry omitting temperature the specimen authors fails"
+          (valid |> editIndex (remove [ "themes"; "0"; "temperature" ]) |> expectErrors [ "index-metadata-mismatch" ])
+
+      test "index entry omitting contexts fails"
+          (valid |> editIndex (remove [ "themes"; "0"; "contexts" ]) |> expectErrors [ "index-metadata-mismatch" ])
+
+      test "index entry may omit temperature when the specimen has no temperature facet"
+          (valid
+           |> editSpecimen "THM-0001.json" (remove [ "facets" ])
+           |> editIndex (remove [ "themes"; "0"; "temperature" ])
+           |> expectValid)
+
+      test "specimen id with a trailing newline is not a THM identifier"
+          (valid |> editSpecimen "THM-0002.json" (set [ "id" ] (str "THM-0002\n")) |> expectErrors [ "invalid-theme-id" ])
+
+      test "replaces with a trailing newline is not a THM identifier"
+          (valid |> editSpecimen "THM-0002.json" (set [ "replaces" ] (str "THM-0001\n")) |> expectErrors [ "invalid-theme-reference" ])
+
+      test "palette color with a trailing newline is malformed"
+          (valid |> editSpecimen "THM-0002.json" (set [ "palette"; "glow" ] (str "#FFB000\n")) |> expectErrors [ "invalid-palette-color" ])
+
       test "invalid provenance THM reference fails"
           (valid
            |> editSpecimen "THM-0002.json" (set [ "provenance"; "source" ] (str "THM-0099"))

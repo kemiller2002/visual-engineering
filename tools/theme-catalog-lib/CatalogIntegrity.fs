@@ -127,7 +127,8 @@ module CatalogIntegrity =
                             (specimens |> List.map (fun s -> s.Path) |> joinSorted)))))
         |> Option.defaultValue []
 
-    /// The specimen is authoritative; the index is a retrieval projection of it. Index temperature
+    /// The specimen is authoritative; the index is a retrieval projection of it, so an index entry
+    /// that omits a facet the specimen authors is as wrong as one that contradicts it. Index temperature
     /// projects the specimen's facets.temperature retrieval facet, not perception.temperature,
     /// which is a separately evidenced perceptual descriptor.
     let indexMetadata (catalog: ParsedCatalog) =
@@ -150,10 +151,13 @@ module CatalogIntegrity =
                       | Some indexed, Some authored when indexed <> authored ->
                           mismatch "temperature" (quote indexed) (sprintf "facets.temperature %s" (quote authored))
                       | Some indexed, None -> mismatch "temperature" (quote indexed) "no facets.temperature"
+                      | None, Some authored ->
+                          mismatch "temperature" "absent" (sprintf "facets.temperature %s" (quote authored))
                       | _ -> ()
                       match e.Contexts with
                       | Some indexed when indexed <> s.Contexts ->
                           mismatch "contexts" (setText indexed) (setText s.Contexts)
+                      | None -> mismatch "contexts" "absent" (setText s.Contexts)
                       | _ -> () ]
                 | _ -> []))
         |> Option.defaultValue []

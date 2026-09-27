@@ -11,7 +11,8 @@ type ThemeId =
     override this.ToString() = sprintf "THM-%04d" this.Number
 
 module ThemeId =
-    let private pattern = Regex("^THM-([0-9]{4})$", RegexOptions.CultureInvariant)
+    // \z, not $: in .NET, $ also matches before a trailing newline.
+    let private pattern = Regex(@"^THM-([0-9]{4})\z", RegexOptions.CultureInvariant)
 
     /// Parses a string that is, in its entirety, a THM-NNNN identifier.
     let tryParse (value: string) : ThemeId option =

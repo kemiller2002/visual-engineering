@@ -37,7 +37,7 @@ Each finding carries a severity, a stable code, the theme ID and path when known
 | `index-specimen-missing` | error | An index entry has no specimen. |
 | `specimen-index-missing` | error | A specimen has no index entry. |
 | `index-path-mismatch` | error | An index `path` is not the specimen's actual path. |
-| `index-metadata-mismatch` | error | Index `name`, `status`, `mode`, `temperature` or `contexts` disagree with the specimen. |
+| `index-metadata-mismatch` | error | Index `name`, `status`, `mode`, `temperature` or `contexts` disagree with the specimen, or the index omits a facet the specimen authors. |
 | `semantic-token-missing-palette-key` | error | A semantic token names a palette key that does not exist. |
 | `next-id-mismatch` | error | `nextId` is not the highest existing ID + 1. |
 | `fingerprint-mismatch` | error | A stored fingerprint is not the canonical palette fingerprint. |

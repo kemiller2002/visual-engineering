@@ -5,7 +5,8 @@ open System.Text.RegularExpressions
 
 /// Exact palette identity. This is string identity over normalized colors, not perceptual similarity.
 module Fingerprint =
-    let private hexPattern = Regex("^#([0-9A-Fa-f]{6})([0-9A-Fa-f]{2})?$", RegexOptions.CultureInvariant)
+    // \z, not $: in .NET, $ also matches before a trailing newline.
+    let private hexPattern = Regex(@"^#([0-9A-Fa-f]{6})([0-9A-Fa-f]{2})?\z", RegexOptions.CultureInvariant)
 
     /// Normalizes an authored palette color: upper-case hex digits, and a fully opaque
     /// #RRGGBBFF collapsed to #RRGGBB so one color has exactly one spelling.
