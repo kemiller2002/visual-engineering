@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 3,
+  "nextSeq": 4,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -61,6 +61,25 @@
     },
     {
       "id": "WI-0002",
+      "title": "Enforce theme catalog structural integrity",
+      "description": "Deterministic dependency-free F# validator for theme catalog identity, index consistency, exact palette fingerprints, semantic token references and THM references, enforced in CI before perceptual measurement.",
+      "tags": [
+        "visual-engineering",
+        "color",
+        "themes",
+        "validation"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-27T05:39:30.420Z",
+      "updatedAt": "2026-09-27T05:51:57.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0003",
       "title": "Back-fill Forma-verified LAY-* layout families into the Visual Engineering layout catalog (content/layouts)",
       "description": null,
       "tags": [
