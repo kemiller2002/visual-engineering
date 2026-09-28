@@ -167,3 +167,20 @@ experiment README.
 Next action: a researcher decides the smallest effects of interest,
 obtains approval, and runs six participants per stratum with
 `npm run tcg319c:session`. Then run `npm run tcg319c:analyze`.
+
+## EX-VE-TCG-2026-319C pilot forgone — 2026-09-28
+
+Decision (project owner): participants cannot currently be recruited, so
+the pilot is forgone. WI-0009 is abandoned, and the decision is recorded
+under WI-0010 in the specification (status `not-run`, section "Decision
+not to run"), the hypothesis registry, the REP, and the experiment
+README.
+
+HY-VE-TCG-2026-9151 and -8750 remain untested. CG-6 remains a rule on its
+existing evidence (EV-VE-TCG-2026-3E25 and WCAG focus order). The
+contained-versus-reflow guidance stays hypothesis-grade. The machinery in
+`experiments/ex-ve-tcg-319c` stays runnable, and CI keeps testing it.
+
+Next action: none for this experiment until participants are available.
+When they are, capture a new work item and follow the specification's
+"Decision not to run" section.

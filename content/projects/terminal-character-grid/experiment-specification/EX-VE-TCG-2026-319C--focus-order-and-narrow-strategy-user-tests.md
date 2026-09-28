@@ -2,7 +2,7 @@
 id: EX-VE-TCG-2026-319C
 title: Character-Grid Focus Order and Narrow-Screen Strategy User Tests
 project: terminal-character-grid
-status: preregistration-draft
+status: not-run
 priority: high
 work_item: WI-0006
 machinery_work_item: WI-0008
@@ -23,9 +23,11 @@ audiences:
 
 # EX-VE-TCG-2026-319C: Focus Order and Narrow-Screen Strategy User Tests
 
-**Status: preregistration draft with executable pilot machinery
-(`experiments/ex-ve-tcg-319c`, WI-0008, 2026-09-28). No participant has
-been recruited and no data exist.** This document specifies the studies so that they can be run
+**Status: not run. On 2026-09-28 the project owner decided to forgo the
+participant pilot because participants cannot currently be recruited
+(WI-0009 abandoned, recorded under WI-0010). No data exist. The
+preregistration and its executable machinery (`experiments/ex-ve-tcg-319c`,
+WI-0008) are kept unchanged, so the studies can run later as specified.** This document specifies the studies so that they can be run
 and judged against criteria fixed in advance. It must not be cited as
 evidence for either hypothesis.
 
@@ -216,14 +218,33 @@ hypothesis. It confirms that:
 - Study 2 answers are scored correctly;
 - horizontal scrolling is measured where the grid needs it.
 
-Not ready, and outside what a repository can supply (tracked as WI-0009,
-blocked):
+Not ready, and outside what a repository can supply (WI-0009, abandoned
+on 2026-09-28; see "Decision not to run" below):
 
 - recruitment of strata T, N, and S;
 - informed consent;
 - the approval route the running organization requires;
 - a researcher to run the sessions;
 - the smallest-effect-of-interest decision.
+
+## Decision not to run (2026-09-28)
+
+The project owner decided to forgo the pilot because participants cannot
+currently be recruited. The consequences follow the rules above:
+
+- HY-VE-TCG-2026-9151 and HY-VE-TCG-2026-8750 remain **untested**. Nothing
+  in this repository, including the scripted mechanics check, is evidence
+  for or against either hypothesis.
+- CG-6 (focus order equals row-major order) remains a family rule. Its
+  support is EV-VE-TCG-2026-3E25 (3270 practice) and the WCAG focus-order
+  requirement. It has no user evidence for web users.
+- The narrow-screen guidance (contained for position-dependent screens,
+  reflow for label/value screens) remains hypothesis-grade guidance. It is
+  not doctrine.
+- To run the studies later, capture a new work item. Reuse this
+  specification and its operational definitions unchanged. First confirm
+  that the frozen Forma snapshot is still the intended stimulus, and record
+  the smallest effect of interest.
 
 ## Ethics and data
 

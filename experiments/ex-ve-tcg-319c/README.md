@@ -6,6 +6,10 @@ HY-VE-TCG-2026-8750 (contained versus reflow at 320 CSS px). The
 specification, including its operational definitions, is
 `content/projects/terminal-character-grid/experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md`.
 
+**Status (2026-09-28): not run.** The project owner decided to forgo the
+participant pilot because participants cannot currently be recruited
+(WI-0009 abandoned). The machinery is kept runnable for a later attempt.
+
 **This directory contains no participant data.** Nothing produced here by
 tests or by the scripted mechanics agent may be cited for either
 hypothesis.
@@ -82,5 +86,5 @@ CI runs both commands (`.github/workflows/validate-research.yml`).
 ## Not supplied here
 
 Recruitment, informed consent, the running organization's approval, the
-session researcher, and the smallest effect of interest. WI-0009 is
-blocked on these; its reason records the commands that resume it.
+session researcher, and the smallest effect of interest. WI-0009 was
+abandoned for lack of participants. A later run needs a new work item.

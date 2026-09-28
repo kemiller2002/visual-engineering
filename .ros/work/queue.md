@@ -18,4 +18,5 @@
 | WI-0006 | Terminal family: user-test protocol for HY-VE-TCG-2026-9151 and HY-VE-TCG-2026-8750 | complete |  | medium |
 | WI-0007 | Terminal family: decide GAP-TCG-12 status line placement (OIA outside application rows) | complete |  | medium |
 | WI-0008 | EX-VE-TCG-2026-319C: executable pilot machinery (stimuli, harness, scoring, power analysis); participant sessions remain external | complete |  | medium |
-| WI-0009 | EX-VE-TCG-2026-319C: run the pilot with participants (strata T, N, S) and record the pilot variance and power analysis | blocked |  | medium |
+| WI-0009 | EX-VE-TCG-2026-319C: run the pilot with participants (strata T, N, S) and record the pilot variance and power analysis | abandoned |  | medium |
+| WI-0010 | EX-VE-TCG-2026-319C: record the decision to forgo the participant pilot | complete |  | medium |
