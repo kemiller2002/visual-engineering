@@ -30,7 +30,10 @@ about plausibility from the evidence in EVR-VE-TCG-001, not a measured result.
 
 HY-VE-TCG-2026-9151 and HY-VE-TCG-2026-8750 have a preregistration draft,
 [EX-VE-TCG-2026-319C](../experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md).
-It has not been run; both remain untested.
+It has not been run; both remain untested. Its pilot machinery (stimuli,
+harness, scoring, and power planning) is ready in `experiments/ex-ve-tcg-319c`
+(WI-0008). The pilot itself (WI-0009) is blocked on participants and
+approval.
 
 ## Rules
 

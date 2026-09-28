@@ -5,6 +5,7 @@ project: terminal-character-grid
 status: preregistration-draft
 priority: high
 work_item: WI-0006
+machinery_work_item: WI-0008
 author_agent: Anthropic Claude
 date: 2026-09-27
 hypotheses:
@@ -22,8 +23,9 @@ audiences:
 
 # EX-VE-TCG-2026-319C: Focus Order and Narrow-Screen Strategy User Tests
 
-**Status: preregistration draft. No participant has been recruited and no
-data exist.** This document specifies the studies so that they can be run
+**Status: preregistration draft with executable pilot machinery
+(`experiments/ex-ve-tcg-319c`, WI-0008, 2026-09-28). No participant has
+been recruited and no data exist.** This document specifies the studies so that they can be run
 and judged against criteria fixed in advance. It must not be cited as
 evidence for either hypothesis.
 
@@ -142,6 +144,86 @@ intervals, per stratum and pooled.
   position-dependent screens, reflow for label/value screens" becomes
   evidence-backed. Falsified: the guidance is withdrawn and both strategies
   are re-examined, especially for stratum S.
+
+## Operational definitions (amendment, 2026-09-28, before any data)
+
+These definitions make the measures above computable. They were fixed with
+the pilot machinery (`experiments/ex-ve-tcg-319c/src/scoring.mjs`) before any
+participant was recruited, and they change only by a dated amendment made
+before the data they would apply to exist.
+
+- **Visit.** One uninterrupted stay of focus on one element, together with
+  the input events made during it.
+- **Misentry (Study 1).** During a visit to field F the value changed and
+  ended as text of at least two characters that is not a prefix of F's
+  target, but begins with the first two characters of another field's
+  target. A typo inside the right field is not a navigation error. Item
+  generation guarantees that no two targets in a record share their first
+  two characters.
+- **Corrective Shift+Tab.** Every Shift+Tab keydown during a Study 1
+  trial. The task never requires backward navigation.
+- **Navigation errors (primary, Study 1).** Misentries plus corrective
+  Shift+Tab presses.
+- **Backtrack.** Any focus move to a field earlier in the condition's focus
+  order than the previously focused field, by any means.
+- **Completion time.** From the first keydown to the submit event.
+- **Correct (primary, Study 2).** Every requested part matches the item's
+  answer after removing spaces and thousands separators and ignoring case.
+  A trial without an answer is incorrect.
+- **Time to answer.** From stimulus display to answer submission.
+- **Scroll distance.** The sum of absolute horizontal (and, separately,
+  vertical) position changes over every scroll container and the window.
+- **Focus stops.** Focus events on elements inside the stimulus.
+
+Procedure details the draft left open, fixed the same way:
+
+- The first field has focus when a Study 1 trial starts, as on a terminal.
+  It is first in both orders.
+- The Study 1 record card mirrors the screen's 2 × 3 layout, so it favors
+  neither order.
+- Study 1 precedes Study 2 for every participant.
+- There are no practice trials. Whether the pilot shows a need for them is
+  a pilot question, and adding them is an amendment.
+- The Study 2 screen × strategy counterbalancing uses a 4 × 4 Williams
+  design. It balances position and first-order carryover and satisfies the
+  draft's "2 × 2 Latin square over screen × strategy".
+- Pilot size stays at six per stratum. Six is not a multiple of four, so
+  Study 2 sequences are used 2, 2, 1, 1 times. Confirmatory sizes are
+  rounded up to a multiple of the sequence count (2 for Study 1, 4 for
+  Study 2).
+- Study 2 does not begin until the harness measures the viewport at
+  320 ± 2 CSS px.
+- Stimuli are frozen: Forma commit `30aa31c` (CSS, reference workflow
+  markup, and conformance checker) with SHA-256 hashes in
+  `experiments/ex-ve-tcg-319c/protocol/forma-snapshot/manifest.json`.
+  Condition C is the only stimulus that breaks a Forma rule (CG-6), and
+  that break is the manipulation.
+
+**Open before confirmatory collection:** the smallest effect of interest
+for each contrast. Until it is set, the power module reports sample sizes
+over a grid of candidate effects (`protocol/pilot-config.json`).
+
+## Pilot readiness (2026-09-28)
+
+Ready (WI-0008): stimuli, schedules, item pools, session harness, event
+logging, scoring, pilot analysis, and power planning. There are 18 unit
+tests and one browser mechanics check. The mechanics check is a scripted
+agent, not a participant, and its output can never bear on either
+hypothesis. It confirms that:
+
+- a row-major typist makes no navigation errors under R and exactly four
+  misentries per trial under C;
+- Study 2 answers are scored correctly;
+- horizontal scrolling is measured where the grid needs it.
+
+Not ready, and outside what a repository can supply (tracked as WI-0009,
+blocked):
+
+- recruitment of strata T, N, and S;
+- informed consent;
+- the approval route the running organization requires;
+- a researcher to run the sessions;
+- the smallest-effect-of-interest decision.
 
 ## Ethics and data
 

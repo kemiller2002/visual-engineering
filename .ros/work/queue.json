@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 8,
+  "nextSeq": 10,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -149,6 +149,35 @@
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0008",
+      "title": "EX-VE-TCG-2026-319C: executable pilot machinery (stimuli, harness, scoring, power analysis); participant sessions remain external",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-28T01:50:20.173Z",
+      "updatedAt": "2026-09-28T02:06:55.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0009",
+      "title": "EX-VE-TCG-2026-319C: run the pilot with participants (strata T, N, S) and record the pilot variance and power analysis",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "blocked",
+      "attachments": [],
+      "createdAt": "2026-09-28T02:05:50.654Z",
+      "updatedAt": "2026-09-28T02:06:01.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null,
+      "blockedReason": "Needs human participants (strata T, N, S), informed consent, the running organization's approval route, a researcher to run sessions, and a smallest-effect-of-interest decision. None can be supplied from the repository. Machinery is ready (WI-0008): build a session with 'npm run tcg319c:session -- --stratum N --index 0', run it, then 'npm run tcg319c:analyze -- --out DIR sessions/*.json'."
     }
   ]
 }

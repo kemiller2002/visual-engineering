@@ -132,3 +132,38 @@ pilot needs human participants. Promotion to family `verified` waits on
 Forma's cross-engine conformance run.
 
 Next action: run the EX-VE-TCG-2026-319C pilot with participants.
+
+## EX-VE-TCG-2026-319C pilot machinery — 2026-09-28 (third session, continued)
+
+Objective: carry out the recommended next experiment, the pilot of
+EX-VE-TCG-2026-319C. Running it needs people, so this session built
+everything up to the first participant and formally blocked the rest.
+
+Completed under WI-0008, on `claude/terminal-character-grid-ui-kg0kec`
+restarted from main after #23 merged:
+
+- `experiments/ex-ve-tcg-319c/` contains:
+  - config and frozen Forma stimuli (`30aa31c`, hash-verified);
+  - Williams and AB/BA schedules;
+  - fictitious item pools;
+  - stimulus generation (Study 1 R/C differ only in source order; Study 2
+    substitutes data into Forma's own screens);
+  - session plans and the browser harness with a 320 px viewport gate;
+  - scoring, pilot analysis, and simulated paired-t power planning.
+- 18 unit tests and a browser mechanics check (scripted agent, 56 trials),
+  both in CI. The t quantiles match tables. Sample sizes match standard
+  paired-t values (d = 0.5 gives n = 34; d = 0.8 gives n = 15).
+- The specification gained a dated operational-definitions amendment
+  (before data) and a pilot-readiness section. The experiments registry,
+  hypothesis registry, and REP were updated.
+- `playwright-core` 1.63.0 was added as a dev dependency (no bundled
+  browsers).
+
+Blocked: WI-0009 (run the pilot). It needs strata T/N/S participants,
+consent, an approval route, a session researcher, and the smallest effect
+of interest. The resume commands are in its ROS block reason and in the
+experiment README.
+
+Next action: a researcher decides the smallest effects of interest,
+obtains approval, and runs six participants per stratum with
+`npm run tcg319c:session`. Then run `npm run tcg319c:analyze`.
