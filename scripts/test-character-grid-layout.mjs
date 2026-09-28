@@ -138,3 +138,37 @@ test("density is measured from occupied cells", () => {
   assert.equal(measured.totalCells, 1920);
   assert.equal(measured.usedCells, 4 + 78 + "Enter=Go".length);
 });
+
+test("device status rows follow the application rows and hold status only (DF-VE-TCG-2026-1320)", () => {
+  const withStatusLine = { messageRow: 21, actionRows: [22, 23], statusRow: 25 };
+  // Runs in status rows come last in source order, after the action rows.
+  const screen = (trailing, statusRows) => {
+    const shell = base([]);
+    return { ...shell, statusRows, runs: [...shell.runs, ...trailing] };
+  };
+  const status = { kind: "status", id: "sys", row: 25, column: 2, length: 78, text: "READY" };
+  assert.deepEqual(screenErrors(screen([status], 1), withStatusLine), []);
+  assert.ok(
+    screenErrors(screen([status], 0), withStatusLine).some((e) => e.includes("sys: row 25 is outside 1..24")),
+    "without declared status rows, row 25 is out of bounds"
+  );
+  assert.ok(
+    screenErrors(screen([{ kind: "text", id: "x", row: 25, column: 2, text: "A" }], 1), withStatusLine)
+      .some((e) => e.includes("x: row 25 is outside 1..24")),
+    "application runs may not occupy a status row"
+  );
+  assert.ok(
+    screenErrors(screen([{ ...status, row: 26 }], 1), withStatusLine).some((e) => e.includes("outside 1..25")),
+    "status runs stay within the declared status rows"
+  );
+  const measured = density(screen([status], 1));
+  assert.equal(measured.totalCells, 1920, "capacity counts application rows only");
+  assert.equal(measured.usedCells, 4 + 78 + "Enter=Go".length, "status-row cells are not application density");
+});
+
+test("the reference workflow's 3270 profile reserves one status row after 24 application rows", async () => {
+  const workflow = await loadWorkflow();
+  assert.deepEqual([workflow.geometry.rows, workflow.geometry.statusRows], [24, 1]);
+  const statusRows = workflow.screens.flatMap((screen) => screen.runs).filter((run) => run.kind === "status").map((run) => run.row);
+  assert.ok(statusRows.length > 0 && statusRows.every((row) => row === 25));
+});

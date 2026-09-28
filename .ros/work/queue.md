@@ -16,3 +16,4 @@
 | WI-0004 | Terminal family: verify blocked assumptions from reachable sources, record Forma GAP-TCG-10/11 outcomes and new gaps | complete |  | medium |
 | WI-0005 | Terminal family: decide the GAP-TCG-09 runtime message overflow policy | complete |  | medium |
 | WI-0006 | Terminal family: user-test protocol for HY-VE-TCG-2026-9151 and HY-VE-TCG-2026-8750 | complete |  | medium |
+| WI-0007 | Terminal family: decide GAP-TCG-12 status line placement (OIA outside application rows) | complete |  | medium |

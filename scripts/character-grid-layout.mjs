@@ -46,17 +46,26 @@ const address = ({ row, column }, columns) => (row - 1) * columns + (column - 1)
 const startOf = (run) =>
   run.kind === "table" ? { row: run.row, column: run.columns[0].column } : { row: run.row, column: run.column };
 
+// Device status rows (DF-VE-TCG-2026-1320) follow the application rows,
+// outside the presentation space, and hold status runs only.
+export const statusRowsOf = (screen) => screen.statusRows ?? 0;
+
+const lastRowFor = (screen, run) =>
+  run.kind === "status" ? screen.rows + statusRowsOf(screen) : screen.rows;
+
 export const boundsErrors = (screen) =>
-  screen.runs.flatMap(segmentsOf).flatMap((segment) => [
-    ...(segment.row < 1 || segment.row > screen.rows
-      ? [`${segment.id}: row ${segment.row} is outside 1..${screen.rows}`]
-      : []),
-    ...(segment.column < 1 ? [`${segment.id}: column ${segment.column} is before column 1`] : []),
-    ...(segment.column + segment.length - 1 > screen.columns
-      ? [`${segment.id}: row ${segment.row} ends at column ${segment.column + segment.length - 1}, beyond ${screen.columns} (no row wrap)`]
-      : []),
-    ...(segment.length < 1 ? [`${segment.id}: length must be at least 1`] : [])
-  ]);
+  screen.runs
+    .flatMap((run) => segmentsOf(run).map((segment) => ({ segment, lastRow: lastRowFor(screen, run) })))
+    .flatMap(({ segment, lastRow }) => [
+      ...(segment.row < 1 || segment.row > lastRow
+        ? [`${segment.id}: row ${segment.row} is outside 1..${lastRow}`]
+        : []),
+      ...(segment.column < 1 ? [`${segment.id}: column ${segment.column} is before column 1`] : []),
+      ...(segment.column + segment.length - 1 > screen.columns
+        ? [`${segment.id}: row ${segment.row} ends at column ${segment.column + segment.length - 1}, beyond ${screen.columns} (no row wrap)`]
+        : []),
+      ...(segment.length < 1 ? [`${segment.id}: length must be at least 1`] : [])
+    ]);
 
 export const collisionErrors = (screen) => {
   const owners = screen.runs
@@ -201,8 +210,11 @@ export const focusOrder = (screen) =>
     .filter((run) => (run.kind === "field" && run.disabled !== true) || run.kind === "action")
     .map((run) => run.id);
 
+// Density is measured over the application's rows only (DF-VE-TCG-2026-1320).
 export const density = (screen) => {
-  const used = new Set(screen.runs.flatMap(segmentsOf).flatMap(cellsOf)).size;
+  const used = new Set(
+    screen.runs.flatMap(segmentsOf).filter((segment) => segment.row <= screen.rows).flatMap(cellsOf)
+  ).size;
   return { usedCells: used, totalCells: screen.rows * screen.columns, ratio: used / (screen.rows * screen.columns) };
 };
 
@@ -220,11 +232,14 @@ export const transitionErrors = (workflow) => {
 
 export const validateWorkflow = (workflow) => {
   const reserved = workflow.reserved;
+  const geometry = {
+    rows: workflow.geometry.rows,
+    columns: workflow.geometry.columns,
+    statusRows: workflow.geometry.statusRows ?? 0
+  };
   const expanded = workflow.screens.flatMap((screen) => [
-    { ...screen, rows: workflow.geometry.rows, columns: workflow.geometry.columns },
-    ...(screen.states ?? []).map((state) =>
-      composeState({ ...screen, rows: workflow.geometry.rows, columns: workflow.geometry.columns }, state)
-    )
+    { ...screen, ...geometry },
+    ...(screen.states ?? []).map((state) => composeState({ ...screen, ...geometry }, state))
   ]);
   const errors = [
     ...expanded.flatMap((screen) => screenErrors(screen, reserved)),

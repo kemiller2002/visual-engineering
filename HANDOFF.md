@@ -102,3 +102,33 @@ mechanically; family `verified` waits for Forma's promotion after a green
 cross-engine run of #47 (blocked by red theme tests on Forma main).
 
 Next action: run the EX-VE-TCG-2026-319C pilot; decide GAP-TCG-12.
+
+## Terminal / Character-Grid follow-up — 2026-09-28 (third session)
+
+Objective: decide GAP-TCG-12, the last open family decision left by the
+second session.
+
+Completed on `claude/terminal-character-grid-ui-kg0kec` under ROS work item
+WI-0007:
+
+- DF-VE-TCG-2026-1320: `rows × columns` is the application's presentation
+  space. A profile may declare device status rows after it, and they hold
+  status runs only. The 3270 profile declares one, matching the x3270 OIA
+  (EV-VE-TCG-2026-1EB5). DOS declares none (EV-VE-TCG-2026-D9CB). 5250,
+  BBS, and TUI are not declared because no source was read.
+- Reference workflow: `geometry.statusRows: 1`, and status moved to row 25.
+  The validator enforces bounds for status-only rows and counts density over
+  application rows only. Two tests were added.
+- Catalog entry, concept (A-3 and the characteristic table), and REP were
+  updated.
+
+Forma counterpart: the generic `data-ef-status-rows` reservation, on the
+same branch name in kemiller2002/forma.
+
+Unresolved: GAP-TCG-06 (wide glyphs, RTL). BBS/ECMA-48 and curses evidence.
+IBM primary documentation for the OIA; reading it could change the 3270
+profile's declaration but not the family rule. The EX-VE-TCG-2026-319C
+pilot needs human participants. Promotion to family `verified` waits on
+Forma's cross-engine conformance run.
+
+Next action: run the EX-VE-TCG-2026-319C pilot with participants.

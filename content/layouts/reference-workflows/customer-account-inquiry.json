@@ -5,7 +5,8 @@
   "description": "Customer Inquiry -> Account Detail -> Transaction History reference workflow (GH-20). Data are fictitious.",
   "geometry": {
     "rows": 24,
-    "columns": 80
+    "columns": 80,
+    "statusRows": 1
   },
   "reserved": {
     "messageRow": 21,
@@ -13,7 +14,7 @@
       22,
       23
     ],
-    "statusRow": 24
+    "statusRow": 25
   },
   "screens": [
     {
@@ -256,7 +257,7 @@
         {
           "kind": "status",
           "id": "sys",
-          "row": 24,
+          "row": 25,
           "column": 2,
           "length": 78,
           "text": "READY"
@@ -324,7 +325,7 @@
             {
               "kind": "status",
               "id": "sys",
-              "row": 24,
+              "row": 25,
               "column": 2,
               "length": 78,
               "text": "X SYSTEM  WAITING FOR HOST"
@@ -728,7 +729,7 @@
         {
           "kind": "status",
           "id": "sys",
-          "row": 24,
+          "row": 25,
           "column": 2,
           "length": 78,
           "text": "READY"
@@ -1118,7 +1119,7 @@
         {
           "kind": "status",
           "id": "sys",
-          "row": 24,
+          "row": 25,
           "column": 2,
           "length": 78,
           "text": "READY"
@@ -1183,7 +1184,7 @@
             {
               "kind": "status",
               "id": "sys",
-              "row": 24,
+              "row": 25,
               "column": 2,
               "length": 78,
               "text": "X SYSTEM  INPUT INHIBITED"
