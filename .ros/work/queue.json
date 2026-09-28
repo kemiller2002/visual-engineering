@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 10,
+  "nextSeq": 11,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -170,14 +170,29 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "blocked",
+      "status": "abandoned",
       "attachments": [],
       "createdAt": "2026-09-28T02:05:50.654Z",
-      "updatedAt": "2026-09-28T02:06:01.000Z",
+      "updatedAt": "2026-09-28T06:40:35.000Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null,
-      "blockedReason": "Needs human participants (strata T, N, S), informed consent, the running organization's approval route, a researcher to run sessions, and a smallest-effect-of-interest decision. None can be supplied from the repository. Machinery is ready (WI-0008): build a session with 'npm run tcg319c:session -- --stratum N --index 0', run it, then 'npm run tcg319c:analyze -- --out DIR sessions/*.json'."
+      "blockedReason": "Needs human participants (strata T, N, S), informed consent, the running organization's approval route, a researcher to run sessions, and a smallest-effect-of-interest decision. None can be supplied from the repository. Machinery is ready (WI-0008): build a session with 'npm run tcg319c:session -- --stratum N --index 0', run it, then 'npm run tcg319c:analyze -- --out DIR sessions/*.json'.",
+      "abandonedReason": "Forgone by user decision on 2026-09-28: participants cannot currently be recruited. HY-VE-TCG-2026-9151 and -8750 remain untested. The machinery in experiments/ex-ve-tcg-319c (WI-0008) stays runnable; capture a new work item if participants become available."
+    },
+    {
+      "id": "WI-0010",
+      "title": "EX-VE-TCG-2026-319C: record the decision to forgo the participant pilot",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-28T06:40:27.983Z",
+      "updatedAt": "2026-09-28T06:41:47.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }

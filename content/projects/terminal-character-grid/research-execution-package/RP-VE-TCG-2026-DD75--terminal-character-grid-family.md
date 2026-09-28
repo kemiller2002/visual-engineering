@@ -104,6 +104,11 @@ operational definitions are fixed by a dated amendment. The pilot (WI-0009)
 is blocked on participants, consent, approval, a session researcher, and
 the smallest-effect-of-interest decision. Both hypotheses remain untested.
 
+Update (WI-0010, 2026-09-28): the project owner decided to forgo the pilot
+because participants cannot currently be recruited, and WI-0009 is
+abandoned. CG-6 stays a rule on its existing evidence. The narrow-screen
+guidance stays hypothesis-grade. The machinery remains runnable.
+
 ## Evidence standard
 
 Claims cite `EV-VE-TCG-2026-*`. Background that was not verified in an opened
