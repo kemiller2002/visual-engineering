@@ -47,6 +47,15 @@ jobs:
       - name: Test character-grid layout validator
         run: npm run workflows:test
 
+      - name: Test EX-VE-TCG-2026-319C pilot machinery
+        run: npm run tcg319c:test
+
+      - name: Install Chromium for the EX-VE-TCG-2026-319C mechanics check
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Run EX-VE-TCG-2026-319C harness mechanics check (scripted agent, not participant data)
+        run: npm run tcg319c:mechanics
+
       - name: Build research site
         id: research-build
         run: npm run research:build

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EX-VE-TCG-2026-319C session</title>
+  <link rel="stylesheet" href="./forma.css">
+  <style>
+    body { margin: 0; padding: 1rem; }
+    .ex-panel { max-inline-size: 60rem; margin-block-end: 1rem; }
+    .ex-record { border-collapse: collapse; }
+    .ex-record :is(th, td) { padding: 0.25rem 0.75rem; text-align: start; font-family: ui-monospace, monospace; }
+    .ex-progress { font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Session <span id="participant"></span></h1>
+    <form id="setup" class="ex-panel">
+      <p>Researcher: record the session environment. Do not enter names or other identifiers.</p>
+      <p><label for="at">Assistive technology and version (or "none")</label><br><input id="at" required></p>
+      <p><label for="notes">Notes</label><br><input id="notes"></p>
+      <p><button type="submit">Start session</button></p>
+    </form>
+    <section id="gate" hidden class="ex-panel" aria-labelledby="gate-title">
+      <h2 id="gate-title">Researcher: set the viewport for Study 2</h2>
+      <p>Resize to <span id="gate-target"></span> CSS px wide. Current width: <output id="gate-width"></output> px.</p>
+      <p><button id="gate-continue" type="button" disabled>Continue</button></p>
+    </section>
+    <section id="session" hidden aria-label="Trial">
+      <div id="card" class="ex-panel" aria-live="polite"></div>
+      <p><button id="begin" type="button" hidden>Begin trial</button></p>
+      <div id="stage"></div>
+      <form id="answers" class="ex-panel"></form>
+    </section>
+    <section id="done" hidden class="ex-panel">
+      <h2>Session complete</h2>
+      <p><button id="download" type="button">Download trial records</button></p>
+    </section>
+  </main>
+  <script type="module" src="./harness.mjs"></script>
+</body>
+</html>

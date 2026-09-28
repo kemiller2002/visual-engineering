@@ -98,6 +98,12 @@ Grid geometry is the application's presentation space; a profile may
 declare device status rows after it. The 3270 profile declares one, and the
 reference workflow's status moves to row 25.
 
+Update (WI-0008 and WI-0009, 2026-09-28): EX-VE-TCG-2026-319C has
+executable pilot machinery in `experiments/ex-ve-tcg-319c`, and its
+operational definitions are fixed by a dated amendment. The pilot (WI-0009)
+is blocked on participants, consent, approval, a session researcher, and
+the smallest-effect-of-interest decision. Both hypotheses remain untested.
+
 ## Evidence standard
 
 Claims cite `EV-VE-TCG-2026-*`. Background that was not verified in an opened
