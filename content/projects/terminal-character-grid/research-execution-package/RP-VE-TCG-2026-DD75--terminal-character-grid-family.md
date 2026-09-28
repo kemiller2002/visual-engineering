@@ -93,6 +93,11 @@ Forma pull request #47; GAP-TCG-12 (status row versus OIA) is open. The
 user tests have a preregistration draft (EX-VE-TCG-2026-319C) and have not
 been run.
 
+Update (WI-0007, 2026-09-28): GAP-TCG-12 is decided by DF-VE-TCG-2026-1320.
+Grid geometry is the application's presentation space; a profile may
+declare device status rows after it. The 3270 profile declares one, and the
+reference workflow's status moves to row 25.
+
 ## Evidence standard
 
 Claims cite `EV-VE-TCG-2026-*`. Background that was not verified in an opened

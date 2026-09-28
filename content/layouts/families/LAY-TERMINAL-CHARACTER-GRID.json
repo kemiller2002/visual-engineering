@@ -59,7 +59,7 @@
       "purpose": "Terminal/system state such as input inhibited, waiting, or insert mode.",
       "required": false,
       "html": "live region (status)",
-      "position": "reserved row, usually last"
+      "position": "a device status row after the application rows when the profile declares one (DF-VE-TCG-2026-1320); otherwise an application reserved row, usually last"
     },
     {
       "id": "actions",
@@ -334,9 +334,9 @@
       {
         "id": "GAP-TCG-12",
         "gap": "The 3270 status line (OIA) lies outside the application's rows (EV-VE-TCG-2026-1EB5), but Forma's 3270 reference screens present system status on application row 24 of a 24 × 80 grid, leaving 23 application rows.",
-        "owner": "Forma; decision needed",
+        "owner": "Visual Engineering WI-0007; Forma implementation",
         "foundBy": "WI-0004 (EV-VE-TCG-2026-1EB5)",
-        "options": "Keep status on the last application row and describe it as a stylistic choice, or model a Model 2 screen as 24 application rows plus a separate status line (for example a 25-row grid whose last row is reserved, or a status region outside the grid inside the same named viewport)."
+        "resolution": "Decided by DF-VE-TCG-2026-1320: rows x columns is the application presentation space; a profile may declare device status rows after it that hold status runs only. The 3270 profile declares one (24 + 1, 32 + 1); DOS declares none; 5250, BBS, and TUI are not declared. The reference workflow now places status on row 25. Forma implements the generic reservation."
       }
     ]
   },
@@ -366,7 +366,7 @@
       "id": "A-3",
       "text": "The 3270 status line sits below the application rows.",
       "test": "IBM display-station documentation",
-      "status": "Supported as implemented by x3270 (EV-VE-TCG-2026-1EB5); IBM device documentation unread. See GAP-TCG-12."
+      "status": "Supported as implemented by x3270 (EV-VE-TCG-2026-1EB5); IBM device documentation unread. Modeled as one device status row after the application rows (DF-VE-TCG-2026-1320)."
     },
     {
       "id": "A-4",

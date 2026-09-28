@@ -114,7 +114,7 @@ as "authentic 3270".
 | Enter / Clear / PF / PA as submissions | ✓ (source) | ✓ (as named actions) | | |
 | Reset as local unlock | ✓ (emulator) | ✓ (as local action) | | |
 | Keyboard-lock / input-inhibited status | ✓ (source) | ✓ | | |
-| Status row below application rows (OIA) | ✓ (emulator, EV-VE-TCG-2026-1EB5) | ✓ (reserved status region) | Status on an application row (GAP-TCG-12) | |
+| Status row below application rows (OIA) | ✓ (emulator, EV-VE-TCG-2026-1EB5) | ✓ (reserved status region; device status rows after the application rows where a profile declares them, DF-VE-TCG-2026-1320) | Ruled line over the status row | |
 | Action-key legend row (e.g. "PF3=Exit") | | ✓ (application convention) | | |
 | Green/amber phosphor palette | | | ✓ | |
 | Scanlines, glow, bezel | | | ✓ | |
@@ -201,7 +201,7 @@ decision.
 | --- | --- | --- | --- |
 | A-1 | Users of modern keyboard-first grid applications expect row-major field order. | Focus order feels wrong for column-oriented forms. | HY-VE-TCG-2026-9151 |
 | A-2 | DOS text-mode, BBS, and modern TUIs share I-1…I-7. | The family over-generalizes from mainframe terminals. | Verify with primary sources (ECMA-48, VGA text mode documentation, a curses reference); record as evidence. **Partially verified:** DOS text mode (EV-VE-TCG-2026-D9CB); BBS and curses still unverified. |
-| A-3 | The 3270 OIA is a line below the application rows. | Status placement in the 3270 profile is inaccurate. | Obtain IBM 3278/3279 or 3174 documentation. **Supported as implemented** by x3270 (EV-VE-TCG-2026-1EB5); the 3270 reference screens place status on an application row, recorded as GAP-TCG-12. |
+| A-3 | The 3270 OIA is a line below the application rows. | Status placement in the 3270 profile is inaccurate. | Obtain IBM 3278/3279 or 3174 documentation. **Supported as implemented** by x3270 (EV-VE-TCG-2026-1EB5); modeled as one device status row after the application rows (DF-VE-TCG-2026-1320, closing GAP-TCG-12). |
 | A-4 | Dense, cell-aligned presentation supports expert scanning. | Density harms novices without benefiting experts. | HY-VE-TCG-2026-3D56 |
 | A-5 | `1ch` of a monospaced face is a stable cell width across engines and zoom levels. | Grid misalignment at 200 %. | Browser verification in Forma (#44). **Refined:** stable for layout, but glyph advances exceed `1ch` by accumulating sub-pixel amounts (EV-VE-TCG-2026-C2ED). |
 
