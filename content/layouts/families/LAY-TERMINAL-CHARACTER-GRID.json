@@ -2,7 +2,7 @@
   "id": "LAY-TERMINAL-CHARACTER-GRID",
   "name": "Terminal / character grid",
   "catalogVersion": "1.0.0",
-  "status": "observed",
+  "status": "supported",
   "summary": "A fixed R x C grid of equal-width cells in which every element is a positioned run of cells, runs are protected or editable, one row-major order governs reading, traversal, and source order, and status and named action keys occupy reserved runs.",
   "concept": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md",
   "tasks": [
@@ -144,7 +144,7 @@
     "noPageOverflow": true
   },
   "content": {
-    "long": "Protected text longer than its declared length is an authoring error found by validation. Editable input is limited by maxlength. Long lists are paged (PF7/PF8-style or named actions) or continue in a separately scrollable region; they do not push the action row off the grid.",
+    "long": "Protected text longer than its declared length is an authoring error found by validation. Editable input is limited by maxlength. Long lists are paged (PF7/PF8-style or named actions) or continue in a separately scrollable region; they do not push the action row off the grid. Runtime messages follow DF-VE-TCG-2026-DD05: they wrap within a reserved message region, are never truncated or clipped, and grow the region rather than overlap the rows below.",
     "missing": "Missing protected values render as an explicit placeholder with text meaning (e.g. 'n/a' or 'not on file'), never as silent blanks that look like zero or empty fields.",
     "extreme": "Maximum-length values fill their run exactly; amounts at the maximum digit count still fit; an empty repeated-row set shows an explicit empty-state message inside the rows region.",
     "localization": "Translated labels change length; each label run must be sized for the longest supported translation or the layout must be re-authored per locale. Wide-glyph scripts (CJK) commonly occupy two cells per glyph; the family has no verified rule for them. Right-to-left grids are not researched."
@@ -263,56 +263,80 @@
       {
         "id": "GAP-TCG-01",
         "gap": "Forma had no character-cell positioning primitive; existing layouts are flow/grid compositions measured in rem, not cells.",
-        "owner": "Forma #38"
+        "owner": "Forma #38",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-02",
         "gap": "No Forma contract ties a field's rendered width to its maximum length in characters.",
-        "owner": "Forma #39"
+        "owner": "Forma #39",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-03",
         "gap": "No Forma contract presents named keyboard actions (key + label) separately from their behavior.",
-        "owner": "Forma #40"
+        "owner": "Forma #40",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-04",
         "gap": "No Forma contract for a staged text reveal with a static fallback.",
-        "owner": "Forma #41"
+        "owner": "Forma #41",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-05",
         "gap": "No contained-scroll viewport contract that is keyboard-focusable and named.",
-        "owner": "Forma #38"
+        "owner": "Forma #38",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-06",
         "gap": "No rule for wide-glyph (two-cell) characters or right-to-left grids.",
-        "owner": "unassigned; research needed"
+        "owner": "unassigned; research needed",
+        "note": "Forma's intrinsic tracks (pull request #47) now widen for a wide glyph instead of overlapping, but a two-cell glyph still counts as one declared cell; the rule remains open."
       },
       {
         "id": "GAP-TCG-07",
         "gap": "No positioned repeated-row table whose columns are measured in cells, whose numeric columns end-align within fixed runs, and which keeps header-to-cell association.",
         "owner": "Forma #38/#43",
-        "foundBy": "EX-VE-TCG-2026-5437"
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-08",
         "gap": "No contract for a field to reference both a hint and the grid message region (aria-describedby with several IDs).",
         "owner": "Forma #39/#40",
-        "foundBy": "EX-VE-TCG-2026-5437"
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
       },
       {
         "id": "GAP-TCG-09",
         "gap": "No declared overflow policy for runtime-generated messages longer than the message region.",
         "owner": "Visual Engineering family rule, then Forma #40",
-        "foundBy": "EX-VE-TCG-2026-5437"
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Decided by DF-VE-TCG-2026-DD05: never truncate or clip; a message region reserves one or more rows and grows when a message exceeds them; message length is application content. Forma verifies growth without overlap (pull request #47)."
       },
       {
         "id": "GAP-TCG-10",
         "gap": "No verified rule for per-row selection fields inside dense repeated rows.",
-        "owner": "unassigned; research needed",
-        "foundBy": "EX-VE-TCG-2026-5437"
+        "owner": "Forma pull request #47",
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma rule CG-17 and pattern character-grid-selection (pull request #47): native per-row fields named by column and row headers, described by the option legend. Evidence: EV-VE-TCG-2026-8081."
+      },
+      {
+        "id": "GAP-TCG-11",
+        "gap": "Fixed 1ch cells cannot absorb WCAG 1.4.12 text-spacing overrides; overridden text overlapped the next run.",
+        "owner": "Forma pull request #47",
+        "foundBy": "Forma #44 verification",
+        "resolution": "Closed by intrinsic tracks of at least one cell (pull request #47). Evidence: EV-VE-TCG-2026-DE6C."
+      },
+      {
+        "id": "GAP-TCG-12",
+        "gap": "The 3270 status line (OIA) lies outside the application's rows (EV-VE-TCG-2026-1EB5), but Forma's 3270 reference screens present system status on application row 24 of a 24 × 80 grid, leaving 23 application rows.",
+        "owner": "Forma; decision needed",
+        "foundBy": "WI-0004 (EV-VE-TCG-2026-1EB5)",
+        "options": "Keep status on the last application row and describe it as a stylistic choice, or model a Model 2 screen as 24 application rows plus a separate status line (for example a 25-row grid whose last row is reserved, or a status region outside the grid inside the same named viewport)."
       }
     ]
   },
@@ -335,12 +359,14 @@
     {
       "id": "A-2",
       "text": "DOS text-mode, BBS, and modern TUIs share the grid invariants.",
-      "test": "primary-source verification"
+      "test": "primary-source verification",
+      "status": "Partially verified: DOS text mode shares the fixed grid, row-major cells, and per-cell attributes (EV-VE-TCG-2026-D9CB); BBS/ECMA-48 and curses/TUI remain unverified."
     },
     {
       "id": "A-3",
       "text": "The 3270 status line sits below the application rows.",
-      "test": "IBM display-station documentation"
+      "test": "IBM display-station documentation",
+      "status": "Supported as implemented by x3270 (EV-VE-TCG-2026-1EB5); IBM device documentation unread. See GAP-TCG-12."
     },
     {
       "id": "A-4",
@@ -350,7 +376,8 @@
     {
       "id": "A-5",
       "text": "1ch of a monospaced face is a stable cell width across engines and zoom.",
-      "test": "Forma #44 browser verification"
+      "test": "Forma #44 browser verification",
+      "status": "Refined: 1ch is stable for layout but glyph advances exceed it by sub-pixel amounts that accumulate with run length (EV-VE-TCG-2026-C2ED)."
     }
   ],
   "verification": [
@@ -432,7 +459,12 @@
     "EV-VE-TCG-2026-E9AC",
     "EV-VE-TCG-2026-E852",
     "EV-VE-TCG-2026-C6E8",
-    "EV-VE-TCG-2026-E22E"
+    "EV-VE-TCG-2026-E22E",
+    "EV-VE-TCG-2026-1EB5",
+    "EV-VE-TCG-2026-D9CB",
+    "EV-VE-TCG-2026-8081",
+    "EV-VE-TCG-2026-C2ED",
+    "EV-VE-TCG-2026-DE6C"
   ],
   "hypotheses": [
     "HY-VE-TCG-2026-9151",
@@ -451,7 +483,9 @@
     "GAP-TCG-07",
     "GAP-TCG-08",
     "GAP-TCG-09",
-    "GAP-TCG-10"
+    "GAP-TCG-10",
+    "GAP-TCG-11",
+    "GAP-TCG-12"
   ],
   "referenceWorkflows": [
     {
@@ -459,6 +493,15 @@
       "path": "content/layouts/reference-workflows/customer-account-inquiry.json",
       "report": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md",
       "result": "valid in 15 screen states; supported with gaps"
+    }
+  ],
+  "implementations": [
+    {
+      "system": "Forma",
+      "status": "supported",
+      "record": "kemiller2002/forma catalog/layouts.json LAY-TERMINAL-CHARACTER-GRID",
+      "conformance": "Forma conformance run 36304907987 on commit 1a3b873 (pull request #46): Chromium, Firefox, and WebKit passed",
+      "note": "Visual Engineering does not claim more than Forma records; verified follows Forma's own promotion."
     }
   ]
 }

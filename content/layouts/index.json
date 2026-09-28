@@ -7,7 +7,7 @@
     {
       "id": "LAY-TERMINAL-CHARACTER-GRID",
       "name": "Terminal / character grid",
-      "status": "observed",
+      "status": "supported",
       "path": "content/layouts/families/LAY-TERMINAL-CHARACTER-GRID.json"
     }
   ]

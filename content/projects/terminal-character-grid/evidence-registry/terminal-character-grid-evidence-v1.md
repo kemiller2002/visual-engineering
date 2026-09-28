@@ -1,7 +1,7 @@
 ---
 id: EVR-VE-TCG-001
 title: Terminal / Character-Grid Evidence Registry
-version: 1.0
+version: 1.1
 project: terminal-character-grid
 status: active
 work_item: GH-17
@@ -35,6 +35,8 @@ and must not be cited as evidence.
   behavior as implemented, not as architected.
 - **standard** — accessibility or web-platform standard text.
 - **repository** — an existing Visual Engineering or Forma record.
+- **practitioner-source** — application source written against a platform
+  by its users; shows how the platform is used, not how it is architected.
 
 ## IBM 3270 (reference profile)
 
@@ -212,6 +214,126 @@ function keys generalize beyond the 3270. The key vocabulary differs (Field
 Exit, Roll Up, Help), so action identifiers must be extensible rather than a
 closed PF list.
 
+## Sources added on 2026-09-27 (second session)
+
+A second session (WI-0004) retried the blocked topics. `ibm.com`,
+`bitsavers.org`, `archive.org`, `wikipedia.org`, and `x3270.miraheze.org`
+were still blocked by the network policy; the sources below were read from
+git clones of public repositories, named with their commits. The Open3270
+mirror was rechecked and holds no further OIA documentation.
+
+### EV-VE-TCG-2026-1EB5 — The OIA is drawn outside the presentation space
+
+**Type:** reference-implementation.
+**Source:** `github.com/pmattes/x3270` at commit
+`c459b5019a58d429b394d939c8822bcf4565c771`: `Common/c3270/cscreen.c`
+`set_status_row(int hard_rows, int emulator_rows)` (line 234; the OIA is
+placed only `if (hard_rows > emulator_rows …)`, line 242, with an optional
+"line over OIA"); `c3270/screen.c` `draw_oia()` (line 2622; the OIA row is
+`status_row`, rows `r >= maxROWS` are outside the 3270 display, and an
+underlined blank row may separate them, lines 2755–2770; cursor position is
+printed on the OIA as `row/col`, line 2854); `Common/vstatus.c` keyboard-lock
+messages `"X -f"` (line 123), `"X SYSTEM"` (line 191), and `"X Wait"`
+(lines 223, 280).
+
+**Finding used:** c3270 draws the Operator Information Area on terminal rows
+beyond the emulated model's rows (`maxROWS`), never inside them, optionally
+separated by a ruled line, and uses it for keyboard-lock/system indicators
+and the cursor position. When the terminal has no spare row, c3270 omits the
+OIA rather than overwriting application rows (`model_min_xtra`).
+
+**Supports:** assumption A-3 *as implemented by a maintained emulator*: the
+3270 status line is not one of the application's rows. A Model 2 screen is
+therefore 24 application rows plus a separate status line.
+
+**Does not prove:** the physical 3278/3279 layout; IBM display-station
+documentation remains unread.
+
+### EV-VE-TCG-2026-D9CB — PC text mode is a row-major cell buffer with per-cell attributes
+
+**Type:** reference-implementation (BIOS/VGA emulation).
+**Source:** `github.com/dosbox-staging/dosbox-staging` at commit
+`c8ad29d897580fa3802bfd222bd00db7d3ad0442`: `src/ints/int10_modes.cpp`
+mode table (line 38: mode `0x003`, `M_TEXT`, text width 80, text height 25;
+line 53: mode `0x019`, 80 × 43; lines 87–89: 80 × 28, 80 × 30, 80 × 34);
+`src/ints/int10.h` `struct VideoModeBlock` field comments (lines 198–222:
+"Text mode width & height in number of characters"); `src/ints/int10_char.cpp`
+`WriteChar` (lines 521–537: `address += (row*cols+col)*2`, then the character
+byte and, when used, the attribute byte).
+
+**Finding used:** BIOS text mode 3 is 80 × 25 character cells. Each cell is a
+character byte followed by an attribute byte at `(row × columns + column) × 2`.
+Other text modes change only the row count (25, 28, 30, 34, 43).
+
+**Supports:** for DOS text mode, invariants I-1 (declared fixed grid) and
+row-major addressing hold as in the 3270; per-cell attributes are the
+equivalent of 3270 extended character attributes. All 25 rows are
+application rows: the mode has no device status line, so a status or
+function-key row is something the application draws.
+
+**Does not prove:** how DOS applications conventionally laid out status and
+key rows; that is practice, not the mode.
+
+### EV-VE-TCG-2026-8081 — 5250 per-row selection fields ("Work with" subfiles)
+
+**Type:** practitioner-source.
+**Source:** `github.com/PoC-dev/as400-sfltemplates` at commit
+`3228b1997e02508fa2f1e25c0471608a981b72a7`: `enu/v_lodalldf.dds` (line 39
+`R MAINSFL SFL`; line 42 `OPT 1A B 7 3VALUES(' ' '2' '3' '4' '5')`; line 88
+`3 2'Type options, press Enter.'`; line 90 `4 3'2=Change  3=Copy …`);
+`v_lodallpg.rpgle` (lines 213–266: "handle OPT choices", `WHENEQ '2'` … `'5'`,
+`MOVE *BLANK OPT` after processing); `readme.md` lines 91–92 ("Use `READC` in
+a loop to read (user) changed subfile records … clear the Opt field upon
+return-on-success") and lines 471–478 (column ruler: `Opt` column, then
+fields separated by at least two blanks).
+
+**Finding used:** a list screen gives every repeated row a one-character
+input/output (`B`) field constrained to listed values, announced by an
+instruction line and an option legend above the rows. On Enter the program
+reads only the changed rows, acts on each, and blanks the option on success.
+
+**Supports:** GAP-TCG-10 as a real, recurring idiom of the 5250 platform:
+per-row selection fields belong in the generic family, positioned in the
+first column of the repeated rows, with the legend as their description and
+Enter as the single submission.
+
+**Does not prove:** IBM's own CUA guidance for list panels (not reachable) or
+that users prefer this idiom to row focus plus action keys.
+
+### EV-VE-TCG-2026-C2ED — A cell is 1ch only to within sub-pixel rounding
+
+**Type:** repository (Forma verification).
+**Source:** `kemiller2002/forma` pull request #47, commit `d8fea43`
+("Close CharacterGrid GAP-TCG-11"), measured in Chromium with the Forma
+monospaced stack at 16px text.
+
+**Finding used:** the glyph advance measured 9.640625px while `1ch` computed
+to 9.625px, so a run of *n* characters exceeds *n* cells by about
+0.0156 × *n* px (≈ 1.2px over 78 cells). Forma absorbs the error with a
+length-proportional negative end margin so the cell grid stays exact
+without a text-spacing override, and rendered positions stay within 1px at
+1280, 390, and 320 CSS px and at 200 % text.
+
+**Supports:** refines A-5: `1ch` is a stable cell width for layout, but an
+implementation must not assume text fills its cells exactly.
+
+### EV-VE-TCG-2026-DE6C — Text-spacing overrides can be absorbed without breaking the grid
+
+**Type:** repository (Forma verification).
+**Source:** `kemiller2002/forma` pull request #47, commits `d8fea43` and
+`533c410`; tests in `tests/browser/character-grid-verification.spec.mjs`.
+
+**Finding used:** with column and row tracks of at least one cell that grow
+to their content, a WCAG 1.4.12 override (letter-spacing 0.12em, word-spacing
+0.16em, line-height 1.5) widens shared columns: no run overlaps another, runs
+that start in the same column stay aligned across rows, table cells keep
+their text inside their cells, and the page gains no horizontal overflow.
+The same tests fail against the earlier fixed `1ch` tracks.
+
+**Supports:** EV-VE-TCG-2026-E852 can be met by a contained grid, not only by
+reflow: the grid relationship that must survive is shared-column alignment,
+not an absolute cell width.
+
 ## Accessibility and web platform
 
 All WCAG text below was read from `github.com/w3c/wcag` at commit
@@ -325,13 +447,14 @@ doctrine for them.
 ## Unverified background
 
 The following are widely repeated practitioner descriptions that shaped the
-questions asked, but no primary source for them was opened in this session.
+questions asked, but no primary source for them was opened in the first
+session. The status column records what later sources established.
 They are **assumptions**, recorded in CN-VE-TCG-2026-6CA0, and must not be
 cited as evidence until verified.
 
 | Topic | Background claim | Status |
 | --- | --- | --- |
-| 3270 OIA | The Operator Information Area occupies a line below the application rows (row 25 on a 24-row model) and shows keyboard-lock and system indicators. | Unverified. The Open3270 mirror includes `PCOMM OIA Data.pdf`, which shows only that emulators expose an OIA data string separate from the presentation space. |
-| DOS text mode | PC text mode is commonly 80 × 25 cells with per-cell foreground/background attributes; applications drew their own status and function-key rows. | Unverified. |
-| BBS / ANSI | BBS screens used ECMA-48 ("ANSI") cursor positioning over serial links; at low line rates characters visibly arrived one at a time. | Unverified; this is the most plausible origin of the "typing" reveal association and is the reason SequentialReveal is classified as *not* authentic 3270 behavior. |
+| 3270 OIA | The Operator Information Area occupies a line below the application rows (row 25 on a 24-row model) and shows keyboard-lock and system indicators. | Supported as implemented by EV-VE-TCG-2026-1EB5 (x3270); IBM display-station documentation still unread. |
+| DOS text mode | PC text mode is commonly 80 × 25 cells with per-cell foreground/background attributes; applications drew their own status and function-key rows. | Grid, row-major cells, and per-cell attributes supported by EV-VE-TCG-2026-D9CB; the absence of a device status line is supported; the application layout convention is still unverified. |
+| BBS / ANSI | BBS screens used ECMA-48 ("ANSI") cursor positioning over serial links; at low line rates characters visibly arrived one at a time. | Unverified. Retried on 2026-09-27 (WI-0004); no ECMA-48 or BBS source was reachable. |
 | 3270 screen update | A 3270 write is applied to the buffer as a unit and the screen is not painted character by character in a user-perceivable sequence. | Partially supported: EV-VE-TCG-2026-CA91 and -DFA5 describe block transfer of a whole data stream; perceptual painting speed of specific devices was not verified. |

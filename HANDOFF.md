@@ -65,3 +65,40 @@ item to back-fill Forma-verified families into `content/layouts`.
 
 Next action: Forma #37 implementation, then user tests of HY-VE-TCG-2026-9151
 and -8750 against rendered reference screens.
+
+## Terminal / Character-Grid follow-up — 2026-09-27 (second session)
+
+Objective: close the open items left by PR #21 and Forma #46.
+
+Completed on `claude/terminal-character-grid-ui-4adh6x`, one ROS work item
+and commit each:
+
+- WI-0004: reachable-source evidence (x3270 OIA EV-VE-TCG-2026-1EB5, DOSBox
+  text mode -D9CB, 5250 DDS per-row selection -8081, Forma cell rounding
+  -C2ED and text-spacing tracks -DE6C); assumptions A-2 (partial), A-3
+  (supported as implemented), A-5 (refined); family status `supported` on
+  Forma conformance run 36304907987; gap resolutions recorded; new
+  GAP-TCG-12.
+- WI-0005: DF-VE-TCG-2026-DD05 runtime message overflow policy (GAP-TCG-09).
+- WI-0006: EX-VE-TCG-2026-319C preregistration draft for HY-VE-TCG-2026-9151
+  and -8750 (not run).
+
+Forma counterpart: kemiller2002/forma pull request #47 (GAP-TCG-09, -10,
+-11 and the defects found while fixing them).
+
+Validation: `npm run layouts:validate|layouts:test|reveal:test|workflows:validate|workflows:test`,
+`npm run research:validate` (no diagnostics for these records; the
+committed `build-reports/*` are stale on main and were not refreshed),
+`npm run context:build|context:validate|context:test`, `./ros registry build`,
+`./ros validate`.
+
+Unresolved: GAP-TCG-12 needs a decision (keep status on the last
+application row as a stylistic choice, or model 24 application rows plus a
+separate status line); GAP-TCG-06 (wide glyphs, RTL); BBS/ECMA-48 and curses
+evidence (hosts still blocked); IBM primary documentation for the OIA and
+5250 CUA list panels; WI-0003 back-fill needs per-family research (the VE
+schema requires fields Forma's catalog does not hold), so it was not done
+mechanically; family `verified` waits for Forma's promotion after a green
+cross-engine run of #47 (blocked by red theme tests on Forma main).
+
+Next action: run the EX-VE-TCG-2026-319C pilot; decide GAP-TCG-12.

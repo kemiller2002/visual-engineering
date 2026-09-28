@@ -26,6 +26,12 @@ about plausibility from the evidence in EVR-VE-TCG-001, not a measured result.
 | HY-VE-TCG-2026-2A59 | Explicit visible field boundaries (brackets, underscore runs, or outlines) improve discrimination of editable from protected runs over color alone, including under forced colors and CVD simulation. | Medium-high (consistent with EV-VE-TCG-2026-C4C6 and -E9AC) | Identification task with boundaries vs color-only; forced-colors condition. Falsified if color-only is equivalent in all conditions. |
 | HY-VE-TCG-2026-3D56 | A fixed-position status region improves detection of validation errors compared with inline-only messages on dense screens, provided the field is also marked invalid. | Low-medium | Error-detection task with status-only, inline-only, and both. Falsified if status region adds no detection benefit when inline markers are present. |
 
+## Test plans
+
+HY-VE-TCG-2026-9151 and HY-VE-TCG-2026-8750 have a preregistration draft,
+[EX-VE-TCG-2026-319C](../experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md).
+It has not been run; both remain untested.
+
 ## Rules
 
 - Hypotheses are not doctrine. The catalog entry may cite them only as open
