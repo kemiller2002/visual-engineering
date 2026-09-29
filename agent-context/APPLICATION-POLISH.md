@@ -21,3 +21,6 @@ Use adversarial cases including extreme text, Unicode and RTL, numeric and colle
 A zero-finding review is not proof of polish. Report what was tested, what evidence exists, what failed, what was not applicable, and what remains unknown. Unknown is not pass.
 
 Recoverable failures should preserve valid work. Persistence indicators must tell the truth. Recurrent defects should be moved upstream into shared components, rules, fixtures or automated probes so they become structurally harder to repeat.
+
+
+Motion review follows the normative motion-selection discipline in `framework/standards/MOTION-AND-INTERACTION.md`: classify the phenomenon before choosing timing, keep semantic state authoritative, preserve zero-lag direct manipulation, keep determinate progress bounded, define interruption behavior, and apply a model-specific reduced-motion substitution.
