@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/application-polish-gate.mjs"
-      - "scripts/test-application-polish-gate.mjs"
+      - "scripts/test-application-polish-gate.mjs"\n      - "scripts/application-polish-browser.mjs"\n      - "scripts/test-application-polish-browser.mjs"\n      - "registries/application-polish-profiles.json"\n      - "registries/application-polish-probes.json"
       - "schemas/application-polish-evidence.schema.json"
       - "registries/application-polish-fixtures.json"
       - "examples/application-polish-evidence.json"
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - run: npm run polish:test
+      - run: npm install --ignore-scripts\n      - run: npm run polish:test\n      - run: npm run polish:browser:test
       - name: Verify incomplete evidence cannot pass
         run: |
           set +e
