@@ -20,7 +20,7 @@ A dimension MAY be declared not applicable only with recorded rationale.
 3. Recoverable failure SHALL preserve valid user work unless an explicit domain constraint makes preservation impossible.
 4. Presentation SHALL be a deterministic projection of known application state wherever practicable; contradictory visual states are defects.
 5. Supported viewport and zoom ranges SHALL not produce unintended clipping, overlap or horizontal overflow.
-6. Motion SHALL be interruptible or safely completed without leaving illegal visual/application state, and reduced-motion preferences SHALL be respected.
+6. Motion SHALL follow the canonical model-selection rules in [MOTION-AND-INTERACTION.md](MOTION-AND-INTERACTION.md), SHALL be interruptible or safely completed without leaving illegal visual/application state, and SHALL apply a model-appropriate reduced-motion substitution.
 7. Saving/saved/syncing/error indicators SHALL accurately represent persistence state. Optimistic UI SHALL define rollback/reconciliation behavior.
 8. Keyboard navigation SHALL preserve logical focus order and visible focus. Focus SHALL be intentionally placed/restored across overlays and navigation.
 9. Empty, loading, partial, stale, degraded, offline, unauthorized, forbidden, validation-failure, recoverable-failure and terminal-failure states SHALL be intentionally handled when reachable.
@@ -29,6 +29,8 @@ A dimension MAY be declared not applicable only with recorded rationale.
 12. Security and permission failures SHALL fail safely while preserving context and actionable recovery where permitted.
 13. A claim of polish SHALL identify tested environments, states, seams, adversarial fixtures, exceptions and retained evidence.
 14. Zero observed defects SHALL NOT by itself satisfy the polish gate.
+
+Motion quality SHALL NOT be judged only by whether an animation appears smooth. Review SHALL verify model choice, semantic authority, direct-manipulation latency, interruption, progress truthfulness, reduced-motion substitution, and fallback behavior where applicable.
 
 ## Seam coverage
 
