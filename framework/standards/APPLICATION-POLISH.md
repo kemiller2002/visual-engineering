@@ -89,7 +89,7 @@ The gate fails outright on any of these:
 - spatial motion that survives reduced motion outside the direct model;
 - motion that conveys domain meaning (severity, priority, importance, confidence, permission, risk, legality, correctness, score, quality, preference strength, improvement/decline, or estimated completion).
 
-A smooth-looking recording is not evidence for any check. Motion evidence is framework-neutral: it names models and observable invariants, never a particular CSS implementation.
+The reusable `motion-*` probes in `registries/application-polish-probes.json` produce pass, fail, not-applicable or unknown results for these checks. They are engineering screens for specific observable invariants, not proof of human comfort or performance. A smooth-looking recording is not evidence for any check. Motion evidence is framework-neutral: it names models and observable invariants, never a particular CSS implementation.
 
 **Migration.** Evidence written before motion evidence existed stays valid when it does not claim the motion dimension. Evidence that claims the motion dimension without a `motion` section now evaluates as incomplete, and the gate reports `missing.motion`. Add `motion.entries` or `motion.notApplicable.rationale`.
 

@@ -34,3 +34,17 @@ Record motion as evidence, not impressions. For each material animated behavior,
 - checks for semantic authority, interruption, rapid repeat, reduced motion, direct-manipulation lag, progress bounds, cadence stopping, boundaries, focus, progressive fallback, concurrent composition and semantic independence, as the model and roles require.
 
 A surface with no material motion states `motion.notApplicable.rationale`. Unknown or missing checks leave the gate incomplete. Motion that conveys severity, priority, confidence, permission, risk, correctness or similar domain meaning fails.
+
+Reusable motion probes (`registries/application-polish-probes.json`, ids `motion-*`) can produce these checks automatically:
+
+- semantic authority, rapid repeat, interruption: selections, toggles and open/close;
+- reduced-motion substitution and semantic cue: every spatial or repeated motion;
+- focus: dialogs, popovers and view transitions;
+- direct lag: drag, resize and scrub;
+- progress bounds: determinate progress;
+- cadence stops: spinners and shimmer;
+- rejected drop and boundary: reorder, snap and resize;
+- progressive fallback: View Transitions and other modern CSS;
+- concurrent composition: stacked effects.
+
+Probe results are pass, fail, not-applicable or unknown engineering evidence, not proof of human comfort.
