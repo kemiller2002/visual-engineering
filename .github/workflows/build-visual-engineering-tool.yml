@@ -15,7 +15,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  debounce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Wait for commit batch
+        if: github.event_name != 'workflow_dispatch'
+        run: sleep 600
+
   dotnet:
+    needs: debounce
     name: F# build and tests
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +46,7 @@ jobs:
         run: dotnet test VisualEngineering.sln -c Release --no-build
 
   package:
+    needs: debounce
     name: Stage npm package
     runs-on: ubuntu-latest
     env:
