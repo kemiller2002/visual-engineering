@@ -16,7 +16,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  debounce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency:
+      group: publish-research-debounce-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Wait for commit batch
+        if: github.event_name == 'push'
+        run: sleep 600
+
   build:
+    needs: debounce
     runs-on: ubuntu-latest
     env:
       VE_CONTEXT_VERSION: 0.${{ github.run_number }}.${{ github.run_attempt }}
