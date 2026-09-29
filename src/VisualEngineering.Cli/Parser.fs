@@ -15,6 +15,7 @@ module Parser =
           Check: bool
           Force: bool
           Strict: bool
+          Manifest: string option
           HelpRequested: bool
           VersionRequested: bool }
 
@@ -26,6 +27,7 @@ module Parser =
           Check = false
           Force = false
           Strict = false
+          Manifest = None
           HelpRequested = false
           VersionRequested = false }
 
@@ -43,6 +45,8 @@ module Parser =
             | "--check" :: rest -> loop rest { flags with Check = true }
             | "--force" :: rest -> loop rest { flags with Force = true }
             | "--strict" :: rest -> loop rest { flags with Strict = true }
+            | "--manifest" :: value :: rest -> loop rest { flags with Manifest = Some value }
+            | "--manifest" :: [] -> Error "--manifest requires a repository-relative path"
             | "--repo" :: value :: rest -> loop rest { flags with Repository = Some value }
             | "--repo" :: [] -> Error "--repo requires a path"
             | argument :: _ when argument.StartsWith "-" -> Error $"unknown option: {argument}"
@@ -67,7 +71,7 @@ module Parser =
         match argv with
         | [] -> Ok(Help None)
         | head :: tail ->
-            let known = [ "init"; "status"; "verify"; "upgrade"; "doctor"; "help" ]
+            let known = [ "init"; "status"; "verify"; "upgrade"; "doctor"; "robustness"; "help" ]
 
             if head = "help" then
                 match tail with
@@ -91,7 +95,7 @@ module Parser =
                     let result =
                         match head with
                         | "init" ->
-                            reject "init" [ flags.Strict, "--strict" ]
+                            reject "init" [ flags.Strict, "--strict"; flags.Manifest.IsSome, "--manifest" ]
                             |> Result.map (fun () ->
                                 Init
                                     { Common = common flags
@@ -99,7 +103,7 @@ module Parser =
                                       Check = flags.Check
                                       Force = flags.Force })
                         | "upgrade" ->
-                            reject "upgrade" [ flags.Strict, "--strict" ]
+                            reject "upgrade" [ flags.Strict, "--strict"; flags.Manifest.IsSome, "--manifest" ]
                             |> Result.map (fun () ->
                                 Upgrade
                                     { Common = common flags
@@ -112,24 +116,43 @@ module Parser =
                                 [ flags.DryRun, "--dry-run"
                                   flags.Check, "--check"
                                   flags.Force, "--force"
-                                  flags.Strict, "--strict" ]
+                                  flags.Strict, "--strict"
+                                  flags.Manifest.IsSome, "--manifest" ]
                             |> Result.map (fun () -> Status { Common = common flags })
                         | "verify" ->
                             reject
                                 "verify"
                                 [ flags.DryRun, "--dry-run"
                                   flags.Check, "--check"
-                                  flags.Force, "--force" ]
+                                  flags.Force, "--force"
+                                  flags.Manifest.IsSome, "--manifest" ]
                             |> Result.map (fun () ->
                                 Verify
                                     { Common = common flags
                                       Strict = flags.Strict })
+                        | "robustness" ->
+                            reject
+                                "robustness"
+                                [ flags.DryRun, "--dry-run"
+                                  flags.Check, "--check"
+                                  flags.Force, "--force"
+                                  flags.Strict, "--strict" ]
+                            |> Result.bind (fun () ->
+                                match flags.Manifest with
+                                | Some manifest ->
+                                    Ok(
+                                        Robustness
+                                            { Common = common flags
+                                              Manifest = manifest }
+                                    )
+                                | None -> Error "robustness requires --manifest <path>")
                         | _ ->
                             reject
                                 "doctor"
                                 [ flags.DryRun, "--dry-run"
                                   flags.Check, "--check"
-                                  flags.Force, "--force" ]
+                                  flags.Force, "--force"
+                                  flags.Manifest.IsSome, "--manifest" ]
                             |> Result.map (fun () ->
                                 Doctor
                                     { Common = common flags

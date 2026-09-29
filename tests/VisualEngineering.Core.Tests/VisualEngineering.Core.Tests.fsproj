@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="Fixtures.fs" />
     <Compile Include="PrimitiveTests.fs" />
+    <Compile Include="PerceptualRobustnessTests.fs" />
     <Compile Include="ManagedBlockTests.fs" />
     <Compile Include="LifecycleTests.fs" />
     <Compile Include="UpgradeTests.fs" />

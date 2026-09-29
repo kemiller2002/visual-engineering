@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "states": [
+    {
+      "id": "warning",
+      "criticality": "important",
+      "channels": ["hue", "text-label", "icon-shape"],
+      "programmaticSemantics": true
+    },
+    {
+      "id": "error",
+      "criticality": "critical",
+      "channels": ["hue", "text-label", "icon-shape", "border-shape"],
+      "programmaticSemantics": true
+    },
+    {
+      "id": "selected",
+      "criticality": "important",
+      "channels": ["text-label", "border-shape", "position"],
+      "programmaticSemantics": true
+    },
+    {
+      "id": "unknown",
+      "criticality": "critical",
+      "channels": ["text-label", "icon-shape", "pattern", "border-shape"],
+      "programmaticSemantics": true
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "no-hue",
+      "lostChannels": ["hue"]
+    },
+    {
+      "id": "forced-color-stress",
+      "lostChannels": ["hue", "luminance"]
+    },
+    {
+      "id": "reduced-motion",
+      "lostChannels": ["motion"]
+    }
+  ]
+}

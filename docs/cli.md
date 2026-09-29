@@ -74,6 +74,23 @@ Moves an existing installation to the version this release provides.
 | `--check` | Write nothing; exit 4 when an upgrade is required |
 | `--force` | Replace locally modified tool maintained content |
 
+### `robustness`
+
+Evaluates a repository-authored perceptual robustness manifest. Read only.
+
+| Option | Meaning |
+| --- | --- |
+| `--manifest <path>` | Repository-relative manifest to evaluate |
+
+The manifest declares semantic states, criticality, independent visual channels,
+programmatic semantics, and optional degradation scenarios.
+
+The command reports baseline validity, single-channel survivability, declared
+scenario results, Perceptual Failure Boundary, and minimal failure sets.
+
+This is a deterministic semantic robustness check. It does not simulate a person
+or claim clinical validity.
+
 ### `doctor`
 
 Diagnoses problems and explains them. Read only.
@@ -97,7 +114,7 @@ Findings carry a `severity` (`error`, `warning`, `information`), a stable `code`
 | 0 | success | The command completed and the resulting state is valid |
 | 1 | internal failure | An unexpected error, or a plan that was only partially applied |
 | 2 | invalid arguments | Unknown command, unknown option, or an option the command rejects |
-| 3 | verification failed | `verify` failed, `doctor` found a failing finding, or `status` found an invalid installation |
+| 3 | verification failed | `verify` failed, `doctor` found a failing finding, `robustness` found an invalid/failed manifest, or `status` found an invalid installation |
 | 4 | changes required | `--check` found that changes are required |
 | 5 | installation blocked | A conflict or a failed migration precondition stopped the plan |
 | 6 | environment failure | The packaged context is missing or corrupt, or the repository cannot be opened |
@@ -125,7 +142,7 @@ Present on every document:
 | `schemaVersion` | integer | Output schema version. Currently `1` |
 | `tool` | string | `"visual-engineering"` |
 | `package` | string | `"@echelon-foundry/visual-engineering"` |
-| `command` | string | `init`, `status`, `verify`, `upgrade` or `doctor` |
+| `command` | string | `init`, `status`, `verify`, `upgrade`, `doctor` or `robustness` |
 | `cliVersion` | string | Version of the CLI, identical to the npm package version |
 | `exitCode` | integer | The process exit code |
 
@@ -149,6 +166,14 @@ mode, so a consumer can see the full picture without rerunning.
 ### `doctor --json`
 
 Adds `healthy` and `findings[]` with `severity`, `code`, `title`, `detail` and `remedy`.
+
+### `robustness --json`
+
+Adds `passed`, `stateCount`, `scenarioCount`, and `states[]`.
+
+Each state includes `criticality`, `baselineValid`,
+`singleChannelSurvivable`, `programmaticSemantics`, `failureBoundary`,
+`minimalFailureSets`, `scenarios`, and `findings`.
 
 ### `init --json` and `upgrade --json`
 
@@ -174,6 +199,7 @@ npx @echelon-foundry/visual-engineering status --json
 npx @echelon-foundry/visual-engineering verify --strict
 npx @echelon-foundry/visual-engineering upgrade --dry-run
 npx @echelon-foundry/visual-engineering doctor --json
+npx @echelon-foundry/visual-engineering robustness --manifest visual-robustness.json --json
 npx @echelon-foundry/visual-engineering --version
 npx @echelon-foundry/visual-engineering init --help
 ```

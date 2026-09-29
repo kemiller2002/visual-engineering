@@ -44,6 +44,7 @@ let ``every documented command parses`` (name: string) =
 [<InlineData("verify")>]
 [<InlineData("upgrade")>]
 [<InlineData("doctor")>]
+[<InlineData("robustness")>]
 let ``command specific help is available both ways`` (name: string) =
     Assert.Equal(Help(Some name), ok [ name; "--help" ])
     Assert.Equal(Help(Some name), ok [ "help"; name ])
@@ -72,6 +73,21 @@ let ``upgrade accepts check`` () =
     match ok [ "upgrade"; "--check" ] with
     | Upgrade options -> Assert.True options.Check
     | other -> failwithf "expected upgrade, got %A" other
+
+[<Fact>]
+let ``robustness requires and accepts a manifest`` () =
+    Assert.Contains("--manifest", failure [ "robustness" ])
+
+    match ok [ "robustness"; "--manifest"; "visual-robustness.json"; "--json"; "--repo"; "/tmp/x" ] with
+    | Robustness options ->
+        Assert.Equal("visual-robustness.json", options.Manifest)
+        Assert.True options.Common.Json
+        Assert.Equal("/tmp/x", options.Common.Repository)
+    | other -> failwithf "expected robustness, got %A" other
+
+[<Fact>]
+let ``robustness rejects lifecycle flags`` () =
+    Assert.Contains("--force", failure [ "robustness"; "--manifest"; "x.json"; "--force" ])
 
 [<Fact>]
 let ``an unknown command is rejected`` () =
