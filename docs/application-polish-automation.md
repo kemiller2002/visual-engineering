@@ -27,3 +27,7 @@ Probe results may be recorded in the evidence document as `passed`, `failed`, `u
 Automate observations that are objective and bounded. Keep semantic quality, task appropriateness, perceptual judgment, and product-specific correctness subject to explicit assertions or human review.
 
 When a recurring defect becomes objectively detectable, add or refine a probe contract and preserve its limitations.
+
+## Motion evidence
+
+`scripts/application-polish-motion.mjs` evaluates the optional `motion` section of polish evidence, and `scripts/application-polish-gate.mjs` folds its result into the disposition. `examples/application-polish-motion-evidence.json` shows inertial, cadence, direct (drag phase and determinate progress), post-release settling and perceptual entries. It is deliberately incomplete because boundary coverage is unknown: `npm run polish:motion-example` exits 3, and CI asserts that. `npm run polish:test` covers the motion rules.

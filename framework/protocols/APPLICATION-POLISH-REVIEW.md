@@ -27,6 +27,8 @@ Evaluate visual precision, interaction, motion, state completeness, forms, feedb
 ### 6. Capture evidence
 For every required claim retain the strongest practical evidence: assertions, traces, measurements, screenshots/comparisons, accessibility results and bounded manual observations. Associate evidence with the state/seam/environment it demonstrates.
 
+For motion, record one `motion` entry per material animated behavior (see the Application Polish Standard, "Motion evidence"). Classify the model before judging timing. Attach each check to the probe or test that produced it (`registries/application-polish-probes.json` lists the reusable motion probes). Mark checks you did not exercise as `unknown`.
+
 ### 7. Record negative knowledge
 Explicitly record untested browsers/devices, unreachable fixtures, missing instrumentation, uncertain behavior and assumptions. Unknown is not pass.
 

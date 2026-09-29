@@ -46,6 +46,53 @@ Polish evidence SHOULD combine deterministic assertions, accessibility checks, i
 
 Evidence MUST identify scope. Untested state or environment coverage MUST remain visible as unknown rather than silently passing.
 
+### Motion evidence
+
+When evidence claims the motion dimension (every shipped profile requires it), it SHALL include a `motion` section, either:
+
+- `motion.entries`: one entry per material animated behavior; or
+- `motion.notApplicable.rationale`: an explicit statement that the surface has no material motion.
+
+Each entry records:
+
+- the selected canonical model (`inertial`, `gravity`, `cadence`, `direct`, `perceptual`), or `unknown`;
+- the phenomenon;
+- what the motion `conveys`;
+- the authoritative state or input, and whether the semantic update is `immediate`;
+- the `phase` (`direct` tracking vs post-release `settle`);
+- roles such as `progress`, `drag`, `selection-indicator` or `loading`;
+- progressive-enhancement and concurrent-effect facts;
+- the reduced-motion substitution;
+- per-invariant `checks`.
+
+The gate derives the required checks from the model and roles:
+
+- always: semantic authority, reduced motion, semantic independence;
+- inertial and gravity models: interruption;
+- inertial motion, press and selection indicators: rapid repeat;
+- cadence and loading: cadence stopping;
+- the direct model or phase: direct manipulation;
+- progress: progress bounds;
+- drag, drop, resize and snap: boundaries;
+- transient surfaces and view transitions: focus;
+- progressive features: fallback;
+- concurrent effects: composition.
+
+A missing, `untested` or `unknown` required check, an `unknown` model or an `unknown` authority is incomplete, never pass. `passed` requires evidence, and `not-applicable` requires a rationale.
+
+The gate fails outright on any of these:
+
+- semantic state that waits for animation;
+- a direct-manipulation phase that does not use the direct model;
+- determinate progress that is not a direct projection;
+- repeated activity modeled as inertial or gravity motion;
+- spatial motion that survives reduced motion outside the direct model;
+- motion that conveys domain meaning (severity, priority, importance, confidence, permission, risk, legality, correctness, score, quality, preference strength, improvement/decline, or estimated completion).
+
+A smooth-looking recording is not evidence for any check. Motion evidence is framework-neutral: it names models and observable invariants, never a particular CSS implementation.
+
+**Migration.** Evidence written before motion evidence existed stays valid when it does not claim the motion dimension. Evidence that claims the motion dimension without a `motion` section now evaluates as incomplete, and the gate reports `missing.motion`. Add `motion.entries` or `motion.notApplicable.rationale`.
+
 ## Release gate
 
 A releasable application SHALL have no unresolved critical polish defect; SHALL have dispositioned material high-severity findings; SHALL have evidence for required dimensions and high-risk seams; SHALL record unsupported/untested scope; and SHALL record any accepted exception with rationale and owner.
