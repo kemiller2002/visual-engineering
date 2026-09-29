@@ -9,6 +9,7 @@ on:
       - "registries/application-polish-*.json"
       - "examples/application-polish-*.json"
       - "examples/adapters/**"
+      - "examples/motion-probes/**"
       - "framework/standards/APPLICATION-POLISH.md"
       - "framework/standards/MOTION-AND-INTERACTION.md"
       - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
@@ -25,6 +26,7 @@ on:
       - "registries/application-polish-*.json"
       - "examples/application-polish-*.json"
       - "examples/adapters/**"
+      - "examples/motion-probes/**"
       - "framework/standards/APPLICATION-POLISH.md"
       - "framework/standards/MOTION-AND-INTERACTION.md"
       - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
@@ -48,6 +50,9 @@ jobs:
       - run: npm run polish:test
       - run: npm run polish:browser:test
       - run: npm run polish:scenarios:test
+      - name: Install Chromium for motion probe tests
+        run: npx playwright-core install --with-deps chromium
+      - run: npm run polish:motion-probes:test
       - name: Verify incomplete evidence cannot pass
         run: |
           set +e

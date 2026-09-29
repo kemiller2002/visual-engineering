@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "agent:claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-29T13:18:18.000Z",
+  "updatedAt": "2026-09-29T13:45:00.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -419,6 +419,43 @@
         "EXE-20260929T131517819Z-3932f1d0"
       ],
       "completedAt": "2026-09-29T13:18:18.000Z"
+    },
+    {
+      "id": "GH-29",
+      "type": "implementation",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "scripts/application-polish-motion-probes.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "registries/application-polish-probes.json"
+        },
+        {
+          "type": "implementation",
+          "path": "schemas/application-polish-motion-probes.schema.json"
+        },
+        {
+          "type": "implementation",
+          "path": "docs/application-polish-automation.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-application-polish-motion-probes.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "examples/motion-probes/fixture.html"
+        }
+      ],
+      "updatedAt": "2026-09-29T13:45:00.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T132047280Z-b2e6728c"
+      ],
+      "completedAt": "2026-09-29T13:45:00.000Z"
     }
   ]
 }

@@ -33,7 +33,9 @@
     "polish:browser": "node scripts/application-polish-browser.mjs",
     "polish:browser:test": "node --test scripts/test-application-polish-browser.mjs",
     "polish:scenarios": "node scripts/application-polish-scenarios.mjs",
-    "polish:scenarios:test": "node --test scripts/test-application-polish-scenarios.mjs"
+    "polish:scenarios:test": "node --test scripts/test-application-polish-scenarios.mjs",
+    "polish:motion-probes": "node scripts/application-polish-motion-probes.mjs",
+    "polish:motion-probes:test": "node --test scripts/test-application-polish-motion-probes.mjs"
   },
   "engines": {
     "node": ">=24 <25"
