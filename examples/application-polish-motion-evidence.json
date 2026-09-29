@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "surface": "example/work-queue",
+  "dimensions": ["interaction", "motion", "accessibility"],
+  "states": [
+    { "id": "loaded", "status": "passed", "evidence": ["test:work-queue-loaded"] }
+  ],
+  "seams": [
+    { "id": "loading-to-loaded", "status": "passed", "evidence": ["test:loading-loaded"] }
+  ],
+  "environments": [
+    { "id": "reduced-motion", "status": "passed", "evidence": ["test:reduced-motion"] }
+  ],
+  "fixtures": [
+    { "id": "rapid-double-action", "status": "passed", "evidence": ["test:rapid-selection"] }
+  ],
+  "motion": {
+    "entries": [
+      {
+        "id": "view-selector-indicator",
+        "surface": "toolbar/view",
+        "model": "inertial",
+        "phenomenon": "A light selection indicator settling on the newly selected option.",
+        "conveys": ["continuity", "confirmation"],
+        "roles": ["selection-indicator", "press"],
+        "authority": { "source": "native radio group", "semanticUpdate": "immediate" },
+        "progressiveEnhancement": true,
+        "reducedMotion": { "substitution": "Indicator placed immediately; press compression removed; selection styling unchanged." },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["probe:motion-semantic-authority#view"], "probe": "motion-semantic-authority" },
+          "interruption": { "status": "passed", "evidence": ["test:indicator-ends-on-checked"] },
+          "rapidRepeat": { "status": "passed", "evidence": ["probe:motion-rapid-repeat#view"], "probe": "motion-rapid-repeat" },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#view"], "probe": "motion-reduced-substitution" },
+          "progressiveFallback": { "status": "passed", "evidence": ["test:unsupported-anchor-fallback"] },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:checked-state-has-text-and-structure"] }
+        }
+      },
+      {
+        "id": "queue-loading-activity",
+        "surface": "queue/loading",
+        "model": "cadence",
+        "phenomenon": "Ongoing retrieval of queue items with an unknown duration.",
+        "conveys": ["activity"],
+        "roles": ["loading"],
+        "authority": { "source": "application request state", "semanticUpdate": "immediate" },
+        "reducedMotion": { "substitution": "Static placeholder; visible 'Loading queue' text remains." },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["test:aria-busy-matches-request"] },
+          "cadenceStops": { "status": "passed", "evidence": ["probe:motion-cadence-stops#queue"], "probe": "motion-cadence-stops" },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#queue"], "probe": "motion-reduced-substitution" },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:loading-text-present"] }
+        }
+      },
+      {
+        "id": "item-reorder-drag",
+        "surface": "queue/item",
+        "model": "direct",
+        "phase": "direct",
+        "phenomenon": "The dragged item follows the pointer supplied position.",
+        "conveys": ["direct-manipulation", "spatial-relationship"],
+        "roles": ["drag"],
+        "authority": { "source": "pointer position via application drag controller", "semanticUpdate": "immediate" },
+        "reducedMotion": { "substitution": "Direct mapping preserved; no smoothing added.", "spatial": true },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["test:order-committed-on-drop"] },
+          "directManipulation": { "status": "passed", "evidence": ["probe:motion-direct-lag#queue-item"], "probe": "motion-direct-lag" },
+          "boundaries": { "status": "unknown" },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#queue-item"], "probe": "motion-reduced-substitution" },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:keyboard-reorder-announcement"] }
+        }
+      },
+      {
+        "id": "item-reorder-settle",
+        "surface": "queue/item",
+        "model": "inertial",
+        "phase": "settle",
+        "phenomenon": "Displaced items settle into their accepted positions after release.",
+        "conveys": ["continuity"],
+        "roles": ["drop"],
+        "authority": { "source": "application accepted order", "semanticUpdate": "immediate" },
+        "reducedMotion": { "substitution": "Items placed directly at the accepted position." },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["test:settle-after-accepted-order"] },
+          "interruption": { "status": "passed", "evidence": ["test:second-drag-during-settle"] },
+          "rapidRepeat": { "status": "not-applicable", "rationale": "Settling only follows a completed drop; repeated drops are covered by the drag entry." },
+          "boundaries": { "status": "untested" },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#queue-item"] },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:final-order-in-text"] }
+        }
+      },
+      {
+        "id": "export-progress",
+        "surface": "export/progress",
+        "model": "direct",
+        "phase": "direct",
+        "phenomenon": "Determinate export progress projected from the server value.",
+        "conveys": ["progress"],
+        "roles": ["progress"],
+        "authority": { "source": "server progress events", "semanticUpdate": "immediate" },
+        "reducedMotion": { "substitution": "Value placed immediately.", "spatial": true },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["test:progress-value-attribute"] },
+          "directManipulation": { "status": "passed", "evidence": ["probe:motion-progress-bounds#export"] },
+          "progressBounds": { "status": "passed", "evidence": ["probe:motion-progress-bounds#export"], "probe": "motion-progress-bounds" },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#export"] },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:percentage-text-visible"] }
+        }
+      },
+      {
+        "id": "theme-change",
+        "surface": "settings/theme",
+        "model": "perceptual",
+        "phenomenon": "Colors crossfade to the selected theme.",
+        "conveys": ["continuity"],
+        "roles": ["theme-change"],
+        "authority": { "source": "user preference setting", "semanticUpdate": "immediate" },
+        "reducedMotion": { "substitution": "Brief crossfade retained; no spatial change exists." },
+        "checks": {
+          "semanticAuthority": { "status": "passed", "evidence": ["test:theme-attribute-immediate"] },
+          "reducedMotion": { "status": "passed", "evidence": ["probe:motion-reduced-substitution#theme"] },
+          "semanticIndependence": { "status": "passed", "evidence": ["review:theme-name-visible"] }
+        }
+      }
+    ]
+  },
+  "unknowns": [],
+  "findings": [],
+  "disposition": "incomplete"
+}

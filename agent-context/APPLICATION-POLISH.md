@@ -24,3 +24,13 @@ Recoverable failures should preserve valid work. Persistence indicators must tel
 
 
 Motion review follows the normative motion-selection discipline in `framework/standards/MOTION-AND-INTERACTION.md`: classify the phenomenon before choosing timing, keep semantic state authoritative, preserve zero-lag direct manipulation, keep determinate progress bounded, define interruption behavior, and apply a model-specific reduced-motion substitution.
+
+Record motion as evidence, not impressions. For each material animated behavior, add a `motion.entries` item with:
+
+- model, phenomenon and what it conveys;
+- the authoritative source, and whether the semantic update is immediate;
+- phase (direct or settle) and roles;
+- the reduced-motion substitution;
+- checks for semantic authority, interruption, rapid repeat, reduced motion, direct-manipulation lag, progress bounds, cadence stopping, boundaries, focus, progressive fallback, concurrent composition and semantic independence, as the model and roles require.
+
+A surface with no material motion states `motion.notApplicable.rationale`. Unknown or missing checks leave the gate incomplete. Motion that conveys severity, priority, confidence, permission, risk, correctness or similar domain meaning fails.

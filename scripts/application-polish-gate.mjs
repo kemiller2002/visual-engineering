@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
+import { evaluateMotionEvidence } from "./application-polish-motion.mjs";
 
 const GROUPS = ["states", "seams", "environments", "fixtures"];
 const SEVERITIES = ["critical", "high", "medium", "low"];
@@ -41,12 +42,19 @@ export function evaluatePolishEvidence(doc, profile = null) {
     if (finding.status === "open") open[finding.severity]++;
   }
 
+  // Motion evidence (VE-MOT-001). Required when the evidence or its profile
+  // claims the motion dimension; absent motion evidence is unknown, not pass.
+  const motionRequired = (doc?.dimensions || []).includes("motion") || (profile?.requiredDimensions || []).includes("motion");
+  const motion = evaluateMotionEvidence(doc?.motion, { required: motionRequired });
+  for (const error of motion.errors) errors.push(error);
+  if (motion.missing.includes("motion evidence")) missing.motion = true;
+
   const tested = counts.passed + counts.failed;
   const applicable = tested + counts.untested;
   const coveragePercent = applicable === 0 ? null : Math.round((tested / applicable) * 10000) / 100;
   const profileIncomplete = missing.dimensions.length > 0 || missing.fixtures.length > 0;
-  const hasUnknown = (doc?.unknowns?.length || 0) > 0 || counts.untested > 0 || profileIncomplete;
-  const hardFailure = counts.failed > 0 || open.critical > 0;
+  const hasUnknown = (doc?.unknowns?.length || 0) > 0 || counts.untested > 0 || profileIncomplete || motion.disposition === "incomplete";
+  const hardFailure = counts.failed > 0 || open.critical > 0 || motion.disposition === "fail";
   const highUnresolved = open.high > 0;
 
   let computedDisposition = "pass";
@@ -57,7 +65,7 @@ export function evaluatePolishEvidence(doc, profile = null) {
     errors.push("declared disposition " + doc.disposition + " does not match computed disposition " + computedDisposition);
     computedDisposition = "fail";
   }
-  return { disposition: computedDisposition, profile: profile?.id || doc?.profile || null, coveragePercent, counts, missing, openFindings: open, errors };
+  return { disposition: computedDisposition, profile: profile?.id || doc?.profile || null, coveragePercent, counts, missing, openFindings: open, motion, errors };
 }
 
 export function resolveProfile(registry, id) {
@@ -98,6 +106,12 @@ async function main() {
       process.stdout.write("Coverage: "+(result.coveragePercent===null?"n/a":result.coveragePercent+"%")+"\n");
       if (result.missing.dimensions.length) process.stdout.write("Missing dimensions: "+result.missing.dimensions.join(", ")+"\n");
       if (result.missing.fixtures.length) process.stdout.write("Missing fixtures: "+result.missing.fixtures.join(", ")+"\n");
+      if (result.motion.present || result.motion.disposition !== "not-required") process.stdout.write("Motion: "+result.motion.disposition+" ("+result.motion.entries+" entries, "+result.motion.counts.unknown+" unknown checks)"+"\n");
+      if (result.missing.motion) process.stdout.write("Missing motion evidence: the motion dimension requires motion.entries or motion.notApplicable\n");
+      for (const item of result.motion.missing) if (item !== "motion evidence") process.stdout.write("Missing motion check: "+item+"\n");
+      for (const item of result.motion.unknownChecks) process.stdout.write("Unknown motion check: "+item+"\n");
+      for (const item of result.motion.unknownModels) process.stdout.write("Unknown motion model or authority: "+item+"\n");
+      for (const violation of result.motion.violations) process.stdout.write("MOTION VIOLATION: "+violation+"\n");
       for (const error of result.errors) process.stdout.write("ERROR: "+error+"\n");
     }
     process.exitCode = result.disposition==="pass"?0:result.disposition==="incomplete"?3:4;

@@ -3,29 +3,35 @@ name: Application Polish Gate
 on:
   pull_request:
     paths:
-      - "scripts/application-polish-gate.mjs"
-      - "scripts/test-application-polish-gate.mjs"\n      - "scripts/application-polish-browser.mjs"\n      - "schemas/application-polish-scenario.schema.json"\n      - "scripts/test-application-polish-scenarios.mjs"\n      - "scripts/application-polish-scenarios.mjs"\n      - "scripts/test-application-polish-browser.mjs"\n      - "registries/application-polish-profiles.json"\n      - "registries/application-polish-probes.json"
-      - "schemas/application-polish-evidence.schema.json"
-      - "registries/application-polish-fixtures.json"
-      - "examples/application-polish-evidence.json"
+      - "scripts/application-polish-*.mjs"
+      - "scripts/test-application-polish-*.mjs"
+      - "schemas/application-polish-*.schema.json"
+      - "registries/application-polish-*.json"
+      - "examples/application-polish-*.json"
+      - "examples/adapters/**"
       - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/standards/MOTION-AND-INTERACTION.md"
       - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
       - "docs/application-polish-requirements.md"
       - "agent-context/APPLICATION-POLISH.md"
       - "package.json"
+      - ".github/workflows/application-polish.yml"
   push:
     branches: [main]
     paths:
-      - "scripts/application-polish-gate.mjs"
-      - "scripts/test-application-polish-gate.mjs"
-      - "schemas/application-polish-evidence.schema.json"
-      - "registries/application-polish-fixtures.json"
-      - "examples/application-polish-evidence.json"
+      - "scripts/application-polish-*.mjs"
+      - "scripts/test-application-polish-*.mjs"
+      - "schemas/application-polish-*.schema.json"
+      - "registries/application-polish-*.json"
+      - "examples/application-polish-*.json"
+      - "examples/adapters/**"
       - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/standards/MOTION-AND-INTERACTION.md"
       - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
       - "docs/application-polish-requirements.md"
       - "agent-context/APPLICATION-POLISH.md"
       - "package.json"
+      - ".github/workflows/application-polish.yml"
 
 permissions:
   contents: read
@@ -38,11 +44,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - run: npm install --ignore-scripts\n      - run: npm run polish:test\n      - run: npm run polish:browser:test\n      - run: npm run polish:scenarios:test
+      - run: npm install --ignore-scripts
+      - run: npm run polish:test
+      - run: npm run polish:browser:test
+      - run: npm run polish:scenarios:test
       - name: Verify incomplete evidence cannot pass
         run: |
           set +e
           npm run polish:example
+          code=$?
+          set -e
+          test "$code" -eq 3
+      - name: Verify unknown motion coverage cannot pass
+        run: |
+          set +e
+          npm run polish:motion-example
           code=$?
           set -e
           test "$code" -eq 3

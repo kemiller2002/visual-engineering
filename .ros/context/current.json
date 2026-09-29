@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "agent:claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-29T12:20:17.000Z",
+  "updatedAt": "2026-09-29T13:18:18.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -382,6 +382,43 @@
         "EXE-20260929T121939831Z-c82bad4a"
       ],
       "completedAt": "2026-09-29T12:20:17.000Z"
+    },
+    {
+      "id": "GH-28",
+      "type": "implementation",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "scripts/application-polish-motion.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "scripts/application-polish-gate.mjs"
+        },
+        {
+          "type": "implementation",
+          "path": "schemas/application-polish-evidence.schema.json"
+        },
+        {
+          "type": "implementation",
+          "path": "framework/standards/APPLICATION-POLISH.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-application-polish-motion.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "examples/application-polish-motion-evidence.json"
+        }
+      ],
+      "updatedAt": "2026-09-29T13:18:18.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T131517819Z-3932f1d0"
+      ],
+      "completedAt": "2026-09-29T13:18:18.000Z"
     }
   ]
 }
