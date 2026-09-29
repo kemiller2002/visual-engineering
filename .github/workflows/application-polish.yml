@@ -38,10 +38,16 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: application-polish-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-gate:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for commit batch
+        run: sleep 600
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
