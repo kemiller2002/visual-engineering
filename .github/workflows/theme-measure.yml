@@ -1,0 +1,50 @@
+name: Theme measurement validation
+
+on:
+  pull_request:
+    paths:
+      - 'content/themes/**'
+      - 'tools/theme-measure*/**'
+      - 'tools/theme-catalog*/**'
+      - '.github/workflows/theme-measure.yml'
+  push:
+    branches: [ main ]
+    paths:
+      - 'content/themes/**'
+      - 'tools/theme-measure*/**'
+      - 'tools/theme-catalog*/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build measurement library
+        run: dotnet build tools/theme-measure-lib/theme-measure-lib.fsproj --configuration Release
+      - name: Build catalog integrity validator
+        run: dotnet build tools/theme-catalog-validate/theme-catalog-validate.fsproj --configuration Release
+      - name: Run catalog integrity tests
+        run: dotnet run --project tools/theme-catalog-tests/theme-catalog-tests.fsproj --configuration Release
+      - name: Validate theme catalog integrity
+        run: dotnet run --no-build --project tools/theme-catalog-validate/theme-catalog-validate.fsproj --configuration Release -- --repository-root .
+      - name: Build evaluator
+        run: dotnet build tools/theme-measure/theme-measure.fsproj --configuration Release
+      - name: Run production-math invariants
+        run: dotnet run --project tools/theme-measure-tests/theme-measure-tests.fsproj --configuration Release
+      - name: Evaluate every theme specimen
+        shell: bash
+        run: |
+          mapfile -t themes < <(find content/themes/specimens -maxdepth 1 -name 'THM-*.json' -type f | sort)
+          test "${#themes[@]}" -gt 0
+          dotnet run --no-build --project tools/theme-measure/theme-measure.fsproj --configuration Release -- "${themes[@]}" > /tmp/theme-evidence.json
+          python -m json.tool /tmp/theme-evidence.json > /dev/null
+          echo "Evaluated ${#themes[@]} theme specimens."
+      - name: Upload computed theme evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-evidence
+          path: /tmp/theme-evidence.json
+          if-no-files-found: error

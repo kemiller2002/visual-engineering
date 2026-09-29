@@ -11,6 +11,8 @@ src/**/bin/
 src/**/obj/
 tests/**/bin/
 tests/**/obj/
+tools/**/bin/
+tools/**/obj/
 
 # Staged npm package artifacts for @echelon-foundry/visual-engineering
 npm/payload/
@@ -25,3 +27,4 @@ npm/CHANGELOG.md
 #   npx @echelon-foundry/visual-engineering init
 .visual-engineering/
 # END echelon:visual-engineering
+experiments/ex-ve-tcg-319c/dist/

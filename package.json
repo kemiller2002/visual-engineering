@@ -16,12 +16,32 @@
     "tool:pack": "npm pack --dry-run --cache /tmp/visual-engineering-npm-cache ./npm",
     "tool:preflight": "node scripts/preflight-npm-publish.mjs",
     "tool:test-package": "node scripts/test-tool-package.mjs",
-    "tool:test": "dotnet test VisualEngineering.sln"
+    "tool:test": "dotnet test VisualEngineering.sln",
+    "polish:gate": "node scripts/application-polish-gate.mjs",
+    "polish:test": "node --test scripts/test-application-polish-gate.mjs scripts/test-application-polish-motion.mjs",
+    "polish:example": "node scripts/application-polish-gate.mjs examples/application-polish-evidence.json --json",
+    "polish:motion-example": "node scripts/application-polish-gate.mjs examples/application-polish-motion-evidence.json",
+    "layouts:validate": "node scripts/layout-catalog.mjs",
+    "layouts:test": "node --test scripts/test-layout-catalog.mjs",
+    "reveal:test": "node --test scripts/test-sequential-reveal.mjs",
+    "workflows:validate": "node scripts/character-grid-layout.mjs --report",
+    "workflows:test": "node --test scripts/test-character-grid-layout.mjs",
+    "tcg319c:test": "node --test experiments/ex-ve-tcg-319c/tests/unit.test.mjs",
+    "tcg319c:session": "node experiments/ex-ve-tcg-319c/src/build-harness.mjs",
+    "tcg319c:mechanics": "node experiments/ex-ve-tcg-319c/tests/mechanics.mjs",
+    "tcg319c:analyze": "node experiments/ex-ve-tcg-319c/src/analyze.mjs",
+    "polish:browser": "node scripts/application-polish-browser.mjs",
+    "polish:browser:test": "node --test scripts/test-application-polish-browser.mjs",
+    "polish:scenarios": "node scripts/application-polish-scenarios.mjs",
+    "polish:scenarios:test": "node --test scripts/test-application-polish-scenarios.mjs",
+    "polish:motion-probes": "node scripts/application-polish-motion-probes.mjs",
+    "polish:motion-probes:test": "node --test scripts/test-application-polish-motion-probes.mjs"
   },
   "engines": {
     "node": ">=24 <25"
   },
   "devDependencies": {
+    "playwright-core": "1.63.0",
     "research-publisher": "github:kemiller2002/research-publisher#main"
   }
 }

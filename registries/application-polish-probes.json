@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "probes": [
+    {
+      "id": "layout-horizontal-overflow",
+      "kind": "automated",
+      "covers": [
+        "responsive",
+        "visual-precision"
+      ],
+      "evidenceFor": [
+        "environments"
+      ],
+      "claim": "Detect unintended document-level horizontal overflow at an exercised viewport.",
+      "limitations": "Does not prove local clipping, intended scrollers, or visual quality."
+    },
+    {
+      "id": "focus-visible",
+      "kind": "automated-assisted",
+      "covers": [
+        "accessibility",
+        "interaction"
+      ],
+      "evidenceFor": [
+        "environments",
+        "seams"
+      ],
+      "claim": "Exercise keyboard focus and detect missing or obscured focus on exercised controls.",
+      "limitations": "Cannot prove logical focus order for every workflow without scenario knowledge."
+    },
+    {
+      "id": "zoom-reflow",
+      "kind": "automated-assisted",
+      "covers": [
+        "responsive",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "environments",
+        "fixtures"
+      ],
+      "claim": "Exercise configured zoom or equivalent constrained CSS viewport and detect overflow/overlap assertions.",
+      "limitations": "Browser zoom semantics vary; retain environment metadata."
+    },
+    {
+      "id": "reduced-motion",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "environments",
+        "fixtures"
+      ],
+      "claim": "Exercise reduced-motion preference and assert configured motion invariants.",
+      "limitations": "Cannot judge whether remaining motion is cognitively appropriate."
+    },
+    {
+      "id": "rapid-repeat",
+      "kind": "scenario",
+      "covers": [
+        "interaction",
+        "data-integrity"
+      ],
+      "evidenceFor": [
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Repeat a consequential action rapidly and verify domain operation cardinality and UI state.",
+      "limitations": "Requires application-specific observation of the domain effect."
+    },
+    {
+      "id": "persistence-truth",
+      "kind": "scenario",
+      "covers": [
+        "state-completeness",
+        "data-integrity",
+        "feedback"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams"
+      ],
+      "claim": "Observe local, pending, persisted, rejected and conflicting transitions against authoritative persistence state.",
+      "limitations": "Requires an application adapter or test seam exposing authoritative state."
+    },
+    {
+      "id": "offline-recovery",
+      "kind": "scenario",
+      "covers": [
+        "resilience",
+        "state-completeness"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Interrupt connectivity, exercise recovery, and verify valid work and truthful status.",
+      "limitations": "Requires a workflow with a network dependency."
+    },
+    {
+      "id": "session-expiry",
+      "kind": "scenario",
+      "covers": [
+        "security-ux",
+        "resilience",
+        "state-completeness"
+      ],
+      "evidenceFor": [
+        "states",
+        "seams",
+        "fixtures"
+      ],
+      "claim": "Expire authentication during work and verify safe recovery and permitted work preservation.",
+      "limitations": "Requires controllable authentication."
+    },
+    {
+      "id": "motion-semantic-authority",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "semanticAuthority",
+      "claim": "Perform the configured action and read the semantic state before animations settle; the state must already be correct.",
+      "applyWhen": "Any animated state change: selection, open/close, toggle, status.",
+      "limitations": "Reads configured DOM state only; application or domain truth that is not exposed in the DOM needs scenario evidence. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-rapid-repeat",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "interaction"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "rapidRepeat",
+      "claim": "Repeat actions back to back and fail when concurrent animations stack on the same property of the same element, the final semantic state is wrong, or motion does not settle.",
+      "applyWhen": "Press feedback, selection indicators, toggles, anything users can activate quickly.",
+      "limitations": "Detects queued Web Animations/CSS transitions visible to document.getAnimations(); canvas or script-driven frame loops are invisible to it. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-interruption",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "interruption",
+      "claim": "Interrupt a running transition with a second action and require convergence on the latest semantic and visual state.",
+      "applyWhen": "Any inertial or gravity transition that can be retargeted mid-flight.",
+      "limitations": "Visual convergence is checked only for configured readers. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-reduced-substitution",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "reducedMotion",
+      "claim": "Emulate prefers-reduced-motion: reduce and fail on spatial animations above a duration threshold or on repeated motion, while the final semantic state holds.",
+      "applyWhen": "Every surface that animates spatially or repeatedly.",
+      "limitations": "Cannot judge whether a remaining brief perceptual transition is cognitively appropriate; direct manipulation must opt in with allowSpatial. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-focus",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "focus",
+      "claim": "Require focus to reach the expected element immediately after the action and to remain on a visible, non-inert element after the transition.",
+      "applyWhen": "Dialogs, popovers, menus, flyouts, route/view transitions, collapse/expand.",
+      "limitations": "Checks one expected focus target per scenario; full focus-order review stays manual. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-direct-lag",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "interaction"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "directManipulation",
+      "claim": "Drive the pointer in steps and require the tracked visual to follow within a pixel tolerance on the next frame, with no transition smoothing the tracked position.",
+      "applyWhen": "Drag, resize handles, scrubbers, custom sliders and other pointer-driven mappings.",
+      "limitations": "Measures DOM geometry per rendered frame; it is not an input-latency or frame-timing benchmark. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-progress-bounds",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "data-integrity"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "progressBounds",
+      "claim": "Sample the visual progress fraction every frame across authoritative updates and fail if it ever exceeds the authoritative value plus tolerance.",
+      "applyWhen": "Determinate progress bars, meters and completion indicators.",
+      "limitations": "Requires readers for both values; it cannot validate the truthfulness of the authoritative value itself. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-cadence-stops",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "cadenceStops",
+      "claim": "Start an activity, stop it, and require repeated animations in the activity region to stop and the status to report the stopped state.",
+      "applyWhen": "Spinners, skeleton shimmer, pulsing activity and other indeterminate indicators.",
+      "limitations": "Only sees animations exposed to document.getAnimations(); animated images and canvas loops are not observed. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-rejected-drop",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "interaction"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "boundaries",
+      "claim": "Drag and drop into a rejected position and require the item to return to its authoritative position without any success presentation or state change.",
+      "applyWhen": "Reorder, drag-and-drop and any drop target that can refuse.",
+      "limitations": "Uses mouse events; keyboard reorder paths need their own scenario. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-boundary",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "boundaries",
+      "claim": "Sample a measured dimension every frame through settling and fail if it leaves the legal minimum/maximum.",
+      "applyWhen": "Resize, split panes, collapse/expand, snap points.",
+      "limitations": "Checks one configured measure per scenario. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-progressive-fallback",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "progressiveFallback",
+      "claim": "Disable configured CSS @supports features and script APIs (for example document.startViewTransition), then require semantics and layout to remain correct.",
+      "applyWhen": "View Transitions, anchor positioning, scroll-driven animation, intrinsic-size interpolation and other progressive motion features.",
+      "limitations": "Feature removal is simulated by rewriting stylesheets and deleting APIs; genuinely older engines should still be exercised where supported. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-concurrent-composition",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "concurrentComposition",
+      "claim": "Trigger concurrent effects together and require each effect's final state; optionally fail on cancelled transitions.",
+      "applyWhen": "Elements that combine press, hover, selection, entry or drag effects.",
+      "limitations": "Final-state readers must be configured; intermediate visual interference is not judged. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    },
+    {
+      "id": "motion-semantic-cue",
+      "kind": "automated-assisted",
+      "covers": [
+        "motion",
+        "accessibility"
+      ],
+      "evidenceFor": [
+        "motion"
+      ],
+      "motionCheck": "semanticIndependence",
+      "claim": "With all animation and transition disabled, require the configured change to alter state attributes, text or static presentation of its target.",
+      "applyWhen": "Any state change whose meaning must not depend on motion alone.",
+      "limitations": "Checks presence of a non-motion cue, not whether that cue is sufficiently understandable. Engineering screen for one observable invariant; it does not prove universal human comfort, perceived smoothness or performance."
+    }
+  ]
+}

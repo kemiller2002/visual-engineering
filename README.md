@@ -7,6 +7,14 @@ implementation agents design, build and review interfaces from current evidence 
 from copied snapshots. The tool owns the whole lifecycle of that installation: it detects the
 current state, installs, verifies, diagnoses and upgrades it, and records what it manages.
 
+## First-class application polish
+
+Visual Engineering treats application polish as an engineering discipline, not a final cosmetic pass. A polished application must provide evidence across visual precision, interaction, motion, state completeness, forms, feedback, content, responsiveness, accessibility, performance perception, resilience, data integrity, navigation, environment behavior, security UX, and fit-and-finish.
+
+The normative standard is [framework/standards/APPLICATION-POLISH.md](framework/standards/APPLICATION-POLISH.md), the review procedure is [framework/protocols/APPLICATION-POLISH-REVIEW.md](framework/protocols/APPLICATION-POLISH-REVIEW.md), and the active research program is [research/frontier/application-polish-engineering.md](research/frontier/application-polish-engineering.md).
+
+A zero-finding review is not evidence of polish by itself. Coverage of states, seams, adversarial fixtures, environments, exceptions, and unknowns is part of the claim.
+
 ## Requirements
 
 - **Node.js 20 or newer.** Node is only used to start the packaged executable.

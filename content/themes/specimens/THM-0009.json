@@ -1,0 +1,78 @@
+{
+  "id": "THM-0009",
+  "name": "Plum Gold",
+  "status": "draft",
+  "mode": "dark",
+  "palette": {
+    "canvas": "#1D1621",
+    "surface": "#2A2030",
+    "ink": "#F6EEF7",
+    "muted": "#C8B6CA",
+    "accent": "#E0A72E",
+    "secondary": "#B889C0",
+    "edge": "#5B4960"
+  },
+  "semanticTokens": {
+    "background": "canvas",
+    "surface": "surface",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "accent",
+    "secondaryAccent": "secondary",
+    "border": "edge"
+  },
+  "contexts": [
+    "marketing",
+    "application",
+    "document"
+  ],
+  "tags": [
+    "purple-gold",
+    "dark",
+    "luxury-hypothesis"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "moderate"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "notes": "Designed as part of the second Visual Engineering perceptual combination matrix."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires computed semantic-pair and non-text contrast evaluation before evaluated status."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text",
+      "dual-accent relationship"
+    ],
+    "path": "content/themes/specimens/THM-0009.json"
+  },
+  "fingerprint": "#1D1621|#2A2030|#5B4960|#B889C0|#C8B6CA|#E0A72E|#F6EEF7",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "predicted",
+    "activationAssociation": "moderate",
+    "valenceAssociation": "positive",
+    "weightAssociation": "heavy",
+    "confidence": "low",
+    "population": "Not yet product-context validated.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Hypothesis specimen pending measured contrast evaluation.",
+      "Affective labels are associations, not induced-emotion claims.",
+      "Combination-level harmony and salience require specimen testing."
+    ]
+  }
+}

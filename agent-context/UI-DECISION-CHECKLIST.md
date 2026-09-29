@@ -69,6 +69,57 @@ audiences:
 - Exercise at least one consequential non-happy semantic state and compare the rendered actions/status with the authoritative product state
 - Where stale state can change meaning or legal action, verify that old presentation evidence is not treated as proof of the current state
 
+
+## Motion model selection
+
+Before adding or reviewing motion:
+
+- What does the motion communicate?
+- What state or input is authoritative?
+- Is the phenomenon inertial/spring, gravity-derived, constant-velocity/cadence, direct-manipulation/value tracking, or perceptual interpolation?
+- Is overshoot physically and semantically safe?
+- Can the user interrupt or rapidly repeat the interaction without stale queued motion?
+- Does direct manipulation track the pointer, scroll position, or authoritative value without decorative lag?
+- Can determinate progress ever visually exceed the authoritative value?
+- Does repeated activity stop when the activity stops?
+- Is a new duration/easing inherited from the shared model, or is there a documented reason for a new one?
+- What is the model-specific reduced-motion substitution?
+- Is the interface still correct when progressive animation support is unavailable?
+
+During verification:
+
+- Exercise rapid repeated activation and interruption.
+- Verify final visual state equals actual semantic state.
+- Verify focus movement/restoration does not wait on decoration.
+- Verify pointer drag/resize/scrub does not lag.
+- Verify determinate progress remains bounded.
+- Verify indeterminate cadence does not imply false progress.
+- Verify reduced motion removes spatial/repeated effects without losing state or feedback.
+- Verify simultaneous effects do not clobber one another.
+- Verify animation is not the only carrier of consequential meaning.
+
+## Application polish gate
+
+- Have applicable polish dimensions been identified?
+- Have reachable non-happy states been exercised rather than inferred?
+- Have high-risk state and environment seams been tested?
+- Have pathological content and boundary fixtures been used?
+- Does persistence presentation tell the truth about local, pending, persisted, failed and conflicting state?
+- Are untested environments and states recorded as unknown rather than passed?
+- Is there evidence behind a zero-finding review?
+- Have recurring defect classes been pushed upstream into shared components, rules or fixtures where appropriate?
+
+## Application polish gate
+
+- Have applicable polish dimensions been identified?
+- Have reachable non-happy states been exercised rather than inferred?
+- Have high-risk state and environment seams been tested?
+- Have pathological content and boundary fixtures been used?
+- Does persistence presentation tell the truth about local, pending, persisted, failed and conflicting state?
+- Are untested environments and states recorded as unknown rather than passed?
+- Is there evidence behind a zero-finding review?
+- Have recurring defect classes been pushed upstream into shared components, rules or fixtures where appropriate?
+
 ## Agent handoff
 
 Report:

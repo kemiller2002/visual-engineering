@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "surface": "application",
+  "url": "http://127.0.0.1:4173",
+  "maxFocusTargets": 50,
+  "environments": [
+    {
+      "id": "desktop",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "id": "narrow",
+      "width": 375,
+      "height": 812
+    },
+    {
+      "id": "landscape",
+      "width": 812,
+      "height": 375
+    }
+  ]
+}

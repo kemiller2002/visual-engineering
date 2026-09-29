@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion probe fixture</title>
+  <!--
+    Adversarial fixture for scripts/application-polish-motion-probes.mjs.
+    ?variant=good implements each motion invariant; ?variant=bad violates it,
+    so the probe tests can prove each probe discriminates. This is a test
+    surface, not a design reference.
+  -->
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 16px; font: 16px/1.4 system-ui, sans-serif; }
+    section { margin-block: 16px; }
+    .tabs { position: relative; display: flex; inline-size: 300px; }
+    .tabs button { inline-size: 100px; block-size: 40px; border: 0; background: #eee; }
+    .indicator { position: absolute; inset-block-end: 0; inset-inline-start: 0; inline-size: 100px; block-size: 3px; background: #333; translate: var(--x, 0px) 0; }
+    html[data-variant="good"] .indicator { transition: translate 300ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .stage { position: relative; block-size: 60px; inline-size: 400px; background: #f4f4f4; }
+    .knob { position: absolute; inset-block-start: 10px; inset-inline-start: 0; inline-size: 40px; block-size: 40px; background: #333; touch-action: none; }
+    html[data-variant="bad"] .knob { transition: translate 250ms ease-out; }
+    .track { inline-size: 300px; block-size: 12px; background: #ddd; }
+    .bar { block-size: 12px; inline-size: 0; background: #333; transition: inline-size 400ms linear; }
+    html[data-variant="bad"] .bar { transition: inline-size 400ms linear(0, 1.25 55%, 0.95 80%, 1); }
+    .spinner { inline-size: 24px; block-size: 24px; border: 3px solid #333; border-block-start-color: transparent; border-radius: 50%; }
+    .spinner.is-active { animation: spin 1000ms linear infinite; }
+    @keyframes spin { to { rotate: 1turn; } }
+    .panel { translate: 0 0; opacity: 1; transition: translate 300ms ease-out, opacity 300ms ease-out; }
+    .panel[hidden-state] { translate: 0 12px; opacity: 0.2; pointer-events: none; }
+    section + section { margin-block-start: 32px; }
+    html[data-variant="good"] .card { transition: translate 200ms ease-out; }
+    .card { inline-size: 120px; padding: 8px; background: #ddd; touch-action: none; }
+    .pane { inline-size: 120px; block-size: 30px; background: #333; transition: inline-size 400ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+    html[data-variant="bad"] .pane { transition: inline-size 400ms linear(0, 1.2 55%, 0.97 80%, 1); }
+    .chip { display: block; }
+    html[data-variant="bad"] .chip { display: none; }
+    @supports (anchor-name: --probe) {
+      .chip { display: block; outline: 2px solid #333; }
+    }
+    .mover { position: relative; inline-size: 100px; block-size: 40px; background: #333; transition: transform 200ms, translate 200ms, scale 200ms; }
+    html[data-variant="good"] .mover.lifted { translate: 0 -4px; }
+    html[data-variant="good"] .mover.pressed { scale: 0.95; }
+    html[data-variant="bad"] .mover.lifted { transform: translateY(-4px); }
+    html[data-variant="bad"] .mover.pressed { transform: scale(0.95); }
+    .option { padding: 4px; }
+    html[data-variant="good"] .option[aria-selected="true"] { background: #333; color: #fff; }
+    html[data-variant="bad"] .option.is-current { animation: pulse 900ms ease-in-out infinite; }
+    @keyframes pulse { 50% { scale: 1.04; } }
+    @media (prefers-reduced-motion: reduce) {
+      html[data-variant="good"] .panel,
+      html[data-variant="good"] .indicator { transition: none; }
+      html[data-variant="good"] .spinner.is-active { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    document.documentElement.dataset.variant = new URLSearchParams(location.search).get("variant") || "good";
+    window.bad = document.documentElement.dataset.variant === "bad";
+  </script>
+
+  <section aria-label="Tabs">
+    <div class="tabs" role="tablist" id="tabs">
+      <button role="tab" id="tab-1" aria-selected="true">One</button>
+      <button role="tab" id="tab-2" aria-selected="false">Two</button>
+      <button role="tab" id="tab-3" aria-selected="false">Three</button>
+      <span class="indicator" id="indicator" data-probe-id="indicator"></span>
+    </div>
+  </section>
+
+  <section aria-label="Drag">
+    <div class="stage"><div class="knob" id="knob" data-probe-id="knob"></div></div>
+  </section>
+
+  <section aria-label="Progress">
+    <div class="track" id="track" data-value="0"><div class="bar" id="bar"></div></div>
+    <button id="advance">Advance</button>
+  </section>
+
+  <section aria-label="Activity">
+    <div class="spinner" id="spinner" aria-hidden="true"></div>
+    <p id="activity-status" data-state="idle">Idle</p>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+  </section>
+
+  <section aria-label="Panel">
+    <button id="toggle-panel">Toggle panel</button>
+    <div class="panel" id="panel" hidden-state data-open="false">Panel content</div>
+  </section>
+
+  <section aria-label="Dialog">
+    <button id="open-dialog">Open dialog</button>
+    <dialog id="dialog"><button id="dialog-first">First action</button> <button id="dialog-close">Close</button></dialog>
+  </section>
+
+  <section aria-label="Reorder">
+    <div class="card" id="card" data-probe-id="card">Card A</div>
+    <p id="order" data-order="A,B,C">A, B, C</p>
+    <p id="drop-status"></p>
+  </section>
+
+  <section aria-label="Resize">
+    <div class="pane" id="pane" data-probe-id="pane"></div>
+    <button id="expand">Expand</button>
+  </section>
+
+  <section aria-label="Enhancement">
+    <button id="reveal">Reveal details</button>
+    <p id="details" data-open="false">Details hidden</p>
+    <p class="chip" id="chip">Essential label</p>
+  </section>
+
+  <section aria-label="Composition">
+    <div class="mover" id="mover" data-probe-id="mover"></div>
+  </section>
+
+  <section aria-label="Choices" role="listbox">
+    <div class="option" id="option-a" role="option" aria-selected="false">Alpha</div>
+    <div class="option" id="option-b" role="option" aria-selected="false">Bravo</div>
+  </section>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    // Tabs: good = immediate semantics + retargeting CSS transition.
+    // bad = delayed semantics + stacked additive animations (queue).
+    [...document.querySelectorAll("[role=tab]")].forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        const select = () => document.querySelectorAll("[role=tab]").forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
+        if (bad) {
+          setTimeout(select, 350);
+          const current = Number.parseFloat(getComputedStyle($("indicator")).translate) || 0;
+          $("indicator").animate([{ translate: "0px 0" }, { translate: `${index * 100 - current}px 0` }], { duration: 300, composite: "add", fill: "forwards" });
+        } else {
+          select();
+          $("indicator").style.setProperty("--x", `${index * 100}px`);
+        }
+      });
+    });
+
+    // Direct drag: the application maps pointer delta to translate.
+    let dragOrigin = null;
+    $("knob").addEventListener("pointerdown", (event) => { dragOrigin = event.clientX; $("knob").setPointerCapture(event.pointerId); });
+    $("knob").addEventListener("pointermove", (event) => { if (dragOrigin !== null) $("knob").style.translate = `${event.clientX - dragOrigin}px 0`; });
+    $("knob").addEventListener("pointerup", () => { dragOrigin = null; });
+
+    // Determinate progress: the data-value is authoritative.
+    const steps = [0.2, 0.5, 0.6, 1];
+    $("advance").addEventListener("click", () => {
+      const next = steps.find((value) => value > Number($("track").dataset.value)) ?? 1;
+      $("track").dataset.value = String(next);
+      $("bar").style.inlineSize = `${next * 100}%`;
+    });
+
+    // Cadence: activity motion must stop when the activity stops.
+    $("start").addEventListener("click", () => { $("spinner").classList.add("is-active"); $("activity-status").textContent = "Loading"; $("activity-status").dataset.state = "busy"; });
+    $("stop").addEventListener("click", () => {
+      if (!bad) $("spinner").classList.remove("is-active");
+      $("activity-status").textContent = "Idle";
+      $("activity-status").dataset.state = "idle";
+    });
+
+    // Panel entry: spatial transition that reduced motion must remove.
+    $("toggle-panel").addEventListener("click", () => {
+      const open = $("panel").dataset.open !== "true";
+      $("panel").dataset.open = String(open);
+      $("panel").toggleAttribute("hidden-state", !open);
+    });
+
+    // Dialog focus: good = native immediate focus; bad = focus after animation.
+    $("open-dialog").addEventListener("click", () => {
+      $("dialog").showModal();
+      if (bad) { $("dialog").tabIndex = -1; $("dialog").focus(); setTimeout(() => $("dialog-first").focus(), 350); }
+    });
+    $("dialog-close").addEventListener("click", () => $("dialog").close());
+
+    // Reorder: every drop is rejected by the application.
+    let cardOrigin = null;
+    $("card").addEventListener("pointerdown", (event) => { cardOrigin = { x: event.clientX, y: event.clientY }; $("card").setPointerCapture(event.pointerId); });
+    $("card").addEventListener("pointermove", (event) => { if (cardOrigin) $("card").style.translate = `${event.clientX - cardOrigin.x}px ${event.clientY - cardOrigin.y}px`; });
+    $("card").addEventListener("pointerup", () => {
+      cardOrigin = null;
+      if (bad) { $("drop-status").innerHTML = '<span class="drop-accepted">Moved</span>'; return; }
+      $("card").style.translate = "0px 0px";
+      $("drop-status").textContent = "Drop not allowed here";
+    });
+
+    // Resize snap to the legal maximum (240px).
+    $("expand").addEventListener("click", () => { $("pane").style.inlineSize = "240px"; });
+
+    // Progressive enhancement: View Transitions are optional.
+    $("reveal").addEventListener("click", () => {
+      const update = () => { $("details").dataset.open = "true"; $("details").textContent = "Details shown"; };
+      if (bad) return document.startViewTransition(update);
+      return document.startViewTransition ? document.startViewTransition(update) : update();
+    });
+  </script>
+</body>
+</html>

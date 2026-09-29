@@ -1,0 +1,100 @@
+{
+  "experiment": "EX-VE-TCG-2026-319C",
+  "phase": "pilot",
+  "status": "machinery-ready; no participant data",
+  "seed": 3190001,
+  "strata": {
+    "T": {
+      "description": "At least one year of regular use of a 3270, 5250, or text-mode business application.",
+      "studies": [
+        1,
+        2
+      ]
+    },
+    "N": {
+      "description": "No regular terminal use.",
+      "studies": [
+        1,
+        2
+      ]
+    },
+    "S": {
+      "description": "Screen-reader users with their own assistive technology.",
+      "studies": [
+        2
+      ],
+      "optionalStudies": [
+        1
+      ]
+    }
+  },
+  "pilotParticipantsPerStratum": 6,
+  "study1": {
+    "hypothesis": "HY-VE-TCG-2026-9151",
+    "conditions": [
+      "R",
+      "C"
+    ],
+    "sequences": [
+      [
+        "R",
+        "C"
+      ],
+      [
+        "C",
+        "R"
+      ]
+    ],
+    "trialsPerCondition": 12,
+    "primaryMeasure": "navigationErrors"
+  },
+  "study2": {
+    "hypothesis": "HY-VE-TCG-2026-8750",
+    "screens": [
+      "TRNH",
+      "ACCD"
+    ],
+    "strategies": [
+      "contained",
+      "reflow"
+    ],
+    "trialsPerCell": 8,
+    "viewport": {
+      "width": 320,
+      "height": 640
+    },
+    "zoomBlock": {
+      "width": 1280,
+      "height": 800,
+      "zoomPercent": 400,
+      "runIf": "the pilot shows the strategies differ"
+    },
+    "primaryMeasure": "correct"
+  },
+  "power": {
+    "alpha": 0.05,
+    "targetPower": 0.8,
+    "sidedness": "two-sided",
+    "smallestEffectOfInterest": null,
+    "smallestEffectOfInterestNote": "Not set by the preregistration. It must be recorded in EX-VE-TCG-2026-319C before confirmatory collection; the power module reports a sample-size table across candidate effects until then.",
+    "simulations": 4000,
+    "candidateEffects": {
+      "study1.navigationErrors.C-R": [
+        0.25,
+        0.5,
+        1.0
+      ],
+      "study2.correct.contained-reflow.TRNH": [
+        0.05,
+        0.1,
+        0.2
+      ],
+      "study2.correct.reflow-contained.ACCD": [
+        0.05,
+        0.1,
+        0.2
+      ]
+    },
+    "candidateEffectsNote": "Planning grid only, in the measure's own units (navigation errors per trial; proportion correct). Choosing the smallest effect of interest is an open decision for the researcher, recorded before confirmatory collection."
+  }
+}

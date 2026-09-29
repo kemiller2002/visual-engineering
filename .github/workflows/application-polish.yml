@@ -1,0 +1,69 @@
+name: Application Polish Gate
+
+on:
+  pull_request:
+    paths:
+      - "scripts/application-polish-*.mjs"
+      - "scripts/test-application-polish-*.mjs"
+      - "schemas/application-polish-*.schema.json"
+      - "registries/application-polish-*.json"
+      - "examples/application-polish-*.json"
+      - "examples/adapters/**"
+      - "examples/motion-probes/**"
+      - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/standards/MOTION-AND-INTERACTION.md"
+      - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
+      - "docs/application-polish-requirements.md"
+      - "agent-context/APPLICATION-POLISH.md"
+      - "package.json"
+      - ".github/workflows/application-polish.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/application-polish-*.mjs"
+      - "scripts/test-application-polish-*.mjs"
+      - "schemas/application-polish-*.schema.json"
+      - "registries/application-polish-*.json"
+      - "examples/application-polish-*.json"
+      - "examples/adapters/**"
+      - "examples/motion-probes/**"
+      - "framework/standards/APPLICATION-POLISH.md"
+      - "framework/standards/MOTION-AND-INTERACTION.md"
+      - "framework/protocols/APPLICATION-POLISH-REVIEW.md"
+      - "docs/application-polish-requirements.md"
+      - "agent-context/APPLICATION-POLISH.md"
+      - "package.json"
+      - ".github/workflows/application-polish.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm install --ignore-scripts
+      - run: npm run polish:test
+      - run: npm run polish:browser:test
+      - run: npm run polish:scenarios:test
+      - name: Install Chromium for motion probe tests
+        run: npx playwright-core install --with-deps chromium
+      - run: npm run polish:motion-probes:test
+      - name: Verify incomplete evidence cannot pass
+        run: |
+          set +e
+          npm run polish:example
+          code=$?
+          set -e
+          test "$code" -eq 3
+      - name: Verify unknown motion coverage cannot pass
+        run: |
+          set +e
+          npm run polish:motion-example
+          code=$?
+          set -e
+          test "$code" -eq 3

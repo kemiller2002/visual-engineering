@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "surface": "application",
+  "url": "http://127.0.0.1:4173",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "scenarios": [
+    {
+      "id": "save-persistence-truth",
+      "probe": "persistence-truth",
+      "adapter": "./adapters/save-persistence-truth.mjs"
+    }
+  ]
+}

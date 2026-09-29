@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Application Polish Motion Probe Configuration",
+  "description": "Framework-neutral configuration for scripts/application-polish-motion-probes.mjs. Each probe names the motion evidence entry it informs (entry) and the state or seam it exercises (state).",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "surface",
+    "probes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "surface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "type": "string"
+    },
+    "environments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "probes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "probe"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "probe": {
+            "enum": [
+              "motion-semantic-authority",
+              "motion-rapid-repeat",
+              "motion-interruption",
+              "motion-reduced-substitution",
+              "motion-focus",
+              "motion-direct-lag",
+              "motion-progress-bounds",
+              "motion-cadence-stops",
+              "motion-rejected-drop",
+              "motion-boundary",
+              "motion-progressive-fallback",
+              "motion-concurrent-composition",
+              "motion-semantic-cue"
+            ]
+          },
+          "entry": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "notApplicable": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "watch": {
+            "type": "string"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "first": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "then": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "start": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "stop": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/action"
+            }
+          },
+          "steps": {
+            "type": "array"
+          },
+          "semantic": {
+            "$ref": "#/$defs/reader"
+          },
+          "semantics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/reader"
+            }
+          },
+          "expectStyles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/reader"
+            }
+          },
+          "authoritative": {
+            "$ref": "#/$defs/reader"
+          },
+          "visual": {
+            "$ref": "#/$defs/reader"
+          },
+          "measure": {
+            "$ref": "#/$defs/reader"
+          },
+          "expectFocus": {
+            "type": "string"
+          },
+          "handle": {
+            "type": "string"
+          },
+          "tracker": {
+            "type": "string"
+          },
+          "item": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "axis": {
+            "enum": [
+              "x",
+              "y"
+            ]
+          },
+          "ratio": {
+            "type": "number"
+          },
+          "tolerancePx": {
+            "type": "number"
+          },
+          "tolerance": {
+            "type": "number"
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "frames": {
+            "type": "integer"
+          },
+          "framesPerStep": {
+            "type": "integer"
+          },
+          "maxSettleMs": {
+            "type": "integer"
+          },
+          "interruptAfterMs": {
+            "type": "integer"
+          },
+          "graceMs": {
+            "type": "integer"
+          },
+          "maxSpatialMs": {
+            "type": "number"
+          },
+          "allowSpatial": {
+            "type": "boolean"
+          },
+          "allowRepeating": {
+            "type": "boolean"
+          },
+          "allowNoActivity": {
+            "type": "boolean"
+          },
+          "forbidCancel": {
+            "type": "boolean"
+          },
+          "to": {
+            "type": "object",
+            "properties": {
+              "dx": {
+                "type": "number"
+              },
+              "dy": {
+                "type": "number"
+              }
+            }
+          },
+          "acceptedMarker": {
+            "type": "string"
+          },
+          "disable": {
+            "type": "object",
+            "properties": {
+              "supports": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "apis": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "click",
+            "check",
+            "focus",
+            "hover",
+            "press",
+            "wait",
+            "evaluate",
+            "reducedMotion"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "times": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "script": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "force": {
+          "type": "boolean"
+        }
+      }
+    },
+    "reader": {
+      "type": "object",
+      "description": "Reads a value: selector with attribute | property | style | rect, or a page script expression.",
+      "properties": {
+        "selector": {
+          "type": "string"
+        },
+        "attribute": {
+          "type": "string"
+        },
+        "property": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        },
+        "rect": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        },
+        "equals": {}
+      }
+    }
+  }
+}

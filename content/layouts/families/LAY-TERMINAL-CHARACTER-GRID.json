@@ -1,0 +1,507 @@
+{
+  "id": "LAY-TERMINAL-CHARACTER-GRID",
+  "name": "Terminal / character grid",
+  "catalogVersion": "1.0.0",
+  "status": "supported",
+  "summary": "A fixed R x C grid of equal-width cells in which every element is a positioned run of cells, runs are protected or editable, one row-major order governs reading, traversal, and source order, and status and named action keys occupy reserved runs.",
+  "concept": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md",
+  "tasks": [
+    "high-frequency keyboard data entry",
+    "record inquiry by key",
+    "verification of dense protected values",
+    "scanning dense repeated rows",
+    "operator workflows moving between fixed screens"
+  ],
+  "notFor": [
+    "exploratory browsing",
+    "long-form reading",
+    "content whose meaning does not depend on position (use a conventional form or list)",
+    "touch-first casual use"
+  ],
+  "semanticRegions": [
+    {
+      "id": "screen-identity",
+      "purpose": "Names the screen and, where used, its transaction or panel identifier.",
+      "required": true,
+      "html": "heading",
+      "position": "top rows"
+    },
+    {
+      "id": "context",
+      "purpose": "Protected context the operator must verify before acting (system, date, user, record key).",
+      "required": false,
+      "html": "protected text / description list",
+      "position": "top rows"
+    },
+    {
+      "id": "body",
+      "purpose": "Positioned protected text and editable fields for the task.",
+      "required": true,
+      "html": "grid of positioned runs inside a form when any field is editable",
+      "position": "middle rows"
+    },
+    {
+      "id": "repeated-rows",
+      "purpose": "Dense repeated records with aligned columns.",
+      "required": false,
+      "html": "table (column headers + rows) placed in the grid",
+      "position": "middle rows"
+    },
+    {
+      "id": "message",
+      "purpose": "Validation, error, warning, information, and success messages about the current screen.",
+      "required": true,
+      "html": "live region (status or alert)",
+      "position": "reserved row near bottom"
+    },
+    {
+      "id": "system-status",
+      "purpose": "Terminal/system state such as input inhibited, waiting, or insert mode.",
+      "required": false,
+      "html": "live region (status)",
+      "position": "a device status row after the application rows when the profile declares one (DF-VE-TCG-2026-1320); otherwise an application reserved row, usually last"
+    },
+    {
+      "id": "actions",
+      "purpose": "Named action affordances (Enter, Clear, Reset, PF/F keys, named actions).",
+      "required": true,
+      "html": "group of native buttons with visible names",
+      "position": "reserved row(s) at bottom"
+    }
+  ],
+  "sourceOrder": {
+    "rule": "Positioned runs appear in ascending row-major order (row x columns + column). Reserved regions keep this rule because they occupy the bottom rows.",
+    "consequence": "DOM order, reading order, focus order, and visual order are the same sequence without tabindex.",
+    "exceptions": "None inside the grid. Content outside the grid (page chrome) follows normal page order.",
+    "evidence": [
+      "EV-VE-TCG-2026-CA91",
+      "EV-VE-TCG-2026-3E25",
+      "EV-VE-TCG-2026-FEFD",
+      "EV-VE-TCG-2026-E22E"
+    ]
+  },
+  "recognitionPath": [
+    "screen identity",
+    "current record/context key",
+    "message row (is anything wrong?)",
+    "editable fields or the rows being scanned",
+    "available action keys"
+  ],
+  "verificationRegions": [
+    "protected context values (which record am I on?)",
+    "field values before Enter",
+    "validation and error messages tied to specific fields",
+    "amounts, dates, and statuses in repeated rows",
+    "consequential action keys (e.g. submit, delete, post)"
+  ],
+  "composition": {
+    "grid": "Explicit integer rows and columns. Reference geometries: 24x80 and 32x80. Other known geometries: 43x80 and 27x132.",
+    "cell": "Equal advance width of one monospaced character (1ch); row height is one line box. The grid therefore scales with text size, not viewport width.",
+    "placement": "Every element declares (row, column, length) in 1-based cells. Rendered position equals declared position.",
+    "alignment": "Labels and values align to shared column positions; repeated-row columns align to fixed column starts; numeric amounts align on their right edge within a fixed-length run.",
+    "density": "High. Whitespace is expressed as blank cells. Grouping is shown by blank rows, blank columns, rule glyphs, or protected headings, not by proportional spacing.",
+    "landmarks": "The terminal is one labelled region. Inside it, regions are distinguished by headings, a form, a table, and live regions rather than nested page landmarks.",
+    "boundaries": "Editable runs have a visible boundary that does not depend on color (bracket glyphs, underscore run, or outline)."
+  },
+  "navigation": {
+    "keyboardOrder": "Tab/Shift+Tab move through editable fields and then action buttons in row-major order. Arrow-key cell navigation is not required.",
+    "focusOrder": "Same as keyboard order; focus is always visible and never entirely obscured by the contained scroller.",
+    "visualOrder": "Row-major; no CSS reordering.",
+    "readingOrder": "Row-major; protected labels precede the value or field they label.",
+    "decisionPoints": [
+      "Enter: submit the current screen",
+      "PF/F keys: navigate or invoke named functions",
+      "Clear: erase and return to an initial state",
+      "Reset: local recovery from an inhibited or error state"
+    ],
+    "exitFromGrid": "Tab must be able to leave the terminal region. Wraparound from the last field to the first is optional application behavior, not part of the family."
+  },
+  "preservedRelationships": [
+    "row-major order = source order = focus order = visual order",
+    "label precedes and is programmatically associated with its field",
+    "field capacity equals declared length",
+    "protected runs are never focusable form controls unless they are genuine read-only form values",
+    "no two runs share a cell",
+    "no run crosses the right edge (no row wrap)",
+    "repeated-row columns keep header-to-cell association",
+    "message row is associated with the field(s) it describes",
+    "action key names are visible text, not color or position alone",
+    "status and message regions persist in a fixed location across screens of a workflow"
+  ],
+  "responsive": {
+    "wide": "The grid renders at its natural width (C ch plus padding). Extra viewport width is margin; the grid does not stretch cells or add columns.",
+    "narrow": {
+      "default": "contained",
+      "contained": "The grid keeps its geometry inside a horizontally scrollable, keyboard-focusable region with an accessible name. The page itself never overflows horizontally. Focus moving to a field scrolls it into view.",
+      "reflow": "Opt-in alternative for screens whose positions carry no meaning: runs are presented in source order as a single column; labels stay with fields; action keys wrap. Positions are not preserved.",
+      "choice": "Authors must justify contained against WCAG 1.4.10: the exception applies only where two-dimensional layout is required for usage or meaning, and text inside cells must still be readable.",
+      "evidence": [
+        "EV-VE-TCG-2026-62B1"
+      ],
+      "hypothesis": "HY-VE-TCG-2026-8750"
+    },
+    "zoom": "At 200% text size the grid grows proportionally and remains contained; no characters are clipped or overlapped. Text-spacing overrides (WCAG 1.4.12) may widen cells; the grid must grow rather than clip.",
+    "noPageOverflow": true
+  },
+  "content": {
+    "long": "Protected text longer than its declared length is an authoring error found by validation. Editable input is limited by maxlength. Long lists are paged (PF7/PF8-style or named actions) or continue in a separately scrollable region; they do not push the action row off the grid. Runtime messages follow DF-VE-TCG-2026-DD05: they wrap within a reserved message region, are never truncated or clipped, and grow the region rather than overlap the rows below.",
+    "missing": "Missing protected values render as an explicit placeholder with text meaning (e.g. 'n/a' or 'not on file'), never as silent blanks that look like zero or empty fields.",
+    "extreme": "Maximum-length values fill their run exactly; amounts at the maximum digit count still fit; an empty repeated-row set shows an explicit empty-state message inside the rows region.",
+    "localization": "Translated labels change length; each label run must be sized for the longest supported translation or the layout must be re-authored per locale. Wide-glyph scripts (CJK) commonly occupy two cells per glyph; the family has no verified rule for them. Right-to-left grids are not researched."
+  },
+  "accessibility": [
+    "Native form controls for editable runs with programmatic labels (WCAG 1.3.1, 4.1.2).",
+    "Required, invalid, disabled, and read-only states exposed natively and shown without color alone (WCAG 1.4.1).",
+    "Messages exposed as status/alert live regions (WCAG 4.1.3).",
+    "Visible focus indicator distinct from the stylistic cursor (WCAG 2.4.7, 2.4.11).",
+    "Action keys operable as buttons; physical key shortcuts are additive and avoid bare printable characters (WCAG 2.1.1, 2.1.4).",
+    "Resize text to 200% and text-spacing overrides without loss (WCAG 1.4.4, 1.4.12).",
+    "Forced-colors mode keeps field boundaries, focus, and state glyphs visible.",
+    "Reduced motion: any SequentialReveal presents immediately (see behavior definition)."
+  ],
+  "behaviors": [
+    {
+      "id": "SequentialReveal",
+      "optional": true,
+      "classification": "new Echelon behavior; not authentic 3270",
+      "definition": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md",
+      "referenceModel": "scripts/sequential-reveal.mjs",
+      "summary": "Optional visual-only row-major staging of already-present text; immediate under reduced motion; never stages fields, actions, messages, status, or consequential values; any input completes it without being consumed."
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ibm-3270",
+      "role": "first reference profile",
+      "geometries": [
+        "24x80",
+        "32x80",
+        "43x80",
+        "27x132"
+      ],
+      "actions": [
+        "Enter",
+        "Clear",
+        "PA1-PA3",
+        "PF1-PF24",
+        "Reset (local)"
+      ],
+      "evidence": [
+        "EV-VE-TCG-2026-DFA5",
+        "EV-VE-TCG-2026-21B3",
+        "EV-VE-TCG-2026-D0F7"
+      ]
+    },
+    {
+      "id": "ibm-5250",
+      "role": "comparison profile",
+      "geometries": [
+        "24x80",
+        "27x132"
+      ],
+      "actions": [
+        "Enter",
+        "F1-F24",
+        "Help",
+        "Roll Up/Down",
+        "Field Exit",
+        "Reset (local)"
+      ],
+      "evidence": [
+        "EV-VE-TCG-2026-2966"
+      ]
+    },
+    {
+      "id": "dos-text-mode",
+      "role": "assumed profile",
+      "geometries": [
+        "80x25 (assumed)"
+      ],
+      "actions": [
+        "F1-F10/F12 (assumed)"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    },
+    {
+      "id": "bbs-ansi",
+      "role": "assumed profile",
+      "geometries": [
+        "80x24 or 80x25 (assumed)"
+      ],
+      "actions": [
+        "single-key menus (assumed)"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    },
+    {
+      "id": "modern-grid",
+      "role": "assumed profile",
+      "geometries": [
+        "author-defined"
+      ],
+      "actions": [
+        "named actions"
+      ],
+      "evidence": [],
+      "assumption": "A-2"
+    }
+  ],
+  "formaPrimitives": {
+    "required": [
+      "grid container with declared rows and columns and a narrow-screen strategy",
+      "positioned protected text run",
+      "positioned editable field run using native input with label, maxlength, and states",
+      "positioned repeated-row table",
+      "message/status region with severity text or glyph",
+      "action-key group presenting key name and label",
+      "optional SequentialReveal presentation hook with reduced-motion fallback",
+      "profile layer for palette, typeface, boundary glyphs, and cursor treatment"
+    ],
+    "knownGaps": [
+      {
+        "id": "GAP-TCG-01",
+        "gap": "Forma had no character-cell positioning primitive; existing layouts are flow/grid compositions measured in rem, not cells.",
+        "owner": "Forma #38",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-02",
+        "gap": "No Forma contract ties a field's rendered width to its maximum length in characters.",
+        "owner": "Forma #39",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-03",
+        "gap": "No Forma contract presents named keyboard actions (key + label) separately from their behavior.",
+        "owner": "Forma #40",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-04",
+        "gap": "No Forma contract for a staged text reveal with a static fallback.",
+        "owner": "Forma #41",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-05",
+        "gap": "No contained-scroll viewport contract that is keyboard-focusable and named.",
+        "owner": "Forma #38",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-06",
+        "gap": "No rule for wide-glyph (two-cell) characters or right-to-left grids.",
+        "owner": "unassigned; research needed",
+        "note": "Forma's intrinsic tracks (pull request #47) now widen for a wide glyph instead of overlapping, but a two-cell glyph still counts as one declared cell; the rule remains open."
+      },
+      {
+        "id": "GAP-TCG-07",
+        "gap": "No positioned repeated-row table whose columns are measured in cells, whose numeric columns end-align within fixed runs, and which keeps header-to-cell association.",
+        "owner": "Forma #38/#43",
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-08",
+        "gap": "No contract for a field to reference both a hint and the grid message region (aria-describedby with several IDs).",
+        "owner": "Forma #39/#40",
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma pull request #46 (requirements/CHARACTER-GRID.md capability-gap table)."
+      },
+      {
+        "id": "GAP-TCG-09",
+        "gap": "No declared overflow policy for runtime-generated messages longer than the message region.",
+        "owner": "Visual Engineering family rule, then Forma #40",
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Decided by DF-VE-TCG-2026-DD05: never truncate or clip; a message region reserves one or more rows and grows when a message exceeds them; message length is application content. Forma verifies growth without overlap (pull request #47)."
+      },
+      {
+        "id": "GAP-TCG-10",
+        "gap": "No verified rule for per-row selection fields inside dense repeated rows.",
+        "owner": "Forma pull request #47",
+        "foundBy": "EX-VE-TCG-2026-5437",
+        "resolution": "Closed by Forma rule CG-17 and pattern character-grid-selection (pull request #47): native per-row fields named by column and row headers, described by the option legend. Evidence: EV-VE-TCG-2026-8081."
+      },
+      {
+        "id": "GAP-TCG-11",
+        "gap": "Fixed 1ch cells cannot absorb WCAG 1.4.12 text-spacing overrides; overridden text overlapped the next run.",
+        "owner": "Forma pull request #47",
+        "foundBy": "Forma #44 verification",
+        "resolution": "Closed by intrinsic tracks of at least one cell (pull request #47). Evidence: EV-VE-TCG-2026-DE6C."
+      },
+      {
+        "id": "GAP-TCG-12",
+        "gap": "The 3270 status line (OIA) lies outside the application's rows (EV-VE-TCG-2026-1EB5), but Forma's 3270 reference screens present system status on application row 24 of a 24 × 80 grid, leaving 23 application rows.",
+        "owner": "Visual Engineering WI-0007; Forma implementation",
+        "foundBy": "WI-0004 (EV-VE-TCG-2026-1EB5)",
+        "resolution": "Decided by DF-VE-TCG-2026-1320: rows x columns is the application presentation space; a profile may declare device status rows after it that hold status runs only. The 3270 profile declares one (24 + 1, 32 + 1); DOS declares none; 5250, BBS, and TUI are not declared. The reference workflow now places status on row 25. Forma implements the generic reservation."
+      }
+    ]
+  },
+  "antiPatterns": [
+    "Imitating a screenshot with absolutely positioned divs that simulate inputs.",
+    "Using tabindex to force an order that source order should express.",
+    "Rendering protected values as read-only inputs so they look aligned.",
+    "Encoding field state or message severity by color only.",
+    "Clipping over-length protected text silently.",
+    "Letting the grid cause page-level horizontal scrolling.",
+    "Making information available only after an animation completes.",
+    "Describing SequentialReveal, green phosphor, or wraparound Tab as authentic 3270 behavior."
+  ],
+  "assumptions": [
+    {
+      "id": "A-1",
+      "text": "Users of modern keyboard-first grid applications expect row-major field order.",
+      "test": "HY-VE-TCG-2026-9151"
+    },
+    {
+      "id": "A-2",
+      "text": "DOS text-mode, BBS, and modern TUIs share the grid invariants.",
+      "test": "primary-source verification",
+      "status": "Partially verified: DOS text mode shares the fixed grid, row-major cells, and per-cell attributes (EV-VE-TCG-2026-D9CB); BBS/ECMA-48 and curses/TUI remain unverified."
+    },
+    {
+      "id": "A-3",
+      "text": "The 3270 status line sits below the application rows.",
+      "test": "IBM display-station documentation",
+      "status": "Supported as implemented by x3270 (EV-VE-TCG-2026-1EB5); IBM device documentation unread. Modeled as one device status row after the application rows (DF-VE-TCG-2026-1320)."
+    },
+    {
+      "id": "A-4",
+      "text": "Dense cell-aligned presentation supports expert scanning.",
+      "test": "HY-VE-TCG-2026-3D56"
+    },
+    {
+      "id": "A-5",
+      "text": "1ch of a monospaced face is a stable cell width across engines and zoom.",
+      "test": "Forma #44 browser verification",
+      "status": "Refined: 1ch is stable for layout but glyph advances exceed it by sub-pixel amounts that accumulate with run length (EV-VE-TCG-2026-C2ED)."
+    }
+  ],
+  "verification": [
+    {
+      "id": "V-01",
+      "check": "Every positioned run is within bounds and does not cross the right edge.",
+      "kind": "static"
+    },
+    {
+      "id": "V-02",
+      "check": "No two runs share a cell.",
+      "kind": "static"
+    },
+    {
+      "id": "V-03",
+      "check": "Source order equals row-major order of runs.",
+      "kind": "static"
+    },
+    {
+      "id": "V-04",
+      "check": "Every editable run has a label and a length; its maxlength equals its length.",
+      "kind": "static + DOM"
+    },
+    {
+      "id": "V-05",
+      "check": "Protected runs are not focusable form controls.",
+      "kind": "DOM"
+    },
+    {
+      "id": "V-06",
+      "check": "Tab and Shift+Tab visit editable fields and actions in row-major order.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-07",
+      "check": "Rendered cell position equals declared position for 24x80 and 32x80.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-08",
+      "check": "No page-level horizontal overflow at 320 and 390 CSS px; the contained region is focusable and named.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-09",
+      "check": "At 200% text size no characters are clipped and positions still correspond.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-10",
+      "check": "Forced colors keep field boundaries, focus, and state cues visible.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-11",
+      "check": "With reduced motion requested, revealed content is present and visible immediately.",
+      "kind": "browser"
+    },
+    {
+      "id": "V-12",
+      "check": "Message and state cues are not conveyed by color alone.",
+      "kind": "review"
+    }
+  ],
+  "narrowRecomposition": "contained horizontal scroll preserving the grid by default; opt-in reflow to a single column in source order when positions carry no meaning; never page-level overflow",
+  "evidence": [
+    "EV-VE-TCG-2026-CA91",
+    "EV-VE-TCG-2026-732A",
+    "EV-VE-TCG-2026-E645",
+    "EV-VE-TCG-2026-C4C6",
+    "EV-VE-TCG-2026-DFA5",
+    "EV-VE-TCG-2026-21B3",
+    "EV-VE-TCG-2026-D0F7",
+    "EV-VE-TCG-2026-3E25",
+    "EV-VE-TCG-2026-2966",
+    "EV-VE-TCG-2026-62B1",
+    "EV-VE-TCG-2026-61DF",
+    "EV-VE-TCG-2026-FEFD",
+    "EV-VE-TCG-2026-E9AC",
+    "EV-VE-TCG-2026-E852",
+    "EV-VE-TCG-2026-C6E8",
+    "EV-VE-TCG-2026-E22E",
+    "EV-VE-TCG-2026-1EB5",
+    "EV-VE-TCG-2026-D9CB",
+    "EV-VE-TCG-2026-8081",
+    "EV-VE-TCG-2026-C2ED",
+    "EV-VE-TCG-2026-DE6C"
+  ],
+  "hypotheses": [
+    "HY-VE-TCG-2026-9151",
+    "HY-VE-TCG-2026-8750",
+    "HY-VE-TCG-2026-A94C",
+    "HY-VE-TCG-2026-2A59",
+    "HY-VE-TCG-2026-3D56"
+  ],
+  "gaps": [
+    "GAP-TCG-01",
+    "GAP-TCG-02",
+    "GAP-TCG-03",
+    "GAP-TCG-04",
+    "GAP-TCG-05",
+    "GAP-TCG-06",
+    "GAP-TCG-07",
+    "GAP-TCG-08",
+    "GAP-TCG-09",
+    "GAP-TCG-10",
+    "GAP-TCG-11",
+    "GAP-TCG-12"
+  ],
+  "referenceWorkflows": [
+    {
+      "id": "RW-TCG-CUSTOMER-ACCOUNT-INQUIRY",
+      "path": "content/layouts/reference-workflows/customer-account-inquiry.json",
+      "report": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md",
+      "result": "valid in 15 screen states; supported with gaps"
+    }
+  ],
+  "implementations": [
+    {
+      "system": "Forma",
+      "status": "supported",
+      "record": "kemiller2002/forma catalog/layouts.json LAY-TERMINAL-CHARACTER-GRID",
+      "conformance": "Forma conformance run 36304907987 on commit 1a3b873 (pull request #46): Chromium, Firefox, and WebKit passed",
+      "note": "Visual Engineering does not claim more than Forma records; verified follows Forma's own promotion."
+    }
+  ]
+}

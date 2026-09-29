@@ -1,0 +1,403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Application Polish Evidence",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "surface",
+    "dimensions",
+    "states",
+    "seams",
+    "environments",
+    "fixtures",
+    "unknowns",
+    "findings",
+    "disposition"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "surface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dimensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverage"
+      }
+    },
+    "seams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverage"
+      }
+    },
+    "environments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverage"
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/coverage"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "severity",
+          "status",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "status": {
+            "enum": [
+              "open",
+              "resolved",
+              "accepted"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "invariant": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "disposition": {
+      "enum": [
+        "pass",
+        "fail",
+        "incomplete"
+      ]
+    },
+    "profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "probes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "unsupported",
+              "not-run"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "environment": {
+            "type": "object"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "motion": {
+      "description": "Motion evidence (framework/standards/MOTION-AND-INTERACTION.md). Required in substance when the evidence or its profile claims the motion dimension: supply entries, or notApplicable with a rationale. Absent or unknown motion coverage is incomplete, never pass.",
+      "type": "object",
+      "properties": {
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/motionEntry"
+          }
+        },
+        "notApplicable": {
+          "type": "object",
+          "required": [
+            "rationale"
+          ],
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "coverage": {
+      "type": "object",
+      "required": [
+        "id",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "untested",
+            "not-applicable"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "motionCheck": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not-applicable",
+            "untested",
+            "unknown"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "probe": {
+          "type": "string",
+          "description": "Probe id from registries/application-polish-probes.json that produced this result, when automated."
+        }
+      }
+    },
+    "motionEntry": {
+      "type": "object",
+      "required": [
+        "id",
+        "model",
+        "phenomenon",
+        "authority",
+        "reducedMotion",
+        "checks"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "surface": {
+          "type": "string"
+        },
+        "model": {
+          "enum": [
+            "inertial",
+            "gravity",
+            "cadence",
+            "direct",
+            "perceptual",
+            "unknown"
+          ]
+        },
+        "phenomenon": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conveys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What the motion communicates. Domain meanings such as severity, priority, confidence, permission, risk, legality, correctness, score or quality are rejected."
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "press",
+              "selection-indicator",
+              "transient-surface",
+              "loading",
+              "progress",
+              "drag",
+              "drop",
+              "resize",
+              "snap",
+              "scroll-linked",
+              "view-transition",
+              "intrinsic-size",
+              "value-change",
+              "theme-change"
+            ]
+          }
+        },
+        "phase": {
+          "enum": [
+            "direct",
+            "settle",
+            "none"
+          ],
+          "description": "direct = the visual tracks authoritative input; settle = post-release settling."
+        },
+        "authority": {
+          "type": "object",
+          "required": [
+            "source",
+            "semanticUpdate"
+          ],
+          "properties": {
+            "source": {
+              "type": "string",
+              "minLength": 1,
+              "description": "What is authoritative: native control, application state, pointer, scroll position, server progress, and so on."
+            },
+            "semanticUpdate": {
+              "enum": [
+                "immediate",
+                "delayed",
+                "unknown"
+              ]
+            }
+          }
+        },
+        "progressiveEnhancement": {
+          "type": "boolean"
+        },
+        "concurrentWith": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reducedMotion": {
+          "type": "object",
+          "required": [
+            "substitution"
+          ],
+          "properties": {
+            "substitution": {
+              "type": "string",
+              "minLength": 1
+            },
+            "spatial": {
+              "type": "boolean",
+              "description": "true if spatial motion remains under reduced motion (only legal for the direct model)."
+            }
+          }
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "semanticAuthority": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "interruption": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "rapidRepeat": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "reducedMotion": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "focus": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "directManipulation": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "progressBounds": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "cadenceStops": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "boundaries": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "progressiveFallback": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "concurrentComposition": {
+              "$ref": "#/$defs/motionCheck"
+            },
+            "semanticIndependence": {
+              "$ref": "#/$defs/motionCheck"
+            }
+          },
+          "additionalProperties": false
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

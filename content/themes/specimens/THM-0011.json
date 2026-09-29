@@ -1,0 +1,78 @@
+{
+  "id": "THM-0011",
+  "name": "Coral Tide",
+  "status": "draft",
+  "mode": "light",
+  "palette": {
+    "canvas": "#FFF7F3",
+    "surface": "#FFFFFF",
+    "ink": "#30211F",
+    "muted": "#6F5A55",
+    "accent": "#A63D2F",
+    "secondary": "#176B70",
+    "edge": "#D5BDB6"
+  },
+  "semanticTokens": {
+    "background": "canvas",
+    "surface": "surface",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "accent",
+    "secondaryAccent": "secondary",
+    "border": "edge"
+  },
+  "contexts": [
+    "marketing",
+    "application",
+    "white-label"
+  ],
+  "tags": [
+    "warm-cool",
+    "coral-teal",
+    "complementary-candidate"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "high",
+    "chromaCharacter": "moderate"
+  },
+  "provenance": {
+    "kind": "experimental",
+    "notes": "Designed as part of the second Visual Engineering perceptual combination matrix."
+  },
+  "accessibility": {
+    "status": "not-evaluated",
+    "contrastPairs": [],
+    "redundantStateEncoding": null,
+    "notes": "Requires computed semantic-pair and non-text contrast evaluation before evaluated status."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text",
+      "dual-accent relationship"
+    ],
+    "path": "content/themes/specimens/THM-0011.json"
+  },
+  "fingerprint": "#176B70|#30211F|#6F5A55|#A63D2F|#D5BDB6|#FFF7F3|#FFFFFF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "unknown",
+    "harmony": "predicted",
+    "activationAssociation": "moderate",
+    "valenceAssociation": "positive",
+    "weightAssociation": "light",
+    "confidence": "low",
+    "population": "Not yet product-context validated.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Hypothesis specimen pending measured contrast evaluation.",
+      "Affective labels are associations, not induced-emotion claims.",
+      "Combination-level harmony and salience require specimen testing."
+    ]
+  }
+}

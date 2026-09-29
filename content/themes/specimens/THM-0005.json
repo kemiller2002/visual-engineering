@@ -1,0 +1,104 @@
+{
+  "id": "THM-0005",
+  "name": "Heather Field",
+  "status": "evaluated",
+  "mode": "light",
+  "palette": {
+    "field": "#F6F3F8",
+    "white": "#FFFFFF",
+    "ink": "#29232D",
+    "muted": "#675C6D",
+    "heather": "#76507D",
+    "edge": "#CFC4D3"
+  },
+  "semanticTokens": {
+    "background": "field",
+    "surface": "white",
+    "text": "ink",
+    "mutedText": "muted",
+    "primaryAccent": "heather",
+    "border": "edge"
+  },
+  "contexts": [
+    "application",
+    "document",
+    "white-label"
+  ],
+  "tags": [
+    "near-hue",
+    "muted",
+    "harmony-candidate"
+  ],
+  "facets": {
+    "temperature": "mixed",
+    "contrastCharacter": "moderate",
+    "chromaCharacter": "muted"
+  },
+  "provenance": {
+    "kind": "designed",
+    "notes": "Visual Engineering baseline specimen designed to test a perceptual combination family."
+  },
+  "accessibility": {
+    "status": "partial",
+    "contrastPairs": [
+      {
+        "foreground": "ink",
+        "background": "field",
+        "ratio": 13.91,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "muted",
+        "background": "field",
+        "ratio": 5.74,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "heather",
+        "background": "field",
+        "ratio": 5.94,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      },
+      {
+        "foreground": "ink",
+        "background": "white",
+        "ratio": 15.3,
+        "criterion": "WCAG 2.x text contrast",
+        "passes": true
+      }
+    ],
+    "redundantStateEncoding": null,
+    "notes": "Primary text-related pairs screened. Border/non-text token is intentionally not certified; current subtle border may be below 3:1 against page background."
+  },
+  "specimen": {
+    "surfaces": [
+      "body text",
+      "muted text",
+      "accent/link",
+      "surface text"
+    ],
+    "path": "content/themes/specimens/THM-0005.json"
+  },
+  "fingerprint": "#29232D|#675C6D|#76507D|#CFC4D3|#F6F3F8|#FFFFFF",
+  "perception": {
+    "temperature": "mixed",
+    "figureGroundSalience": "moderate",
+    "harmony": "predicted",
+    "activationAssociation": "moderate",
+    "valenceAssociation": "positive",
+    "weightAssociation": "light",
+    "confidence": "moderate",
+    "population": "General cross-cultural evidence baseline; not validated for a product-specific population.",
+    "evidence": [
+      "content/themes/research/color-combination-perception.md"
+    ],
+    "caveats": [
+      "Affective labels are associations, not claims of induced emotion.",
+      "No product-context user study has been run.",
+      "Border/non-text discriminability requires separate evaluation."
+    ]
+  }
+}

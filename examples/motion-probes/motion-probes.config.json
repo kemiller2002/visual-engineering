@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "surface": "example/motion-probe-fixture",
+  "url": "http://127.0.0.1:4178/fixture.html?variant=good",
+  "environments": [
+    { "id": "desktop", "width": 1280, "height": 900 }
+  ],
+  "probes": [
+    {
+      "id": "tabs-semantic-authority", "probe": "motion-semantic-authority", "entry": "tab-indicator", "state": "tabs/select-three",
+      "actions": [{ "type": "click", "target": "#tab-3" }],
+      "watch": "#tabs",
+      "semantic": { "selector": "#tab-3", "attribute": "aria-selected", "equals": "true" }
+    },
+    {
+      "id": "tabs-rapid-repeat", "probe": "motion-rapid-repeat", "entry": "tab-indicator", "state": "tabs/rapid",
+      "actions": [
+        { "type": "click", "target": "#tab-2" }, { "type": "click", "target": "#tab-3" },
+        { "type": "click", "target": "#tab-1" }, { "type": "click", "target": "#tab-2" }
+      ],
+      "watch": "#tabs",
+      "semantic": { "selector": "#tab-2", "attribute": "aria-selected", "equals": "true" }
+    },
+    {
+      "id": "tabs-interruption", "probe": "motion-interruption", "entry": "tab-indicator", "state": "tabs/interrupt",
+      "first": [{ "type": "click", "target": "#tab-2" }],
+      "then": [{ "type": "click", "target": "#tab-3" }],
+      "interruptAfterMs": 60,
+      "watch": "#tabs",
+      "semantic": { "selector": "#tab-3", "attribute": "aria-selected", "equals": "true" },
+      "expectStyles": [{ "selector": "#indicator", "script": "Math.round(document.getElementById('indicator').getBoundingClientRect().left - document.getElementById('tabs').getBoundingClientRect().left)", "equals": 200 }]
+    },
+    {
+      "id": "panel-reduced-motion", "probe": "motion-reduced-substitution", "entry": "panel-entry", "state": "panel/open",
+      "actions": [{ "type": "click", "target": "#toggle-panel" }],
+      "watch": "#panel",
+      "semantic": { "selector": "#panel", "attribute": "data-open", "equals": "true" }
+    },
+    {
+      "id": "spinner-reduced-motion", "probe": "motion-reduced-substitution", "entry": "activity", "state": "activity/busy",
+      "actions": [{ "type": "click", "target": "#start" }],
+      "watch": "#spinner",
+      "semantic": { "selector": "#activity-status", "attribute": "data-state", "equals": "busy" }
+    },
+    {
+      "id": "dialog-focus", "probe": "motion-focus", "entry": "dialog-entry", "state": "dialog/open",
+      "actions": [{ "type": "click", "target": "#open-dialog" }],
+      "expectFocus": "#dialog-first",
+      "watch": "#dialog"
+    },
+    {
+      "id": "knob-direct-lag", "probe": "motion-direct-lag", "entry": "knob-drag", "state": "knob/drag",
+      "handle": "#knob", "tracker": "#knob", "axis": "x", "steps": [20, 60, 140], "tolerancePx": 1.5
+    },
+    {
+      "id": "progress-bounds", "probe": "motion-progress-bounds", "entry": "progress", "state": "progress/advance",
+      "steps": [
+        { "type": "click", "target": "#advance" }, { "type": "click", "target": "#advance" },
+        { "type": "click", "target": "#advance" }, { "type": "click", "target": "#advance" }
+      ],
+      "framesPerStep": 30,
+      "authoritative": { "script": "Number(document.getElementById('track').dataset.value)" },
+      "visual": { "script": "document.getElementById('bar').getBoundingClientRect().width / document.getElementById('track').getBoundingClientRect().width" }
+    },
+    {
+      "id": "spinner-cadence-stops", "probe": "motion-cadence-stops", "entry": "activity", "state": "activity/stop",
+      "start": [{ "type": "click", "target": "#start" }],
+      "stop": [{ "type": "click", "target": "#stop" }],
+      "watch": "#spinner",
+      "semantic": { "selector": "#activity-status", "attribute": "data-state", "equals": "idle" }
+    },
+    {
+      "id": "card-rejected-drop", "probe": "motion-rejected-drop", "entry": "card-reorder", "state": "reorder/rejected",
+      "item": "#card", "to": { "dx": 160, "dy": 0 }, "acceptedMarker": ".drop-accepted",
+      "semantic": { "selector": "#order", "attribute": "data-order", "equals": "A,B,C" }
+    },
+    {
+      "id": "pane-boundary", "probe": "motion-boundary", "entry": "pane-snap", "state": "pane/expand",
+      "actions": [{ "type": "click", "target": "#expand" }],
+      "measure": { "script": "document.getElementById('pane').getBoundingClientRect().width" },
+      "min": 120, "max": 240, "frames": 40
+    },
+    {
+      "id": "reveal-fallback", "probe": "motion-progressive-fallback", "entry": "reveal", "state": "details/reveal",
+      "disable": { "apis": ["document.startViewTransition"], "supports": ["anchor-name"] },
+      "actions": [{ "type": "click", "target": "#reveal" }],
+      "semantics": [
+        { "selector": "#details", "attribute": "data-open", "equals": "true" },
+        { "selector": "#chip", "style": "display", "equals": "block" }
+      ]
+    },
+    {
+      "id": "mover-composition", "probe": "motion-concurrent-composition", "entry": "mover", "state": "mover/lift-and-press",
+      "watch": "#mover",
+      "actions": [
+        { "type": "evaluate", "script": "document.getElementById('mover').classList.add('lifted')" },
+        { "type": "evaluate", "script": "document.getElementById('mover').classList.add('pressed')" }
+      ],
+      "expectStyles": [
+        { "selector": "#mover", "script": "(() => { const r = document.getElementById('mover').getBoundingClientRect(); const s = document.getElementById('mover').parentElement.getBoundingClientRect(); return `${Math.round((r.top - s.top) * 10) / 10}|${Math.round(r.width)}`; })()", "equals": "-3|95" }
+      ]
+    },
+    {
+      "id": "choice-semantic-cue", "probe": "motion-semantic-cue", "entry": "choices", "state": "choices/current",
+      "target": "#option-b",
+      "actions": [{ "type": "evaluate", "script": "document.getElementById('option-b').classList.add('is-current'); bad || document.getElementById('option-b').setAttribute('aria-selected', 'true')" }]
+    }
+  ]
+}

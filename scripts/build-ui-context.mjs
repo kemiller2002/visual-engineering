@@ -118,6 +118,7 @@ const sourceFiles = [
   "UI-FOUNDATIONS.md",
   "UI-DECISION-CHECKLIST.md",
   "UI-ANTI-PATTERNS.md",
+  "APPLICATION-POLISH.md",
 ];
 
 const artifacts = [];

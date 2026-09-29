@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "surface": "example/application",
+  "dimensions": [
+    "visual-precision",
+    "interaction",
+    "state-completeness",
+    "responsive",
+    "accessibility",
+    "resilience"
+  ],
+  "states": [
+    {
+      "id": "loaded",
+      "status": "passed",
+      "evidence": [
+        "test:loaded-state"
+      ]
+    },
+    {
+      "id": "offline",
+      "status": "untested"
+    }
+  ],
+  "seams": [
+    {
+      "id": "loading-to-loaded",
+      "status": "passed",
+      "evidence": [
+        "test:loading-loaded"
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "id": "narrow-viewport",
+      "status": "passed",
+      "evidence": [
+        "screenshot:narrow"
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "text-long-unbroken",
+      "status": "passed",
+      "evidence": [
+        "test:long-text"
+      ]
+    }
+  ],
+  "unknowns": [
+    "iOS Safari not yet exercised"
+  ],
+  "findings": [],
+  "disposition": "incomplete"
+}

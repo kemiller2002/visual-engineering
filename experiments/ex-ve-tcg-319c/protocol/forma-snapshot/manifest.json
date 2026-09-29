@@ -1,0 +1,12 @@
+{
+  "source": "kemiller2002/forma",
+  "commit": "30aa31cef12415965e2b2402c5031b13dc7f4828",
+  "builtWith": "npm run build (dotnet-sdk-10.0 10.0.112, node v22.22.2)",
+  "purpose": "Frozen EX-VE-TCG-2026-319C stimuli: Forma CSS, the reference workflow markup, and Forma's CharacterGrid conformance checker. Refresh only before a new data-collection phase, never during one.",
+  "files": {
+    "all.css": "2d4ae51e6b7c72cea8ba5a6915a9d019bd720d03b0de4b92504ee6caebed7dd1",
+    "character-grid-conformance.mjs": "6bf1131e3b329d2555518fa8d1f7371fbe075d688f104cbd65fb67fcdef78497",
+    "character-grid-css.mjs": "acd37567b823e21f641de2bf6ae7af2a9e36bb6965089370671ab7e3008ef713",
+    "character-grid-workflow.html": "03054922fa0cbe84ab0efe32e4e518d82ccb9749101ba632975479ba3d170a3e"
+  }
+}
