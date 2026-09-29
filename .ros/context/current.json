@@ -2,9 +2,9 @@
   "schemaVersion": "1.0.0",
   "protocolVersion": "1.0.0",
   "repository": "visual-engineering",
-  "actor": "agent:chatgpt",
+  "actor": "agent:claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-09-28T06:41:47.000Z",
+  "updatedAt": "2026-09-29T12:20:17.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -357,6 +357,31 @@
         "EXE-20260928T064029025Z-a75b477f"
       ],
       "completedAt": "2026-09-28T06:41:47.000Z"
+    },
+    {
+      "id": "GH-26",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "framework/standards/MOTION-AND-INTERACTION.md"
+        },
+        {
+          "type": "implementation",
+          "path": "agent-context/UI-DECISION-CHECKLIST.md"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-ui-context.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-29T12:20:17.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20260929T121939831Z-c82bad4a"
+      ],
+      "completedAt": "2026-09-29T12:20:17.000Z"
     }
   ]
 }

@@ -83,6 +83,24 @@ Visual quality is not decoration applied after structure. Architecture, content 
 - Do not hide critical actions behind unfamiliar gestures or unexplained icons.
 - Ensure keyboard order, reading order, focus order, and visual order tell the same story.
 
+
+## Motion and temporal behavior
+
+- Choose the animation model from the phenomenon before choosing duration or easing.
+- Use inertial/spring response for perceived objects settling after activation or release.
+- Use gravity-derived timing only for an intentionally modeled directional cue; mass does not change gravity-derived timing.
+- Use constant-velocity/cadence motion for repeated activity such as spinners or skeleton shimmer.
+- Use direct-manipulation/value tracking when pointer, scroll, native control value, or application value is authoritative. Do not add decorative lag or overshoot.
+- Use perceptual interpolation for opacity, color, backdrop, and other non-spatial state changes rather than inventing fake mechanical behavior.
+- Semantic state changes immediately. Motion represents state and never authorizes it.
+- Determinate progress never overshoots the authoritative value.
+- Press and selection motion must not move the hit target or queue stale responses.
+- Repeated motion stops when the represented activity stops.
+- Equivalent phenomena should use equivalent motion unless a documented context difference justifies otherwise.
+- New component-local durations and easing curves require an explicit reason. Arbitrary `200ms ease` is not a design rationale.
+- Reduced motion is model-aware: remove spatial travel, bounce, repeated motion, and decorative compression while preserving direct mappings, final state, focus, feedback, and activity semantics.
+- Progressive animation features must fail back to a correct static interface.
+
 ## Semantic projection
 
 A UI is often a purpose-specific projection of richer product state. Treat that projection as a semantic boundary, not only a visual transformation.
