@@ -30,7 +30,9 @@
     "tcg319c:mechanics": "node experiments/ex-ve-tcg-319c/tests/mechanics.mjs",
     "tcg319c:analyze": "node experiments/ex-ve-tcg-319c/src/analyze.mjs",
     "polish:browser": "node scripts/application-polish-browser.mjs",
-    "polish:browser:test": "node --test scripts/test-application-polish-browser.mjs"
+    "polish:browser:test": "node --test scripts/test-application-polish-browser.mjs",
+    "polish:scenarios": "node scripts/application-polish-scenarios.mjs",
+    "polish:scenarios:test": "node --test scripts/test-application-polish-scenarios.mjs"
   },
   "engines": {
     "node": ">=24 <25"
