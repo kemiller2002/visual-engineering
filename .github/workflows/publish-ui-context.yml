@@ -27,7 +27,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  debounce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency:
+      group: publish-ui-context-debounce-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Wait for commit batch
+        if: github.event_name == 'push'
+        run: sleep 600
+
   publish:
+    needs: debounce
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
