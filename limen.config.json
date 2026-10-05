@@ -1,1 +1,8 @@
-{"configurationVersion":1,"boundary":{"engine":[],"kernel":[]}}
+{
+  "configurationVersion": 1,
+  "boundary": {
+    "notApplicable": {
+      "rationale": "Visual Engineering is a research, documentation and context-publishing repository with no browser/WASM application boundary: its F# code (src/VisualEngineering.*, experiments/ex-ve-typ-001) runs as CLIs, the published site is static, and the ex-ve-tcg-319c pilot harness is a standalone static test page with no engine/kernel split or WASM."
+    }
+  }
+}
