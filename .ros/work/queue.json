@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 11,
+  "nextSeq": 12,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -213,6 +213,20 @@
       "attachments": [],
       "createdAt": "2026-09-28T06:40:27.983Z",
       "updatedAt": "2026-09-28T06:41:47.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0011",
+      "title": "Upgrade Limen to 0.7.0 (@echelon-foundry/limen): pinned verify workflow; declare boundary notApplicable (empty boundary is not-configured, LIMEN012)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-05T17:01:09.518Z",
+      "updatedAt": "2026-10-05T17:01:29.000Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
