@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 15,
+  "nextSeq": 16,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -284,6 +284,27 @@
       "createdAt": "2026-10-06T13:56:24.769Z",
       "updatedAt": "2026-10-06T13:57:47.000Z",
       "createdBy": "anthropic/claude-code",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0015",
+      "title": "Track installed Visual Engineering context instead of gitignoring it (clean-checkout verify fails); add fail-closed dispatch release; release 1.0.1",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-06T15:35:29.015Z",
+      "updatedAt": "2026-10-06T15:40:51.000Z",
+      "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
         "id": "anthropic/claude-code",

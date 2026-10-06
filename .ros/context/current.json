@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-10-06T13:57:47.000Z",
+  "updatedAt": "2026-10-06T15:40:51.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -610,6 +610,48 @@
         }
       },
       "completedAt": "2026-10-06T13:57:47.000Z"
+    },
+    {
+      "id": "WI-0015",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "src/VisualEngineering.Core/Desired.fs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/VisualEngineering.Core.Tests/TrackedContextTests.fs"
+        }
+      ],
+      "updatedAt": "2026-10-06T15:40:51.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261006T153537419Z-b9a95807"
+      ],
+      "latestCheckpoint": {
+        "id": "911a1d3f0ec252e92a9757f0",
+        "recordedAt": "2026-10-06T15:40:50.000Z",
+        "executionId": "EXE-20261006T153537419Z-b9a95807",
+        "repository": "visual-engineering",
+        "branch": "fix/ve-tracked-context",
+        "commit": "f61c11d2e95243f329d046eff95bdb71ef4058bf",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/visual-engineering"
+        },
+        "remoteBranch": "fix/ve-tracked-context",
+        "remoteCommit": "f61c11d2e95243f329d046eff95bdb71ef4058bf",
+        "summary": "Context re-included in managed .gitignore region; tests; fail-closed dispatch release; 1.0.1 prepared",
+        "nextAction": "Merge PR, dispatch release 1.0.1, record in echelon-registry",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-06T15:40:51.000Z",
+      "conclusion": "Installed context is committed; release workflow fails closed"
     }
   ]
 }
