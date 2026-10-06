@@ -2,26 +2,26 @@
 
 ## Summary
 
-- publishable source: 756
-- generated output: 6
+- publishable source: 823
+- generated output: 1
 - archived: 2
+- ambiguous: 401
 - intake/unprocessed: 1
-- ambiguous: 358
-- ignored: 67
+- ignored: 68
 
 ## Records
 
 - publishable source: `agent-context/AGENT-INSTRUCTIONS.md`
+- publishable source: `agent-context/APPLICATION-POLISH.md`
 - publishable source: `agent-context/README.md`
 - publishable source: `agent-context/UI-ANTI-PATTERNS.md`
 - publishable source: `agent-context/UI-DECISION-CHECKLIST.md`
 - publishable source: `agent-context/UI-FOUNDATIONS.md`
+- publishable source: `AGENTS.md`
+- publishable source: `BOOTSTRAP.md`
 - generated output: `build-reports/content-inventory.md`
-- generated output: `build-reports/ui-context-release/visual-engineering-context-0.1.0/AGENT-INSTRUCTIONS.md`
-- generated output: `build-reports/ui-context-release/visual-engineering-context-0.1.0/RESEARCH-INDEX.md`
-- generated output: `build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-ANTI-PATTERNS.md`
-- generated output: `build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-DECISION-CHECKLIST.md`
-- generated output: `build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-FOUNDATIONS.md`
+- publishable source: `CHANGELOG.md`
+- publishable source: `CLAUDE.md`
 - archived: `content/archive/duplicates/composition-science/Composition_Science_Research_Library_v0.2.md`
 - archived: `content/archive/duplicates/project-atlas/Project_Atlas_Visual_Information_Transfer_Foundations_v1.md`
 - publishable source: `content/concepts/architecture/index.md`
@@ -37,12 +37,16 @@
 - publishable source: `content/concepts/learning/index.md`
 - publishable source: `content/concepts/ontology/index.md`
 - publishable source: `content/concepts/perception/index.md`
+- publishable source: `content/concepts/perceptual-envelope/index.md`
+- publishable source: `content/concepts/perceptual-failure-boundary/index.md`
 - publishable source: `content/concepts/product-design/index.md`
 - publishable source: `content/concepts/research-methodology/index.md`
+- publishable source: `content/concepts/semantic-channel-survivability/index.md`
 - publishable source: `content/concepts/spacing/index.md`
 - publishable source: `content/concepts/typography/index.md`
 - publishable source: `content/concepts/wayfinding/index.md`
 - publishable source: `content/intake-preservation.md`
+- publishable source: `content/layouts/README.md`
 - publishable source: `content/projects/beautiful-digital-experiences/evidence-registry/beautiful-digital-experiences-evidence-registry-v0-1.md`
 - publishable source: `content/projects/beautiful-digital-experiences/hypothesis-registry/beautiful-digital-experiences-hypothesis-registry-v0-1.md`
 - publishable source: `content/projects/beautiful-digital-experiences/research-execution-package/rep-bde-0001-territory-and-evidence-foundation.md`
@@ -104,6 +108,16 @@
 - publishable source: `content/projects/itten-color-contrasts/research-execution-package/REP_Visual_Engineering_Johannes_Itten_Modern_Color_Theory.md`
 - publishable source: `content/projects/itten-color-contrasts/research-journal/2026-07-28-cycle-1.md`
 - publishable source: `content/projects/itten-color-contrasts/research-journal/2026-07-28-cycle-2-experiment-pilots.md`
+- publishable source: `content/projects/perceptual-envelope/evidence-registry/perceptual-envelope-evidence-v1.md`
+- publishable source: `content/projects/perceptual-envelope/experiment-specification/ex-ve-col-006-cvd-minimax-palette-and-semantic-survivability.md`
+- publishable source: `content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-001-individual-readability-envelope.md`
+- publishable source: `content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-002-crowding-responsive-typography.md`
+- publishable source: `content/projects/perceptual-envelope/experiment-specification/ex-ve-x-002-accessibility-without-modes.md`
+- publishable source: `content/projects/perceptual-envelope/hypothesis-registry/perceptual-envelope-hypotheses-v1.md`
+- publishable source: `content/projects/perceptual-envelope/research-execution-package/rp-ve-pe-001-perceptual-envelope-program.md`
+- publishable source: `content/projects/perceptual-envelope/research-journal/jr-ve-pe-001-program-inception.md`
+- publishable source: `content/projects/perceptual-envelope/research-journal/jr-ve-pe-002-provisional-operational-adoption.md`
+- publishable source: `content/projects/perceptual-envelope/research-journal/jr-ve-typ-001-phase-0-execution.md`
 - publishable source: `content/projects/product-genome/canonical/product-genome-project-atlas-v1.md`
 - publishable source: `content/projects/product-genome/canonical/product-genome-research-execution-package-run-02.md`
 - publishable source: `content/projects/product-genome/knowledge-model/product-genome-autonomous-research-run-01.md`
@@ -134,11 +148,74 @@
 - publishable source: `content/projects/project-atlas/research-report/project-atlas-autonomous-research-itten-seven-contrasts-v0-1.md`
 - publishable source: `content/projects/project-atlas/research-report/project-atlas-autonomous-research-report-001-relational-legibility.md`
 - publishable source: `content/projects/project-atlas/research-report/project-atlas-typography-autonomous-research-report-v1.md`
+- publishable source: `content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md`
+- publishable source: `content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md`
+- publishable source: `content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-1320--device-status-line-placement.md`
+- publishable source: `content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md`
+- publishable source: `content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-DD05--runtime-message-overflow-policy.md`
+- publishable source: `content/projects/terminal-character-grid/evidence-registry/terminal-character-grid-evidence-v1.md`
+- publishable source: `content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md`
+- publishable source: `content/projects/terminal-character-grid/experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md`
+- publishable source: `content/projects/terminal-character-grid/hypothesis-registry/terminal-character-grid-hypotheses-v1.md`
+- publishable source: `content/projects/terminal-character-grid/research-execution-package/RP-VE-TCG-2026-DD75--terminal-character-grid-family.md`
+- publishable source: `content/projects/terminal-character-grid/research-journal/JR-VE-TCG-2026-2E0E--evidence-and-abstraction-boundary.md`
 - publishable source: `content/README.md`
 - publishable source: `content/registries/decisions/index.md`
 - publishable source: `content/registries/evidence/index.md`
 - publishable source: `content/registries/experiments/index.md`
 - publishable source: `content/registries/hypotheses/index.md`
+- publishable source: `content/themes/README.md`
+- publishable source: `content/themes/research/accessibility-data-color-protocol.md`
+- publishable source: `content/themes/research/color-combination-perception.md`
+- publishable source: `content/themes/research/theme-perception-experiment-matrix.md`
+- publishable source: `context/ARCHITECTURE.md`
+- publishable source: `context/CURRENT-STATE.md`
+- publishable source: `context/DECISIONS.md`
+- publishable source: `context/KNOWN-RISKS.md`
+- publishable source: `context/RESEARCH-QUEUE.md`
+- ambiguous: `docs/00-governance/Agent-Operating-Manual.md`
+- ambiguous: `docs/00-governance/AI-Repository-Operating-System.md`
+- ambiguous: `docs/00-governance/Engineering-Standards.md`
+- ambiguous: `docs/00-governance/Governance-Decision-Log.md`
+- ambiguous: `docs/00-governance/README.md`
+- ambiguous: `docs/00-governance/Research-Execution-Package-Specification.md`
+- ambiguous: `docs/agent-provenance.md`
+- ambiguous: `docs/application-polish-automation.md`
+- ambiguous: `docs/application-polish-requirements.md`
+- ambiguous: `docs/architecture/README.md`
+- ambiguous: `docs/cli.md`
+- ambiguous: `docs/decisions/README.md`
+- ambiguous: `docs/development-telemetry.md`
+- ambiguous: `docs/development.md`
+- ambiguous: `docs/fallback-reconciliation.md`
+- ambiguous: `docs/installation.md`
+- ambiguous: `docs/ordo-observation.md`
+- ambiguous: `docs/ownership.md`
+- ambiguous: `docs/PILOT-MEASUREMENT-PLAN.md`
+- ambiguous: `docs/releasing.md`
+- ambiguous: `docs/remote-agent-contract.md`
+- ambiguous: `docs/remote-protocol.md`
+- ambiguous: `docs/upgrading.md`
+- ambiguous: `docs/work-adapter-contract.md`
+- ambiguous: `docs/work-protocol.md`
+- ambiguous: `experiments/ex-ve-tcg-319c/README.md`
+- ambiguous: `experiments/ex-ve-typ-001/README.md`
+- publishable source: `framework/policies/EVIDENCE-POLICY.md`
+- publishable source: `framework/policies/OUTPUT-POLICY.md`
+- publishable source: `framework/policies/RESEARCH-POLICY.md`
+- publishable source: `framework/protocols/APPLICATION-POLISH-REVIEW.md`
+- publishable source: `framework/protocols/ARTIFACT-LIFECYCLE.md`
+- publishable source: `framework/protocols/SUPERSESSION.md`
+- publishable source: `framework/REP-SPECIFICATION.md`
+- publishable source: `framework/standards/APPLICATION-POLISH.md`
+- publishable source: `framework/standards/ARTIFACT-TIERS.md`
+- publishable source: `framework/standards/CONFIDENCE.md`
+- publishable source: `framework/standards/IDENTIFIERS.md`
+- publishable source: `framework/standards/MOTION-AND-INTERACTION.md`
+- publishable source: `framework/standards/NAMING-STANDARD.md`
+- publishable source: `framework/standards/TAXONOMY.md`
+- publishable source: `GEMINI.md`
+- publishable source: `HANDOFF.md`
 - intake/unprocessed: `input-documents/README.md`
 - publishable source: `knowledge-platform/build-pipeline.md`
 - publishable source: `knowledge-platform/implementation-roadmap.md`
@@ -160,21 +237,24 @@
 - ambiguous: `node_modules/@babel/parser/README.md`
 - ambiguous: `node_modules/@babel/types/README.md`
 - ambiguous: `node_modules/@capsizecss/unpack/README.md`
-- ambiguous: `node_modules/@esbuild/darwin-arm64/README.md`
+- ambiguous: `node_modules/@esbuild/linux-x64/README.md`
 - ambiguous: `node_modules/@img/colour/LICENSE.md`
 - ambiguous: `node_modules/@img/colour/README.md`
-- ambiguous: `node_modules/@img/sharp-darwin-arm64/README.md`
-- ambiguous: `node_modules/@img/sharp-libvips-darwin-arm64/README.md`
+- ambiguous: `node_modules/@img/sharp-libvips-linux-x64/README.md`
+- ambiguous: `node_modules/@img/sharp-libvips-linuxmusl-x64/README.md`
+- ambiguous: `node_modules/@img/sharp-linux-x64/README.md`
+- ambiguous: `node_modules/@img/sharp-linuxmusl-x64/README.md`
 - ambiguous: `node_modules/@jridgewell/sourcemap-codec/README.md`
 - ambiguous: `node_modules/@nodelib/fs.scandir/README.md`
 - ambiguous: `node_modules/@nodelib/fs.stat/README.md`
 - ambiguous: `node_modules/@nodelib/fs.walk/README.md`
 - ambiguous: `node_modules/@oslojs/encoding/README.md`
-- ambiguous: `node_modules/@pagefind/darwin-arm64/README.md`
+- ambiguous: `node_modules/@pagefind/linux-x64/README.md`
 - ambiguous: `node_modules/@rollup/pluginutils/node_modules/estree-walker/CHANGELOG.md`
 - ambiguous: `node_modules/@rollup/pluginutils/node_modules/estree-walker/README.md`
 - ambiguous: `node_modules/@rollup/pluginutils/README.md`
-- ambiguous: `node_modules/@rollup/rollup-darwin-arm64/README.md`
+- ambiguous: `node_modules/@rollup/rollup-linux-x64-gnu/README.md`
+- ambiguous: `node_modules/@rollup/rollup-linux-x64-musl/README.md`
 - ambiguous: `node_modules/@shikijs/core/README.md`
 - ambiguous: `node_modules/@shikijs/engine-javascript/README.md`
 - ambiguous: `node_modules/@shikijs/engine-oniguruma/README.md`
@@ -281,7 +361,6 @@
 - ambiguous: `node_modules/flattie/readme.md`
 - ambiguous: `node_modules/fontace/README.md`
 - ambiguous: `node_modules/fontkitten/README.md`
-- ambiguous: `node_modules/fsevents/README.md`
 - ambiguous: `node_modules/get-east-asian-width/readme.md`
 - ambiguous: `node_modules/github-slugger/README.md`
 - ambiguous: `node_modules/glob-parent/CHANGELOG.md`
@@ -399,6 +478,24 @@
 - ambiguous: `node_modules/piccolore/README.md`
 - ambiguous: `node_modules/picocolors/README.md`
 - ambiguous: `node_modules/picomatch/README.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/element-attributes.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/playwright-tests.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/request-mocking.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/running-code.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/session-management.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/storage-state.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/test-generation.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/tracing.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/references/video-recording.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-cli/SKILL.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/gallery-spec.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/migration.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/react.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/typing.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/vue.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-component-testing/SKILL.md`
+- ambiguous: `node_modules/playwright-core/lib/tools/skills/playwright-trace/SKILL.md`
+- ambiguous: `node_modules/playwright-core/README.md`
 - ambiguous: `node_modules/postcss/README.md`
 - ambiguous: `node_modules/prismjs/CHANGELOG.md`
 - ambiguous: `node_modules/prismjs/README.md`
@@ -480,7 +577,7 @@
 - ambiguous: `node_modules/vfile-message/readme.md`
 - ambiguous: `node_modules/vfile/readme.md`
 - ambiguous: `node_modules/vite/LICENSE.md`
-- ambiguous: `node_modules/vite/node_modules/@esbuild/darwin-arm64/README.md`
+- ambiguous: `node_modules/vite/node_modules/@esbuild/linux-x64/README.md`
 - ambiguous: `node_modules/vite/node_modules/esbuild/LICENSE.md`
 - ambiguous: `node_modules/vite/node_modules/esbuild/README.md`
 - ambiguous: `node_modules/vite/README.md`
@@ -502,15 +599,12 @@
 - ambiguous: `node_modules/zod-to-json-schema/README.md`
 - ambiguous: `node_modules/zod/README.md`
 - ambiguous: `node_modules/zwitch/readme.md`
-- ambiguous: `packages/visual-engineering-context/context/AGENT-INSTRUCTIONS.md`
-- ambiguous: `packages/visual-engineering-context/context/RESEARCH-INDEX.md`
-- ambiguous: `packages/visual-engineering-context/context/UI-ANTI-PATTERNS.md`
-- ambiguous: `packages/visual-engineering-context/context/UI-DECISION-CHECKLIST.md`
-- ambiguous: `packages/visual-engineering-context/context/UI-FOUNDATIONS.md`
 - ambiguous: `packages/visual-engineering-context/README.md`
+- publishable source: `PROJECT-CHARTER.md`
 - ignored: `prompts/Clinical-Communication-Engineering-REP-Research-Agent-v2.md`
 - ignored: `prompts/implement-project-context-contract.md`
 - ignored: `prompts/install-research-publisher-on-existing-repo.md`
+- ignored: `prompts/README.md`
 - ignored: `prompts/REP_Visual_Engineering_Johannes_Itten_Modern_Color_Theory.md`
 - ignored: `prompts/research-publisher-mark-documents.md`
 - ignored: `prompts/RP-COMP-005-Visual-Scene-Construction-Predictive-Processing-and-Active-Perception.md`
@@ -575,6 +669,8 @@
 - ignored: `prompts/visual-engineering/sections/wayfinding-familiarity/README.md`
 - ignored: `prompts/visual-engineering/sections/wayfinding-familiarity/roadmap.md`
 - ignored: `prompts/web-components/implement-cross-project-web-component-framework.md`
+- ambiguous: `README.md`
+- publishable source: `research/frontier/application-polish-engineering.md`
 - publishable source: `research/frontier/document-frontiers/document-frontier-agent-context-agent-instructions-f425c1b98c7f-frontier.md`
 - publishable source: `research/frontier/document-frontiers/document-frontier-agent-context-readme-4f4fc38427d7-frontier.md`
 - publishable source: `research/frontier/document-frontiers/document-frontier-agent-context-ui-anti-patterns-d4f73a2b01c8-frontier.md`
@@ -680,6 +776,7 @@
 - publishable source: `research/frontier/document-frontiers/document-frontier-knowledge-platform-search-architecture-269e038e693f-frontier.md`
 - publishable source: `research/frontier/document-frontiers/document-frontier-knowledge-platform-website-architecture-4b824dc50a2f-frontier.md`
 - publishable source: `research/frontier/FRONTIER-MASTER.md`
+- publishable source: `research/frontier/README.md`
 - publishable source: `research/frontier/records/RFR-00CA9D58.md`
 - publishable source: `research/frontier/records/RFR-011D1D79.md`
 - publishable source: `research/frontier/records/RFR-02B4F929.md`
@@ -1201,3 +1298,12 @@
 - publishable source: `research/frontier/records/RFR-FFC3C91D.md`
 - publishable source: `research/frontier/records/RFR-FFEBDA32.md`
 - publishable source: `research/frontier/repository-health.md`
+- publishable source: `templates/missions/MISSION-TEMPLATE.md`
+- publishable source: `templates/research/EVIDENCE-TEMPLATE.md`
+- publishable source: `templates/research/EXPERIMENT-TEMPLATE.md`
+- publishable source: `templates/research/HYPOTHESIS-TEMPLATE.md`
+- publishable source: `templates/research/JOURNAL-TEMPLATE.md`
+- publishable source: `templates/research/REP-TEMPLATE.md`
+- publishable source: `templates/research/THEORY-TEMPLATE.md`
+- publishable source: `tools/theme-catalog-validate/README.md`
+- publishable source: `tools/theme-measure/README.md`
