@@ -27,3 +27,4 @@
 | WI-0011 | Upgrade Limen to 0.7.0 (@echelon-foundry/limen): pinned verify workflow; declare boundary notApplicable (empty boundary is not-configured, LIMEN012) | complete |  | medium |
 | WI-0012 | Upgrade Limen to 0.7.1 to match the echelon-current channel | complete |  | medium |
 | WI-0013 | Move visual-engineering to Praxis 3.7.1 (ROS -> Praxis rename) and Ordo 1.4.0 | complete | praxis, ordo, toolchain | medium |
+| WI-0014 | Move visual-engineering to Ordo 1.4.1 | ready | ordo, toolchain | medium |
