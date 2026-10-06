@@ -56,4 +56,11 @@ classified `shared` and not `tool-owned`: you are expected to edit its values, a
 survive every later run. `.gitignore` and `AGENTS.md` are likewise yours except for one region.
 
 The context files under `.visual-engineering/` are the opposite: they are entirely the tool's,
-and are expected to be gitignored. The managed `.gitignore` region does that for you.
+but they are required, committed repository content. `verify` fails when they are missing and
+the agent briefing tells agents to read them, so a clean checkout must carry them. Commit them
+with the installation manifest. The managed `.gitignore` region re-includes the context
+directory (`!.visual-engineering/`) so that no broader ignore rule can keep it out of version
+control.
+
+Releases before 1.0.1 wrote a region that ignored the context directory, which made `verify`
+fail on every clean checkout. `upgrade` replaces that region; then commit `.visual-engineering/`.

@@ -1,6 +1,6 @@
 {
   "name": "@echelon-foundry/visual-engineering",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Echelon Foundry Visual Engineering repository initialization, verification, diagnostics, and upgrade tooling.",
   "license": "MIT",
   "homepage": "https://visual.echelonfoundry.com/",
@@ -41,11 +41,11 @@
     "provenance": true
   },
   "optionalDependencies": {
-    "@echelon-foundry/visual-engineering-linux-x64": "1.0.0",
-    "@echelon-foundry/visual-engineering-linux-arm64": "1.0.0",
-    "@echelon-foundry/visual-engineering-win-x64": "1.0.0",
-    "@echelon-foundry/visual-engineering-win-arm64": "1.0.0",
-    "@echelon-foundry/visual-engineering-osx-x64": "1.0.0",
-    "@echelon-foundry/visual-engineering-osx-arm64": "1.0.0"
+    "@echelon-foundry/visual-engineering-linux-x64": "1.0.1",
+    "@echelon-foundry/visual-engineering-linux-arm64": "1.0.1",
+    "@echelon-foundry/visual-engineering-win-x64": "1.0.1",
+    "@echelon-foundry/visual-engineering-win-arm64": "1.0.1",
+    "@echelon-foundry/visual-engineering-osx-x64": "1.0.1",
+    "@echelon-foundry/visual-engineering-osx-arm64": "1.0.1"
   }
 }

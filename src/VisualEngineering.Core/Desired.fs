@@ -70,12 +70,18 @@ module Desired =
         |> fun text -> text.TrimEnd '\n'
 
     /// Body of the managed region added to the repository's `.gitignore`.
+    ///
+    /// The installed context is required, committed content: `verify` fails without it and the
+    /// agent briefing tells agents to read it, so a clean checkout must carry it. The region
+    /// therefore re-includes the context directory, so that no broader rule (for example one
+    /// ignoring dot directories) can keep it out of version control. Releases before 1.0.1
+    /// ignored the directory here; `upgrade` replaces that region like any stale one.
     let gitignoreRegionBody (contextDirectory: RepoPath) =
         String.Join(
             '\n',
-            [ "# Installed Visual Engineering context. Refresh it with:"
-              $"#   npx {Tool.PackageName} init"
-              RepoPath.value contextDirectory + "/" ]
+            [ "# Installed Visual Engineering context. It is required and must be committed."
+              $"# Refresh it with: npx {Tool.PackageName} upgrade"
+              "!" + RepoPath.value contextDirectory + "/" ]
         )
 
     /// Renders the repository configuration, preserving keys the tool does not own.

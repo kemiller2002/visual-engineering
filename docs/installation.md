@@ -102,7 +102,8 @@ You may change:
   repository.
 - `integrations.agentsFile` — which file receives the managed briefing region, or `null` to
   register nothing.
-- `integrations.gitignore` — `false` to leave `.gitignore` alone.
+- `integrations.gitignore` — `false` to leave `.gitignore` alone. The context directory must
+  still be committed: `verify` requires it in every checkout.
 
 Any other key you add is preserved across `init` and `upgrade`. The tool owns
 `schemaVersion`, `tool`, `configurationVersion`, `contextDirectory` and `integrations`.

@@ -7,6 +7,23 @@ line and is not tracked here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.1
+
+### Fixed
+
+- The installed context under `.visual-engineering/` is required: `verify` fails without it and
+  the managed agent briefing tells agents to read it. 1.0.0 nevertheless wrote a managed
+  `.gitignore` region that ignored that directory, so `verify` failed on every clean checkout
+  of a repository that committed its installation, and Conditor refused to adopt it. The
+  managed region now re-includes the context directory (`!.visual-engineering/`) so it is
+  committed, and no broader ignore rule can exclude it.
+
+### Upgrading
+
+- `upgrade` replaces the 1.0.0 region in place. Commit `.visual-engineering/`,
+  `.gitignore` and `.echelon/visual-engineering.json` afterwards. See
+  [docs/upgrading.md](docs/upgrading.md).
+
 ## 1.0.0
 
 First public release.
