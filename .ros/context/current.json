@@ -2,9 +2,9 @@
   "schemaVersion": "1.0.0",
   "protocolVersion": "1.0.0",
   "repository": "visual-engineering",
-  "actor": "agent:claude-code",
+  "actor": "anthropic/claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-10-06T09:38:42Z",
+  "updatedAt": "2026-10-06T12:22:05.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -516,6 +516,55 @@
         "EXE-20261006T093840420Z-ff9a0ed0"
       ],
       "completedAt": "2026-10-06T09:38:42Z"
+    },
+    {
+      "id": "WI-0013",
+      "type": "mechanical",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": ".echelon/ros.json"
+        },
+        {
+          "type": "documentation",
+          "path": "AGENTS.md"
+        },
+        {
+          "type": "tests",
+          "path": ".github/workflows/praxis-validation.yml"
+        },
+        {
+          "type": "implementation",
+          "path": ".echelon/sde.json"
+        }
+      ],
+      "updatedAt": "2026-10-06T12:22:05.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261006T122035570Z-9028c57d"
+      ],
+      "latestCheckpoint": {
+        "id": "52054c02c3590caddcb848a8",
+        "recordedAt": "2026-10-06T12:22:03.000Z",
+        "executionId": "EXE-20261006T122035570Z-9028c57d",
+        "repository": "visual-engineering",
+        "branch": "chore/praxis-3.7.1",
+        "commit": "40a6cc9c9be8efa28924e55fdf05962fde483b87",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/visual-engineering"
+        },
+        "remoteBranch": "chore/praxis-3.7.1",
+        "remoteCommit": "40a6cc9c9be8efa28924e55fdf05962fde483b87",
+        "summary": "upgrade applied, verified, pushed",
+        "nextAction": "complete, PR",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-06T12:22:05.000Z"
     }
   ]
 }

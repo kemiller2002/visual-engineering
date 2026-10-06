@@ -1,16 +1,20 @@
 {
   "generatedAt": "2026-07-22",
   "summary": {
-    "publishable source": 756,
-    "generated output": 6,
+    "publishable source": 823,
+    "generated output": 1,
     "archived": 2,
+    "ambiguous": 401,
     "intake/unprocessed": 1,
-    "ambiguous": 358,
-    "ignored": 67
+    "ignored": 68
   },
   "records": [
     {
       "path": "agent-context/AGENT-INSTRUCTIONS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "agent-context/APPLICATION-POLISH.md",
       "classification": "publishable source"
     },
     {
@@ -30,28 +34,24 @@
       "classification": "publishable source"
     },
     {
+      "path": "AGENTS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "BOOTSTRAP.md",
+      "classification": "publishable source"
+    },
+    {
       "path": "build-reports/content-inventory.md",
       "classification": "generated output"
     },
     {
-      "path": "build-reports/ui-context-release/visual-engineering-context-0.1.0/AGENT-INSTRUCTIONS.md",
-      "classification": "generated output"
+      "path": "CHANGELOG.md",
+      "classification": "publishable source"
     },
     {
-      "path": "build-reports/ui-context-release/visual-engineering-context-0.1.0/RESEARCH-INDEX.md",
-      "classification": "generated output"
-    },
-    {
-      "path": "build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-ANTI-PATTERNS.md",
-      "classification": "generated output"
-    },
-    {
-      "path": "build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-DECISION-CHECKLIST.md",
-      "classification": "generated output"
-    },
-    {
-      "path": "build-reports/ui-context-release/visual-engineering-context-0.1.0/UI-FOUNDATIONS.md",
-      "classification": "generated output"
+      "path": "CLAUDE.md",
+      "classification": "publishable source"
     },
     {
       "path": "content/archive/duplicates/composition-science/Composition_Science_Research_Library_v0.2.md",
@@ -114,11 +114,23 @@
       "classification": "publishable source"
     },
     {
+      "path": "content/concepts/perceptual-envelope/index.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/concepts/perceptual-failure-boundary/index.md",
+      "classification": "publishable source"
+    },
+    {
       "path": "content/concepts/product-design/index.md",
       "classification": "publishable source"
     },
     {
       "path": "content/concepts/research-methodology/index.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/concepts/semantic-channel-survivability/index.md",
       "classification": "publishable source"
     },
     {
@@ -135,6 +147,10 @@
     },
     {
       "path": "content/intake-preservation.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/layouts/README.md",
       "classification": "publishable source"
     },
     {
@@ -382,6 +398,46 @@
       "classification": "publishable source"
     },
     {
+      "path": "content/projects/perceptual-envelope/evidence-registry/perceptual-envelope-evidence-v1.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/experiment-specification/ex-ve-col-006-cvd-minimax-palette-and-semantic-survivability.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-001-individual-readability-envelope.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/experiment-specification/ex-ve-typ-002-crowding-responsive-typography.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/experiment-specification/ex-ve-x-002-accessibility-without-modes.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/hypothesis-registry/perceptual-envelope-hypotheses-v1.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/research-execution-package/rp-ve-pe-001-perceptual-envelope-program.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/research-journal/jr-ve-pe-001-program-inception.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/research-journal/jr-ve-pe-002-provisional-operational-adoption.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/perceptual-envelope/research-journal/jr-ve-typ-001-phase-0-execution.md",
+      "classification": "publishable source"
+    },
+    {
       "path": "content/projects/product-genome/canonical/product-genome-project-atlas-v1.md",
       "classification": "publishable source"
     },
@@ -502,6 +558,50 @@
       "classification": "publishable source"
     },
     {
+      "path": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-6CA0--terminal-character-grid-abstraction-boundary.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/concept/CN-VE-TCG-2026-F9F1--sequential-reveal-behavior.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-1320--device-status-line-placement.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-2DD5--visual-engineering-layout-catalog-location.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/decision-record/DF-VE-TCG-2026-DD05--runtime-message-overflow-policy.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/evidence-registry/terminal-character-grid-evidence-v1.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/experiment-report/EX-VE-TCG-2026-5437--reference-workflow-validation.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/experiment-specification/EX-VE-TCG-2026-319C--focus-order-and-narrow-strategy-user-tests.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/hypothesis-registry/terminal-character-grid-hypotheses-v1.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/research-execution-package/RP-VE-TCG-2026-DD75--terminal-character-grid-family.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/projects/terminal-character-grid/research-journal/JR-VE-TCG-2026-2E0E--evidence-and-abstraction-boundary.md",
+      "classification": "publishable source"
+    },
+    {
       "path": "content/README.md",
       "classification": "publishable source"
     },
@@ -519,6 +619,214 @@
     },
     {
       "path": "content/registries/hypotheses/index.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/themes/README.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/themes/research/accessibility-data-color-protocol.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/themes/research/color-combination-perception.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "content/themes/research/theme-perception-experiment-matrix.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "context/ARCHITECTURE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "context/CURRENT-STATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "context/DECISIONS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "context/KNOWN-RISKS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "context/RESEARCH-QUEUE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "docs/00-governance/Agent-Operating-Manual.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/00-governance/AI-Repository-Operating-System.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/00-governance/Engineering-Standards.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/00-governance/Governance-Decision-Log.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/00-governance/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/00-governance/Research-Execution-Package-Specification.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/agent-provenance.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/application-polish-automation.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/application-polish-requirements.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/architecture/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/cli.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/decisions/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/development-telemetry.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/development.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/fallback-reconciliation.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/installation.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/ordo-observation.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/ownership.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/PILOT-MEASUREMENT-PLAN.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/releasing.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/remote-agent-contract.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/remote-protocol.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/upgrading.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/work-adapter-contract.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "docs/work-protocol.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "experiments/ex-ve-tcg-319c/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "experiments/ex-ve-typ-001/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "framework/policies/EVIDENCE-POLICY.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/policies/OUTPUT-POLICY.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/policies/RESEARCH-POLICY.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/protocols/APPLICATION-POLISH-REVIEW.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/protocols/ARTIFACT-LIFECYCLE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/protocols/SUPERSESSION.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/REP-SPECIFICATION.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/APPLICATION-POLISH.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/ARTIFACT-TIERS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/CONFIDENCE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/IDENTIFIERS.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/MOTION-AND-INTERACTION.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/NAMING-STANDARD.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/TAXONOMY.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "GEMINI.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "HANDOFF.md",
       "classification": "publishable source"
     },
     {
@@ -606,7 +914,7 @@
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/@esbuild/darwin-arm64/README.md",
+      "path": "node_modules/@esbuild/linux-x64/README.md",
       "classification": "ambiguous"
     },
     {
@@ -618,11 +926,19 @@
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/@img/sharp-darwin-arm64/README.md",
+      "path": "node_modules/@img/sharp-libvips-linux-x64/README.md",
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/@img/sharp-libvips-darwin-arm64/README.md",
+      "path": "node_modules/@img/sharp-libvips-linuxmusl-x64/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/@img/sharp-linux-x64/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/@img/sharp-linuxmusl-x64/README.md",
       "classification": "ambiguous"
     },
     {
@@ -646,7 +962,7 @@
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/@pagefind/darwin-arm64/README.md",
+      "path": "node_modules/@pagefind/linux-x64/README.md",
       "classification": "ambiguous"
     },
     {
@@ -662,7 +978,11 @@
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/@rollup/rollup-darwin-arm64/README.md",
+      "path": "node_modules/@rollup/rollup-linux-x64-gnu/README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/@rollup/rollup-linux-x64-musl/README.md",
       "classification": "ambiguous"
     },
     {
@@ -1087,10 +1407,6 @@
     },
     {
       "path": "node_modules/fontkitten/README.md",
-      "classification": "ambiguous"
-    },
-    {
-      "path": "node_modules/fsevents/README.md",
       "classification": "ambiguous"
     },
     {
@@ -1562,6 +1878,78 @@
       "classification": "ambiguous"
     },
     {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/element-attributes.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/playwright-tests.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/request-mocking.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/running-code.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/session-management.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/storage-state.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/test-generation.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/tracing.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/references/video-recording.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-cli/SKILL.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/gallery-spec.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/migration.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/react.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/typing.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/references/vue.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-component-testing/SKILL.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/lib/tools/skills/playwright-trace/SKILL.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "node_modules/playwright-core/README.md",
+      "classification": "ambiguous"
+    },
+    {
       "path": "node_modules/postcss/README.md",
       "classification": "ambiguous"
     },
@@ -1886,7 +2274,7 @@
       "classification": "ambiguous"
     },
     {
-      "path": "node_modules/vite/node_modules/@esbuild/darwin-arm64/README.md",
+      "path": "node_modules/vite/node_modules/@esbuild/linux-x64/README.md",
       "classification": "ambiguous"
     },
     {
@@ -1974,28 +2362,12 @@
       "classification": "ambiguous"
     },
     {
-      "path": "packages/visual-engineering-context/context/AGENT-INSTRUCTIONS.md",
-      "classification": "ambiguous"
-    },
-    {
-      "path": "packages/visual-engineering-context/context/RESEARCH-INDEX.md",
-      "classification": "ambiguous"
-    },
-    {
-      "path": "packages/visual-engineering-context/context/UI-ANTI-PATTERNS.md",
-      "classification": "ambiguous"
-    },
-    {
-      "path": "packages/visual-engineering-context/context/UI-DECISION-CHECKLIST.md",
-      "classification": "ambiguous"
-    },
-    {
-      "path": "packages/visual-engineering-context/context/UI-FOUNDATIONS.md",
-      "classification": "ambiguous"
-    },
-    {
       "path": "packages/visual-engineering-context/README.md",
       "classification": "ambiguous"
+    },
+    {
+      "path": "PROJECT-CHARTER.md",
+      "classification": "publishable source"
     },
     {
       "path": "prompts/Clinical-Communication-Engineering-REP-Research-Agent-v2.md",
@@ -2007,6 +2379,10 @@
     },
     {
       "path": "prompts/install-research-publisher-on-existing-repo.md",
+      "classification": "ignored"
+    },
+    {
+      "path": "prompts/README.md",
       "classification": "ignored"
     },
     {
@@ -2264,6 +2640,14 @@
     {
       "path": "prompts/web-components/implement-cross-project-web-component-framework.md",
       "classification": "ignored"
+    },
+    {
+      "path": "README.md",
+      "classification": "ambiguous"
+    },
+    {
+      "path": "research/frontier/application-polish-engineering.md",
+      "classification": "publishable source"
     },
     {
       "path": "research/frontier/document-frontiers/document-frontier-agent-context-agent-instructions-f425c1b98c7f-frontier.md",
@@ -2683,6 +3067,10 @@
     },
     {
       "path": "research/frontier/FRONTIER-MASTER.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "research/frontier/README.md",
       "classification": "publishable source"
     },
     {
@@ -4767,6 +5155,42 @@
     },
     {
       "path": "research/frontier/repository-health.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/missions/MISSION-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/EVIDENCE-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/EXPERIMENT-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/HYPOTHESIS-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/JOURNAL-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/REP-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "templates/research/THEORY-TEMPLATE.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "tools/theme-catalog-validate/README.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "tools/theme-measure/README.md",
       "classification": "publishable source"
     }
   ]
