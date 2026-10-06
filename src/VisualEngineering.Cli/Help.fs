@@ -81,7 +81,8 @@ module Help =
                   "changes and rewrites nothing. It installs the packaged context, writes the"
                   "installation manifest and repository configuration, and registers the managed"
                   "regions in .gitignore and the agent instructions file. Files you own are never"
-                  "overwritten, and content outside a managed region is preserved."
+                  "overwritten, and content outside a managed region is preserved. Commit the"
+                  "installed context: verify requires it in every checkout."
                  ]
              |> fun text -> text.TrimEnd '\n')
             "Creates and updates tool owned files. Refuses to replace locally modified content unless --force is given."

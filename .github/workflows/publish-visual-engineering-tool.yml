@@ -1,5 +1,21 @@
 name: Publish Visual Engineering tool
 
+# Two ways to cut a release, one publish path:
+#
+#  1. Push a tag visual-engineering-vX.Y.Z.
+#  2. Run this workflow from the Actions tab on main with the version and the full commit
+#     SHA. The `tag` job verifies that commit and pushes the tag with GITHUB_TOKEN; the
+#     build and publish jobs then run from that tag in this same run.
+#
+# The dispatch path has to live in this file, not a separate workflow: a tag pushed by
+# GITHUB_TOKEN never starts another workflow.
+#
+# Fails closed: nothing is tagged unless the commit is on main, carries the version in
+# npm/package.json and CHANGELOG.md, and its "Build Visual Engineering tool" push run (every
+# check in it) succeeded; nothing is reported as released unless NPM_TOKEN is configured and
+# every package was published. The root package archive and SHA256SUMS are attached to a
+# GitHub release so the Echelon Registry can record the digest of exactly what was published.
+
 on:
   push:
     tags:
@@ -7,27 +23,144 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Semantic version to publish
+        description: "Version to release, without a prefix (for example 1.0.1). Must equal npm/package.json and a CHANGELOG.md heading at the commit."
+        required: true
+        type: string
+      commit:
+        description: "Full 40-character SHA of the commit on main to release."
         required: true
         type: string
 
-permissions:
-  contents: read
-  id-token: write
+permissions: {}
 
 concurrency:
   group: publish-visual-engineering-tool
   cancel-in-progress: false
 
 jobs:
+  # Dispatch only. Fails closed before anything is tagged or published.
+  tag:
+    name: Verify the commit and tag it
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the tag
+      actions: read # find the commit's CI run
+      checks: read # read that run's check runs
+    env:
+      VERSION: ${{ inputs.version }}
+      COMMIT: ${{ inputs.commit }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Require well-formed inputs, dispatched from main
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "::error::Run this workflow from main, not $GITHUB_REF"
+            exit 1
+          fi
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::version '$VERSION' is not X.Y.Z"
+            exit 1
+          fi
+          if [[ ! "$COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::commit '$COMMIT' is not a full lowercase 40-character SHA"
+            exit 1
+          fi
+
+      - name: Check out the release commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.commit }}
+          fetch-depth: 0
+
+      - name: Require the commit to be on main
+        shell: bash
+        run: |
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor "$COMMIT" origin/main; then
+            echo "::error::$COMMIT is not main or an ancestor of main"
+            exit 1
+          fi
+
+      - name: Require npm/package.json and CHANGELOG.md at the commit to carry the version
+        shell: bash
+        run: |
+          package_version="$(git show "$COMMIT:npm/package.json" | jq -r .version)"
+          if [[ "$package_version" != "$VERSION" ]]; then
+            echo "::error::npm/package.json at $COMMIT is $package_version, not $VERSION"
+            exit 1
+          fi
+          if ! git show "$COMMIT:CHANGELOG.md" | grep -Fxq "## $VERSION"; then
+            echo "::error::CHANGELOG.md at $COMMIT has no '## $VERSION' heading"
+            exit 1
+          fi
+
+      - name: Require the build CI to have passed on the commit
+        shell: bash
+        run: |
+          run="$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/build-visual-engineering-tool.yml/runs?head_sha=$COMMIT&event=push&per_page=1" \
+            --jq '.workflow_runs[0] // empty | [.id, .status, (.conclusion // "none"), .check_suite_id] | @tsv')"
+          if [[ -z "$run" ]]; then
+            echo "::error::no build CI push run found for $COMMIT"
+            exit 1
+          fi
+          read -r run_id status conclusion suite_id <<<"$run"
+          echo "CI run $run_id: $status/$conclusion"
+          if [[ "$status" != "completed" || "$conclusion" != "success" ]]; then
+            echo "::error::CI run $run_id on $COMMIT is $status/$conclusion, not completed/success"
+            exit 1
+          fi
+          checks="$(gh api --paginate "repos/$GITHUB_REPOSITORY/check-suites/$suite_id/check-runs?per_page=100" \
+            --jq '.check_runs[] | [.name, .status, (.conclusion // "none")] | @tsv')"
+          echo "$checks"
+          if [[ -z "$checks" ]]; then
+            echo "::error::CI run $run_id has no check runs"
+            exit 1
+          fi
+          if awk -F'\t' '$2 != "completed" || ($3 != "success" && $3 != "skipped" && $3 != "neutral")' <<<"$checks" | grep -q .; then
+            echo "::error::a CI check run on $COMMIT did not succeed"
+            exit 1
+          fi
+
+      # Idempotent: a re-run finds the tag it pushed and accepts it, but a tag at any other
+      # commit stops the release.
+      - name: Create and push the annotated tag
+        shell: bash
+        run: |
+          tag="visual-engineering-v$VERSION"
+          existing="$(git ls-remote --tags origin "refs/tags/$tag" "refs/tags/$tag^{}")"
+          if [[ -n "$existing" ]]; then
+            target="$(awk -v ref="refs/tags/$tag^{}" '$2 == ref { print $1 }' <<<"$existing")"
+            [[ -z "$target" ]] && target="$(awk '{ print $1 }' <<<"$existing" | head -n 1)"
+            if [[ "$target" != "$COMMIT" ]]; then
+              echo "::error::$tag already exists at $target, not $COMMIT"
+              exit 1
+            fi
+            echo "$tag already exists at $COMMIT; not re-creating it"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" "$COMMIT" -m "Visual Engineering $VERSION"
+          git push origin "refs/tags/$tag"
+
   build:
     name: Build and stage
+    needs: tag
+    # Runs for a tag push (where `tag` is skipped) or after `tag` succeeds.
+    if: ${{ !cancelled() && (github.event_name == 'push' || needs.tag.result == 'success') }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
     steps:
-      - name: Check out repository
+      - name: Check out the release tag
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/tags/visual-engineering-v{0}', inputs.version) || github.ref }}
 
       - name: Resolve release version
         id: version
@@ -35,17 +168,30 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           REF_NAME: ${{ github.ref_name }}
           INPUT_VERSION: ${{ inputs.version }}
+          INPUT_COMMIT: ${{ inputs.commit }}
         run: |
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-            VERSION="${INPUT_VERSION#visual-engineering-v}"
+            VERSION="$INPUT_VERSION"
+            EXPECTED_COMMIT="$INPUT_COMMIT"
           else
             VERSION="${REF_NAME#visual-engineering-v}"
+            EXPECTED_COMMIT=""
           fi
           if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
             echo "::error::Version must be semantic: $VERSION"
             exit 1
           fi
+          package_version="$(jq -r .version npm/package.json)"
+          if [ "$package_version" != "$VERSION" ]; then
+            echo "::error::npm/package.json is $package_version, not $VERSION"
+            exit 1
+          fi
+          if [ -n "$EXPECTED_COMMIT" ] && [ "$(git rev-parse HEAD)" != "$EXPECTED_COMMIT" ]; then
+            echo "::error::visual-engineering-v$VERSION resolves to $(git rev-parse HEAD), not $EXPECTED_COMMIT"
+            exit 1
+          fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=visual-engineering-v$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -96,13 +242,17 @@ jobs:
     name: Packed artifact on ${{ matrix.os }}
     needs: build
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - name: Check out repository
+      - name: Check out the release tag
         uses: actions/checkout@v6
+        with:
+          ref: refs/tags/${{ needs.build.outputs.tag }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -123,14 +273,30 @@ jobs:
         run: node scripts/test-tool-package.mjs
 
   publish:
-    name: Publish to npm
+    name: Publish to npm and GitHub
     needs: [build, packed-artifact]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the GitHub release and upload its assets
+      id-token: write # npm provenance
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      VERSION: ${{ needs.build.outputs.version }}
+      RELEASE_TAG: ${{ needs.build.outputs.tag }}
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Check out repository
+      - name: Require the npm token
+        shell: bash
+        run: |
+          if [[ -z "$NODE_AUTH_TOKEN" ]]; then
+            echo "::error::The NPM_TOKEN repository secret is not configured, so $VERSION cannot be published. Nothing was published."
+            exit 1
+          fi
+
+      - name: Check out the release tag
         uses: actions/checkout@v6
+        with:
+          ref: refs/tags/${{ needs.build.outputs.tag }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -147,11 +313,19 @@ jobs:
       - name: Restore executable permissions
         run: chmod +x npm/platforms/*/visual-engineering npm/bin/visual-engineering.js
 
+      # The root package is published from this exact archive, so the digest recorded for the
+      # GitHub release asset is the digest of what npm serves.
+      - name: Pack the root package
+        shell: bash
+        run: |
+          mkdir -p release
+          npm pack ./npm --pack-destination ./release
+          ls -l release
+
       # npm publish is not transactional across the seven packages, so a problem found on the
       # last one leaves the earlier versions permanently taken. This refuses the release up
       # front for every failure that can be detected without publishing.
       - name: Preflight the release
-        if: ${{ env.NODE_AUTH_TOKEN != '' }}
         run: node scripts/preflight-npm-publish.mjs
 
       # Platform packages go first: the root package declares each of them as an
@@ -162,7 +336,7 @@ jobs:
       # so this still has to survive failing partway. It reports exactly which versions went
       # out, because those cannot be republished and the release has to move to a new version.
       - name: Publish the platform packages
-        if: ${{ env.NODE_AUTH_TOKEN != '' }}
+        shell: bash
         run: |
           published=""
           for platform in npm/platforms/*/; do
@@ -171,21 +345,37 @@ jobs:
             if npm publish --access public --provenance --tag latest "$platform"; then
               published="$published $rid"
             else
-              echo "::error::Publishing $rid failed. Platform packages already published at ${{ needs.build.outputs.version }}:${published:- none}. Those versions are permanently taken, so re-run this release under a new version rather than retrying this one."
+              echo "::error::Publishing $rid failed. Platform packages already published at $VERSION:${published:- none}. Those versions are permanently taken, so re-run this release under a new version rather than retrying this one."
               exit 1
             fi
           done
 
       - name: Publish the root package
-        if: ${{ env.NODE_AUTH_TOKEN != '' }}
-        working-directory: npm
+        shell: bash
         run: |
-          if ! npm publish --access public --provenance --tag latest; then
-            echo "::error::All six platform packages published at ${{ needs.build.outputs.version }} but the root package did not. That version is now unusable for the platform packages, so re-run this release under a new version."
+          archive="$(ls release/*.tgz)"
+          if ! npm publish --access public --provenance --tag latest "./$archive"; then
+            echo "::error::All six platform packages published at $VERSION but the root package did not. That version is now unusable for the platform packages, so re-run this release under a new version."
             exit 1
           fi
 
-      - name: Explain skipped publication
-        if: ${{ env.NODE_AUTH_TOKEN == '' }}
+      - name: Write checksums
+        shell: bash
+        working-directory: release
         run: |
-          echo "::warning::@echelon-foundry/visual-engineering ${{ needs.build.outputs.version }} and its six platform packages were built, packed and exercised but not published because the NPM_TOKEN repository secret is not configured."
+          sha256sum *.tgz > SHA256SUMS
+          cat SHA256SUMS
+
+      # Idempotent: an existing release is left alone, so a re-run after a later failure does
+      # not replace assets that may already be recorded.
+      - name: Create the GitHub release
+        shell: bash
+        run: |
+          if gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
+            echo "::notice::Release $RELEASE_TAG already exists; not replacing its assets"
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" --verify-tag \
+            --title "Visual Engineering $VERSION" \
+            --notes "Visual Engineering $VERSION: the packed @echelon-foundry/visual-engineering root package exactly as published to npm, and its SHA-256 checksum. See CHANGELOG.md." \
+            release/*.tgz release/SHA256SUMS

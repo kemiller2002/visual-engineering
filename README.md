@@ -134,7 +134,7 @@ npx @echelon-foundry/visual-engineering init --dry-run
 
 `init` installed the Visual Engineering UI research briefing into `.visual-engineering/`,
 recorded what it manages in `.echelon/visual-engineering.json`, added a managed block to your
-`.gitignore` so the context is not committed, and registered a managed block in `AGENTS.md`
+`.gitignore` that keeps the context directory trackable, and registered a managed block in `AGENTS.md`
 telling coding agents to read the briefing before doing UI work. Your own content in those two
 files is untouched. The next section lists every path.
 
@@ -151,7 +151,7 @@ files is untouched. The next section lists every path.
 | `.visual-engineering/context.json` | generated | Context manifest and integrity metadata |
 | `.echelon/visual-engineering.json` | tool-owned | Installation manifest |
 | `.echelon/visual-engineering.config.json` | shared | Repository configuration |
-| `.gitignore` | shared | Managed region ignoring the context directory |
+| `.gitignore` | shared | Managed region re-including the context directory, which must be committed |
 | `AGENTS.md` | shared | Managed region registering the briefing with agents |
 
 Shared files are only partly the tool's: it owns a region delimited by

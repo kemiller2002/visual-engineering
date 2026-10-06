@@ -21,6 +21,24 @@ files present, no `.echelon/` manifest.
 
 An upgrade from 1 to 3 runs `1 -> 2` then `2 -> 3` in order.
 
+## Upgrading an installation made by 1.0.0
+
+Release 1.0.0 wrote a managed `.gitignore` region that ignored the context directory. The
+context is required (`verify` fails without it), so every clean checkout of such a repository
+failed verification. From 1.0.1 the region re-includes the context directory instead.
+
+`upgrade` replaces the old region like any other stale managed region; nothing outside the
+markers changes. Then commit the context:
+
+```bash
+npx @echelon-foundry/visual-engineering@1.0.1 upgrade
+git add .gitignore .echelon/visual-engineering.json .visual-engineering/
+```
+
+A repository that already force-added `.visual-engineering/` only needs the `upgrade`. If you
+edited inside the old region, `upgrade` stops with `LocallyModifiedRegion`: move your edits
+outside the markers, or pass `--force`.
+
 ## Supported upgrade paths
 
 | Starting state | Result |

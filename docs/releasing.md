@@ -6,8 +6,30 @@ There are two independent release paths in this repository. Both remain supporte
 
 Workflow: `.github/workflows/publish-visual-engineering-tool.yml`
 
-Trigger: push of a tag matching `visual-engineering-v*`, or manual dispatch with a semantic
-version.
+Trigger: run the workflow from the Actions tab on `main` with `version` (for example `1.0.1`)
+and the full 40-character `commit` SHA on `main` to release, or push a tag matching
+`visual-engineering-v*`. Hand-pushed tags are not the normal path.
+
+A dispatched release fails closed before anything is tagged. The `tag` job requires that:
+
+- the workflow was dispatched from `main` and the commit is `main` or an ancestor of it;
+- `npm/package.json` at the commit carries the version, and `CHANGELOG.md` has a `## <version>`
+  heading;
+- the "Build Visual Engineering tool" push run on that commit, and every check run in it,
+  succeeded.
+
+It then pushes the annotated tag `visual-engineering-v<version>` with `GITHUB_TOKEN`, and the
+rest of the workflow builds from that tag in the same run (a tag pushed by `GITHUB_TOKEN`
+never starts another workflow). Re-runs are idempotent: an existing tag at another commit stops
+the release, and an existing GitHub release is never replaced. A missing `NPM_TOKEN` fails the
+run rather than reporting success.
+
+After npm publication, the root package archive that was published and its `SHA256SUMS` are
+attached to a GitHub release named for the tag. The Echelon Registry records that digest.
+
+To prepare a release, bump `version` (and the pinned `optionalDependencies`) in
+`npm/package.json` and add the `CHANGELOG.md` entry in a pull request, merge it, wait for the
+build to pass on `main`, then dispatch.
 
 The workflow does all of the following before anything is published:
 
