@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 12,
+  "nextSeq": 13,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -227,6 +227,20 @@
       "attachments": [],
       "createdAt": "2026-10-05T17:01:09.518Z",
       "updatedAt": "2026-10-05T17:01:29.000Z",
+      "createdBy": "unknown",
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0012",
+      "title": "Upgrade Limen to 0.7.1 to match the echelon-current channel",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-06T09:38:39.371Z",
+      "updatedAt": "2026-10-06T09:38:42Z",
       "createdBy": "unknown",
       "source": "manual",
       "sourceReference": null
