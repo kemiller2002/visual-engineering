@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 17,
+  "nextSeq": 18,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -335,6 +335,27 @@
         "id": "anthropic/claude-code",
         "provider": "anthropic",
         "model": "claude-opus-5-5",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0017",
+      "title": "Move visual-engineering to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-08T07:15:53.154Z",
+      "updatedAt": "2026-10-08T07:16:37.497Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
         "runtime": "claude-code"
       },
       "source": "manual",
