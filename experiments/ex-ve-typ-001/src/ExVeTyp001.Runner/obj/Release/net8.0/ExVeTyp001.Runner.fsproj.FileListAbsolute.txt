@@ -1,0 +1,15 @@
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/ex-ve-typ-001
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/ex-ve-typ-001.deps.json
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/ex-ve-typ-001.runtimeconfig.json
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/ex-ve-typ-001.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/FSharp.Core.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/bin/Release/net8.0/ExVeTyp001.Core.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp001.Runner.fsproj.AssemblyReference.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp001.Runner.AssemblyInfoInputs.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp001.Runner.AssemblyInfo.fs
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp001.Runner.fsproj.CoreCompileInputs.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp0.9E7C1632.Up2Date
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ex-ve-typ-001.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/refint/ex-ve-typ-001.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ExVeTyp001.Runner.genruntimeconfig.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/Release/net8.0/ref/ex-ve-typ-001.dll

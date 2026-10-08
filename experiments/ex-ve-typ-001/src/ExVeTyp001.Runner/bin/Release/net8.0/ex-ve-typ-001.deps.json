@@ -1,0 +1,58 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ex-ve-typ-001/0.0.0-dev": {
+        "dependencies": {
+          "ExVeTyp001.Core": "0.0.0-dev",
+          "FSharp.Core": "10.1.401"
+        },
+        "runtime": {
+          "ex-ve-typ-001.dll": {}
+        }
+      },
+      "FSharp.Core/10.1.401": {
+        "runtime": {
+          "lib/netstandard2.1/FSharp.Core.dll": {
+            "assemblyVersion": "10.1.0.0",
+            "fileVersion": "10.104.126.42413"
+          }
+        }
+      },
+      "ExVeTyp001.Core/0.0.0-dev": {
+        "dependencies": {
+          "FSharp.Core": "10.1.401"
+        },
+        "runtime": {
+          "ExVeTyp001.Core.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ex-ve-typ-001/0.0.0-dev": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FSharp.Core/10.1.401": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/lvOK51KD8IangBYkfDVna3/HrE/r4VUnX3dI01KDspctoYXmind3POeoYkqWKeXHwiKlf6Hc9TxwSnoSCWcjw==",
+      "path": "fsharp.core/10.1.401",
+      "hashPath": "fsharp.core.10.1.401.nupkg.sha512"
+    },
+    "ExVeTyp001.Core/0.0.0-dev": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

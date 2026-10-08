@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-10-06T16:32:41.000Z",
+  "updatedAt": "2026-10-08T07:16:37.497Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -697,6 +697,60 @@
         }
       },
       "completedAt": "2026-10-06T16:32:41.000Z"
+    },
+    {
+      "id": "WI-0017",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "conditor.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".conditor/lock.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".conditor/authority/resolved-release-set.json"
+        },
+        {
+          "type": "implementation",
+          "path": ".echelon/toolchain.json"
+        },
+        {
+          "type": "tests",
+          "path": ".github/workflows/praxis-validation.yml"
+        }
+      ],
+      "updatedAt": "2026-10-08T07:16:37.497Z",
+      "telemetryExecutionIds": [
+        "EXE-20261008T071554401Z-c9636995"
+      ],
+      "latestCheckpoint": {
+        "id": "2659e1c4f3646b5165657945",
+        "recordedAt": "2026-10-08T07:16:36.359Z",
+        "executionId": "EXE-20261008T071554401Z-c9636995",
+        "repository": "visual-engineering",
+        "branch": "chore/ordo-1.5.0",
+        "commit": "dc036a3a727bf5ff03c78688a2187e85368d6e72",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/visual-engineering"
+        },
+        "remoteBranch": "chore/ordo-1.5.0",
+        "remoteCommit": "dc036a3a727bf5ff03c78688a2187e85368d6e72",
+        "summary": "conditor upgrade --current to echelon-current 1.2.0 (Ordo 1.4.2 -> 1.5.0) committed and pushed; local checks passed",
+        "nextAction": "Open the PR, get CI green and merge",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-08T07:16:37.497Z",
+      "conclusion": "Ordo 1.5.0 through echelon-current 1.2.0; local checks passed (log: /tmp/claude-0/-home-user-praxis/7bcb3038-90cc-534e-8e5b-9be62aa1de8c/scratchpad/sweep/logs/visual-engineering.log)"
     }
   ]
 }
