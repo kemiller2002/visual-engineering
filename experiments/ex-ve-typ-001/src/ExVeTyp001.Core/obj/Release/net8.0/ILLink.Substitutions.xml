@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="ExVeTyp001.Core">
+    <resource name="FSharpSignatureData.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationData.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.ExVeTyp001.Core" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.ExVeTyp001.Core" action="remove"></resource>
+  </assembly>
+</linker>

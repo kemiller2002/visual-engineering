@@ -1,0 +1,9 @@
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/bin/Release/net8.0/ExVeTyp001.Core.deps.json
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/bin/Release/net8.0/ExVeTyp001.Core.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ExVeTyp001.Core.fsproj.AssemblyReference.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ExVeTyp001.Core.AssemblyInfoInputs.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ExVeTyp001.Core.AssemblyInfo.fs
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ExVeTyp001.Core.fsproj.CoreCompileInputs.cache
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ExVeTyp001.Core.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/refint/ExVeTyp001.Core.dll
+/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/Release/net8.0/ref/ExVeTyp001.Core.dll

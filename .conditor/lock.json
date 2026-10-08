@@ -1,19 +1,19 @@
 {
   "schemaVersion": 4,
   "project": "visual-engineering",
-  "manifestSha256": "b22fe0bccb8f6c23b59a7031817df4aaa5a2ce8f9ecb2847eea2a47183ae2df2",
+  "manifestSha256": "0cfe51f6e6ad4ea172ff3189fe13c0c2ae45bbc1f9f70bb9566a92a0e5f13ac4",
   "manifest": {
     "schemaVersion": 1,
     "name": "visual-engineering",
     "registryAuthority": {
       "kind": "resolved-release-set",
       "path": ".conditor/authority/resolved-release-set.json",
-      "sha256": "cd8d8d0482c5c4750f4bb31d28bc79e9597d3be4f6264955691e3aebd86cb6d2"
+      "sha256": "ea1b39a003d3f2f41c4fb6e979694ec82fd03964854e5dd268e38df51cd22931"
     },
     "components": [
       {
         "id": "ordo",
-        "version": "1.4.2",
+        "version": "1.5.0",
         "required": true
       },
       {
@@ -35,12 +35,12 @@
   "components": [
     {
       "id": "ordo",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "distribution": "host-tool",
       "package": "ordo",
-      "descriptorSha256": "ee057aa4a0c4cd5180269fd262e5570ff6146035e52fd6d17a0baede0df21f5c",
+      "descriptorSha256": "cac222af525161218391dade23d2a583c29315e8df255ffb9f11f0f2bb4eaf3a",
       "authority": "embedded-component-descriptor",
-      "sourceReference": "host:ordo@1.4.2"
+      "sourceReference": "host:ordo@1.5.0"
     },
     {
       "id": "praxis",

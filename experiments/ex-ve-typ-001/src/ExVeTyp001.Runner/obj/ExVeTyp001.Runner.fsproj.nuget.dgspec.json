@@ -1,0 +1,174 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/ExVeTyp001.Runner.fsproj": {}
+  },
+  "projects": {
+    "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/ExVeTyp001.Core.fsproj": {
+      "version": "0.0.0-dev",
+      "restore": {
+        "projectUniqueName": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/ExVeTyp001.Core.fsproj",
+        "projectName": "ExVeTyp001.Core",
+        "projectPath": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/ExVeTyp001.Core.fsproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/user/visual-engineering/nuget.config",
+          "/root/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/root/.dotnet-sdk/sdk/10.0.401/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "framework": "net8.0",
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.400"
+      },
+      "frameworks": {
+        "net8.0": {
+          "framework": "net8.0",
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[10.1.401, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/root/.dotnet-sdk/sdk/10.0.401/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/ExVeTyp001.Runner.fsproj": {
+      "version": "0.0.0-dev",
+      "restore": {
+        "projectUniqueName": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/ExVeTyp001.Runner.fsproj",
+        "projectName": "ex-ve-typ-001",
+        "projectPath": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/ExVeTyp001.Runner.fsproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Runner/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/user/visual-engineering/nuget.config",
+          "/root/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/root/.dotnet-sdk/sdk/10.0.401/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "framework": "net8.0",
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/ExVeTyp001.Core.fsproj": {
+                "projectPath": "/home/user/visual-engineering/experiments/ex-ve-typ-001/src/ExVeTyp001.Core/ExVeTyp001.Core.fsproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.400"
+      },
+      "frameworks": {
+        "net8.0": {
+          "framework": "net8.0",
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[10.1.401, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/root/.dotnet-sdk/sdk/10.0.401/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

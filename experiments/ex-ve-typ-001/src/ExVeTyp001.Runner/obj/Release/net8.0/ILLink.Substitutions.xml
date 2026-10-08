@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="ex-ve-typ-001">
+    <resource name="FSharpSignatureData.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpOptimizationData.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.ex-ve-typ-001" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.ex-ve-typ-001" action="remove"></resource>
+  </assembly>
+</linker>
