@@ -31,3 +31,4 @@
 | WI-0015 | Track installed Visual Engineering context instead of gitignoring it (clean-checkout verify fails); add fail-closed dispatch release; release 1.0.1 | complete |  | medium |
 | WI-0016 | Move visual-engineering to Praxis 3.7.2, Ordo 1.4.2, Visual Engineering 1.0.1 and adopt Conditor | complete | praxis, ordo, toolchain | medium |
 | WI-0017 | Move visual-engineering to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current) | complete |  | medium |
+| WI-0018 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |

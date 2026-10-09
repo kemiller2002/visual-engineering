@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 18,
+  "nextSeq": 19,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -350,6 +350,27 @@
       "attachments": [],
       "createdAt": "2026-10-08T07:15:53.154Z",
       "updatedAt": "2026-10-08T07:16:37.497Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0018",
+      "title": "Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current)",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-09T00:06:23.194Z",
+      "updatedAt": "2026-10-09T00:11:06.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
