@@ -1,9 +1,12 @@
 # Universal UI Layout and Interaction Conformance
 
-Version: 0.1.0 (rollout baseline)  
-Status: normative for newly changed Echelon UI; brownfield adoption is staged  
+Version: 1.0.0  
+Status: canonical and normative for newly changed Echelon UI; brownfield adoption is staged  
+Canonical reference: `visual-engineering/UI-LAYOUT-INTERACTION@1.0.0` (evidence schema `framework/contracts/ui-conformance.schema.json`, `standardVersion: "1.0.0"`)  
 Owner: Visual Engineering  
 Applies to: active application interfaces, marketing and documentation sites, component demonstrations, and interactive preview environments. Folio print output adopts geometry/overflow provisions with print-specific evidence.
+
+This is the single authoritative version of the universal layout and interaction contract. Application Visual Language describes visual relationships and design intent; Forma implements reusable screen presentation; Folio implements print presentation; applications own their behavior. Consumers pin this version and cite rule IDs; they do not restate or fork the rules.
 
 This standard extends [APPLICATION-POLISH.md](APPLICATION-POLISH.md) and does not replace the Forma machine-operability contract, accessibility requirements, product semantics, or application-specific design profiles.
 
@@ -30,18 +33,19 @@ An interface is not finished when peer elements are unintentionally misaligned, 
 
 | ID | Strength | Contract |
 | --- | --- | --- |
-| ULI-L01 | Required | Declare meaningful alignment groups. Peer inputs in a shared form row align at their top edges or declared baselines; different-sized labels must not inadvertently stagger peer control edges. Do not assume unrelated fields must align. |
+| ULI-L01 | Required | Declare meaningful alignment groups. Peer inputs, selects and other fields in a shared form row align at their top edges or declared baselines; different label lengths, help text or validation messages must not inadvertently stagger peer control edges. Do not assume unrelated fields must align. |
 | ULI-L02 | Required | Equivalent controls in the same density/context have coherent intrinsic heights, padding, baseline alignment and geometry, or a documented semantic difference. |
 | ULI-L03 | Required | Composition/parent owns cross-component layout; primitives own their internal geometry. Consumers must not patch recurring shared defects with per-page pixel offsets. |
 | ULI-L04 | Required | Grouping and gaps express hierarchy using documented semantic roles/tokens; local values cannot obscure relationships or create inconsistent equivalent layouts. |
-| ULI-L05 | Required | At supported widths, browser zoom, text expansion and state changes, no unintended clipping, overlap, horizontal page scrolling or offscreen critical action. Essential two-dimensional content may have a contained, labeled scroller. |
+| ULI-L05 | Required | At supported widths, browser zoom, text scaling, long labels, translated and right-to-left text, and content or state changes, text does not overlap boundaries or escape its container, and there is no unintended clipping, overlap, horizontal page scrolling or offscreen critical action. Essential two-dimensional content may have a contained, labeled scroller. |
 | ULI-L06 | Required | Navigation labels remain meaningful. Preserve each destination's readable accessible name; either preserve label integrity or recompose navigation rather than crop or overlap it. |
 | ULI-L07 | Required | Icons and text inside controls are perceptually centered with a stable baseline; intrinsic button geometry does not vary inexplicably within a group. |
 | ULI-L08 | Required | Empty, loading, validation, error, expanded, collapsed, flyout and modal states preserve valid geometry and focus; state changes must not create avoidable layout jump or trap controls. |
-| ULI-L09 | Required | Responsive changes retain semantic order, grouping, comparisons, accessible navigation and action scope. Test at 320, 390, 768 and 1280 CSS pixels plus relevant content-driven breakpoints. |
-| ULI-L10 | Recommended | Related action rows align to a shared contextual edge and predictable order, respecting language direction and accessibility needs. |
+| ULI-L09 | Required | Mobile layouts are functional compositions, not merely compressed desktop layouts: responsive changes retain semantic order, grouping, comparisons, accessible navigation and action scope. Test at 320, 390, 768 and 1280 CSS pixels plus relevant content-driven breakpoints. |
+| ULI-L10 | Required | Related buttons align to a shared contextual edge in a predictable order and wrap or recompose sensibly when space is constrained, respecting language direction and accessibility needs. |
 | ULI-L11 | Contextual | Text areas, editors, tables, diagrams and complex panels can intentionally differ from ordinary fields when their visual relationships are specified and verified. |
-| ULI-L12 | Required | Folio print/paged-media output additionally validates page edges, page breaks, clipping, table continuation, headers/footers, and print/PDF output geometry at intended media sizes. |
+| ULI-L12 | Required | Folio print/paged-media output additionally validates page edges, page breaks, clipping, table and content continuation, headers/footers, page numbers, and print/PDF output geometry at intended media sizes. Browser print preview and PDF rendering are verified separately. |
+| ULI-L13 | Required | Spacing, sizing and alignment use shared design tokens and composition primitives. Arbitrary one-off positional corrections (negative margins, per-page pixel nudges) are not an acceptable repair for a shared or recurring defect. |
 
 **Geometry tolerance.** For declared equal-top or equal-baseline groups in the same visual row, the default automated browser tolerance is `<= 1 CSS px` once fonts and layout stabilize. This is an engineering starting point, not a WCAG threshold. Browser/renderer effects or deliberate optical corrections may justify a documented per-group tolerance. Tests must compare actual bounding boxes after settling; never hardcode absolute viewport coordinates or guess which elements are peers.
 
@@ -54,8 +58,8 @@ An interface is not finished when peer elements are unintentionally misaligned, 
 | ULI-A03 | Required | Every shipped demo button and control performs the documented behavior with real local/native state or a genuinely wired operation. If an unavailable backend is simulated, clearly label the simulation and never present it as a completed real operation. |
 | ULI-A04 | Required | Disabled controls express a real constraint and a way to understand it. A labeled disabled-state specimen may be intentionally disabled; unfinished functionality is not a legitimate reason to ship a prominent disabled button. |
 | ULI-A05 | Required | Every interactive demo scenario supplies initial state, invocation, expected observable result, and a repeat/reset strategy (or documented immutable terminal state). |
-| ULI-A06 | Required | Buttons, links, switches, disclosure elements, menu items, gestures and custom widgets use correct roles/names and offer human/machine parity. Follow Forma machine-operability rules; no fixed sleeps or coordinate-only action path. |
-| ULI-A07 | Required | Loading, success, partial success, error, cancellation and recovery never lie about persistence or completion. Side-effecting retries require idempotency/reconciliation as appropriate. |
+| ULI-A06 | Required | Buttons, links, switches, disclosure elements, menu items, gestures and custom widgets use correct roles/names and offer human/machine parity. Follow Forma machine-operability rules. No action relies exclusively on coordinates, hover, animation or implementation-specific selectors; drag operations that perform meaningful edits have a semantic alternative. The final state is observable without fixed sleeps. |
+| ULI-A07 | Required | Loading, success, partial success, error, cancellation, reset, retry and recovery behave honestly and never lie about persistence or completion; a missing backend never yields a falsely successful operation. Side-effecting retries and repeated rapid activation require idempotency/reconciliation as appropriate. |
 | ULI-A08 | Required | All actionable surfaces remain operable by keyboard and required input alternatives; touch target and focus behavior satisfy existing accessibility standards. |
 | ULI-A09 | Required | Unimplemented actions are removed, clearly presented as noninteractive documentation, or gated from shipping with visible honest explanation. Do not make a disabled placeholder the default design. |
 | ULI-A10 | Required | Each important workflow has at least one end-to-end action assertion, including a failure/recovery case where relevant. Demo catalogs exercise **every** enabled example action rather than only a sample. |
@@ -90,6 +94,17 @@ Do not claim "all buttons tested" unless every in-scope demo action was enumerat
 - `PASS`: observed assertion on the declared surface/environment.
 - `UNKNOWN`: missing evidence, unsupported renderer or untested route/state.
 - `NOT_APPLICABLE`: documented absence of the relevant phenomenon.
-- `EXCEPTION`: owned, bounded, justified deviation, not an invisible pass.
+- `EXCEPTION` (approved exception): owned, bounded, justified deviation with rule ID, surface, owner, rationale and review trigger; not an invisible pass.
+
+Lack of evidence is `UNKNOWN`, never `PASS`.
+
+## Versioning
+
+This standard follows semantic versioning. A new required rule, a stricter tolerance or a changed status vocabulary is a major change; a new recommended rule or clarification is minor; editorial fixes are patches. The evidence schema's `standardVersion` changes with the major/minor version of this document.
+
+| Version | Date | Change |
+| --- | --- | --- |
+| 1.0.0 | 2026-10-13 | First canonical release. Adds ULI-L13 (tokens and primitives over one-off offsets); makes ULI-L10 required (button groups align and wrap sensibly); extends ULI-L01, L05, L09, L12, A06 and A07 for help text, translation/RTL, functional mobile layout, print continuation, hover/animation/drag alternatives and honest reset/retry; adds the `demo-ui` classification. |
+| 0.1.0 | 2026-10-13 | Rollout baseline draft. |
 
 See the rollout protocol and its candidate inventory in `framework/protocols/UI-CONFORMANCE-ROLLOUT.md`.

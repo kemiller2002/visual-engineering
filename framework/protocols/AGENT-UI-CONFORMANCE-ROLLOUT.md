@@ -10,7 +10,7 @@ You are the lead agent. Use subagents for isolated, owned repositories, with cod
 
 1. Work from the user's local `dev` workspace if available; do not assume your current directory is correct. Confirm each repository's remote and clean working tree before editing.
 2. For every repository, read `AGENTS.md`, current state/context, requirements, applicable capability manifests and the canonical validation commands. Use its actual Ordo/ROS/Praxis work-item lifecycle **before** meaningful edits. Do not fabricate state or modify installed lifecycle internals.
-3. Fix governance issues in standard PRs before merging: Visual Engineering #46 currently needs genuine Praxis work-item attribution for its four new files. AVL #4 has a failing ROS check with unconfirmed cause. Forma #155 needs complete CI results. Never bypass validation.
+3. Fix governance issues in standard PRs before merging, through each repository's real work-item lifecycle (Visual Engineering #46 attributes its commits to WI-0019 by Git-evidenced post-hoc reconciliation). Never bypass validation.
 4. Adopt the canonical rule by pinned version/commit after it passes governance. Do not copy divergent standards into consuming repositories.
 5. Prefer a repository-owned branch and PR. Respect other agents' uncommitted files, migration windows and repository-level concurrency constraints.
 
@@ -18,7 +18,7 @@ You are the lead agent. Use subagents for isolated, owned repositories, with cod
 
 - Read every row in `targets.csv`; for each inspect actual UI route/site/build commands and confirm whether it is maintained.
 - Search the complete owned repository list for missing maintained UIs. New active UIs must be added; a name-based list cannot establish completeness.
-- Classify each as `app-ui`, `site-ui`, `print-ui`, `service-no-ui`, `archived` or `unknown`. Document evidence and ownership; don't assume a repository is an app just because its name sounds like one.
+- Classify each as `app-ui`, `site-ui`, `demo-ui`, `print-ui`, `service-no-ui`, `archived` or `unknown`. Document evidence and ownership; don't assume a repository is an app just because its name sounds like one.
 - Update corresponding issue with discovered routes, initial violations and baseline evidence. Keep `unknown` when source or runtime can't be inspected.
 
 ### Step 2: fix sources first

@@ -2,6 +2,12 @@
   {
     "severity": "warning",
     "code": "missing-id",
+    "sourcePath": "framework/protocols/AGENT-UI-CONFORMANCE-ROLLOUT.md",
+    "message": "Compatibility mode inferred metadata because no canonical identifier was present."
+  },
+  {
+    "severity": "warning",
+    "code": "missing-id",
     "sourcePath": "agent-context/AGENT-INSTRUCTIONS.md",
     "message": "Compatibility mode inferred metadata because no canonical identifier was present."
   },
@@ -597,6 +603,18 @@
     "severity": "warning",
     "code": "missing-id",
     "sourcePath": "content/concepts/typography/index.md",
+    "message": "Compatibility mode inferred metadata because no canonical identifier was present."
+  },
+  {
+    "severity": "warning",
+    "code": "missing-id",
+    "sourcePath": "framework/protocols/UI-CONFORMANCE-ROLLOUT.md",
+    "message": "Compatibility mode inferred metadata because no canonical identifier was present."
+  },
+  {
+    "severity": "warning",
+    "code": "missing-id",
+    "sourcePath": "framework/standards/UI-LAYOUT-INTERACTION.md",
     "message": "Compatibility mode inferred metadata because no canonical identifier was present."
   },
   {

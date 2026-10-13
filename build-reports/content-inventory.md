@@ -2,7 +2,7 @@
 
 ## Summary
 
-- publishable source: 823
+- publishable source: 826
 - generated output: 1
 - archived: 2
 - ambiguous: 401
@@ -203,9 +203,11 @@
 - publishable source: `framework/policies/EVIDENCE-POLICY.md`
 - publishable source: `framework/policies/OUTPUT-POLICY.md`
 - publishable source: `framework/policies/RESEARCH-POLICY.md`
+- publishable source: `framework/protocols/AGENT-UI-CONFORMANCE-ROLLOUT.md`
 - publishable source: `framework/protocols/APPLICATION-POLISH-REVIEW.md`
 - publishable source: `framework/protocols/ARTIFACT-LIFECYCLE.md`
 - publishable source: `framework/protocols/SUPERSESSION.md`
+- publishable source: `framework/protocols/UI-CONFORMANCE-ROLLOUT.md`
 - publishable source: `framework/REP-SPECIFICATION.md`
 - publishable source: `framework/standards/APPLICATION-POLISH.md`
 - publishable source: `framework/standards/ARTIFACT-TIERS.md`
@@ -214,6 +216,7 @@
 - publishable source: `framework/standards/MOTION-AND-INTERACTION.md`
 - publishable source: `framework/standards/NAMING-STANDARD.md`
 - publishable source: `framework/standards/TAXONOMY.md`
+- publishable source: `framework/standards/UI-LAYOUT-INTERACTION.md`
 - publishable source: `GEMINI.md`
 - publishable source: `HANDOFF.md`
 - intake/unprocessed: `input-documents/README.md`

@@ -26,7 +26,7 @@ This work is NOT an instruction to bulk-edit all historical repositories or repl
 ### Stage 0: inventory and triage
 
 1. Enumerate repositories and detect maintained UI surfaces: public sites, product screens, interactive docs, component demos, editor previews and rendered print examples.
-2. In every candidate repository, verify its current status and label it `app-ui`, `site-ui`, `print-ui`, `service-no-ui`, `archived` or `unknown`. Record actual routes and commands; repo names are not sufficient proof.
+2. In every candidate repository, verify its current status and label it `app-ui`, `site-ui`, `demo-ui`, `print-ui`, `service-no-ui`, `archived` or `unknown`. Record actual routes and commands; repo names are not sufficient proof.
 3. Create a repository-owned issue/work item referencing the versioned canonical standard; keep its known deviations and exact execution plan in that repository.
 4. Give each currently running UI a baseline: actionable controls (including demo pages), peer alignment groups, mobile clipping/overflow, page/print geometry, keyboard and state transitions.
 5. Report `unassessed` honestly. An absence of observed findings is not a passed gate.
@@ -63,10 +63,10 @@ Integrate with Conditor/capability installation where appropriate and with Dokim
 ## Minimum per-application acceptance record
 
 ```yaml
-standard: visual-engineering/UI-LAYOUT-INTERACTION@0.1.0
+standard: visual-engineering/UI-LAYOUT-INTERACTION@1.0.0
 repo: owner/repository
 revision: <actual-sha>
-classification: app-ui # app-ui | site-ui | print-ui | service-no-ui | archived | unknown
+classification: app-ui # app-ui | site-ui | demo-ui | print-ui | service-no-ui | archived | unknown
 surfaces: [{ route: "/example", states: ["initial", "error"] }]
 viewportWidths: [320, 390, 768, 1280]
 alignmentGroups: [{ id: "customer-row", role: "top-edge", targets: ["First name", "Last name"] }]
