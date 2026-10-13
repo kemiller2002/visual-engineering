@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-07-22",
   "summary": {
-    "publishable source": 823,
+    "publishable source": 826,
     "generated output": 1,
     "archived": 2,
     "ambiguous": 401,
@@ -778,6 +778,10 @@
       "classification": "publishable source"
     },
     {
+      "path": "framework/protocols/AGENT-UI-CONFORMANCE-ROLLOUT.md",
+      "classification": "publishable source"
+    },
+    {
       "path": "framework/protocols/APPLICATION-POLISH-REVIEW.md",
       "classification": "publishable source"
     },
@@ -787,6 +791,10 @@
     },
     {
       "path": "framework/protocols/SUPERSESSION.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/protocols/UI-CONFORMANCE-ROLLOUT.md",
       "classification": "publishable source"
     },
     {
@@ -819,6 +827,10 @@
     },
     {
       "path": "framework/standards/TAXONOMY.md",
+      "classification": "publishable source"
+    },
+    {
+      "path": "framework/standards/UI-LAYOUT-INTERACTION.md",
       "classification": "publishable source"
     },
     {

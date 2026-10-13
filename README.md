@@ -15,6 +15,10 @@ The normative standard is [framework/standards/APPLICATION-POLISH.md](framework/
 
 A zero-finding review is not evidence of polish by itself. Coverage of states, seams, adversarial fixtures, environments, exceptions, and unknowns is part of the claim.
 
+## Universal UI layout and interaction conformance
+
+Every maintained Echelon interface, component demonstration and print surface follows one versioned contract: [framework/standards/UI-LAYOUT-INTERACTION.md](framework/standards/UI-LAYOUT-INTERACTION.md) (`UI-LAYOUT-INTERACTION@1.0.0`). It requires declared peer alignment, container integrity, functional mobile layouts and truthful, observable actions. Evidence follows [framework/contracts/ui-conformance.schema.json](framework/contracts/ui-conformance.schema.json); adoption follows [framework/protocols/UI-CONFORMANCE-ROLLOUT.md](framework/protocols/UI-CONFORMANCE-ROLLOUT.md). Rollout status is tracked in [issue #47](https://github.com/kemiller2002/visual-engineering/issues/47).
+
 ## Requirements
 
 - **Node.js 20 or newer.** Node is only used to start the packaged executable.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 19,
+  "nextSeq": 20,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -371,6 +371,29 @@
       "attachments": [],
       "createdAt": "2026-10-09T00:06:23.194Z",
       "updatedAt": "2026-10-09T00:11:06.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0019",
+      "title": "Establish universal UI layout and interaction conformance contract and rollout (GH-47)",
+      "description": null,
+      "tags": [
+        "ui-conformance,standards"
+      ],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-13T17:19:03.620Z",
+      "updatedAt": "2026-10-13T17:21:10.000Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
