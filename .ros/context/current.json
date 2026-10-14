@@ -4,7 +4,7 @@
   "repository": "visual-engineering",
   "actor": "anthropic/claude-code",
   "startedAt": "2026-09-21T14:51:43.813Z",
-  "updatedAt": "2026-10-13T17:21:10.000Z",
+  "updatedAt": "2026-10-14T00:40:13.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -838,6 +838,55 @@
         }
       },
       "completedAt": "2026-10-13T17:21:10.000Z"
+    },
+    {
+      "id": "WI-0020",
+      "type": "task",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "decision",
+          "path": "framework/decisions/DF-VE-ID-2026-5C1E--published-document-identifiers.md"
+        },
+        {
+          "type": "implementation",
+          "path": "scripts/artifact-ids.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "scripts/test-artifact-ids.mjs"
+        },
+        {
+          "type": "validation",
+          "path": "build-reports/validation-diagnostics.json"
+        }
+      ],
+      "updatedAt": "2026-10-14T00:40:13.000Z",
+      "telemetryExecutionIds": [
+        "EXE-20261014T003630076Z-b0f19592"
+      ],
+      "latestCheckpoint": {
+        "id": "c140db8f95da4a615a7586dc",
+        "recordedAt": "2026-10-14T00:40:08.000Z",
+        "executionId": "EXE-20261014T003630076Z-b0f19592",
+        "repository": "visual-engineering",
+        "branch": "claude/backfill-artifact-ids",
+        "commit": "b91eac46954e25abd00b5dae434a970893c5bb0f",
+        "remote": {
+          "name": "origin",
+          "url": "https://github.com/kemiller2002/visual-engineering"
+        },
+        "remoteBranch": "claude/backfill-artifact-ids",
+        "remoteCommit": "b91eac46954e25abd00b5dae434a970893c5bb0f",
+        "summary": "Backfilled 100 identifiers, added GV/RR prefixes via DF-VE-ID-2026-5C1E, excluded Praxis-owned docs from the site, CI now fails on missing ids",
+        "nextAction": "Review and merge the PR; propose GV/RR prefixes upstream in Praxis IDENTIFIERS.md",
+        "verification": {
+          "status": "verified",
+          "mechanism": "git-remote-observation"
+        }
+      },
+      "completedAt": "2026-10-14T00:40:13.000Z"
     }
   ]
 }

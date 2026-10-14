@@ -33,3 +33,5 @@
 | WI-0017 | Move visual-engineering to Ordo 1.5.0 via echelon-current 1.2.0 (conditor upgrade --current) | complete |  | medium |
 | WI-0018 | Upgrade Limen from 0.7.1 to 0.9.0 (echelon-current) | complete |  | medium |
 | WI-0019 | Establish universal UI layout and interaction conformance contract and rollout (GH-47) | complete | ui-conformance,standards | high |
+| WI-0020 | Backfill canonical identifiers for the 115 published documents that lack one, extend the identifier policy for governance and research-report documents, and fail validation on missing ids | complete |  | medium |
+| WI-0021 | Propose GV and RR identifier prefixes to the upstream Praxis IDENTIFIERS.md standard (DF-VE-ID-2026-5C1E) | captured | identifiers,upstream | medium |

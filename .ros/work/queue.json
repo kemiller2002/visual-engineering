@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "repository": "visual-engineering",
-  "nextSeq": 20,
+  "nextSeq": 22,
   "items": [
     {
       "id": "ECHELON-UPGRADE-2026-09-21",
@@ -394,6 +394,50 @@
       "attachments": [],
       "createdAt": "2026-10-13T17:19:03.620Z",
       "updatedAt": "2026-10-13T17:21:10.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0020",
+      "title": "Backfill canonical identifiers for the 115 published documents that lack one, extend the identifier policy for governance and research-report documents, and fail validation on missing ids",
+      "description": null,
+      "tags": [],
+      "priority": "medium",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-10-14T00:36:23.203Z",
+      "updatedAt": "2026-10-14T00:40:13.000Z",
+      "createdBy": "unknown",
+      "createdByActor": {
+        "kind": "agent",
+        "id": "anthropic/claude-code",
+        "provider": "anthropic",
+        "model": "unknown",
+        "runtime": "claude-code"
+      },
+      "source": "manual",
+      "sourceReference": null
+    },
+    {
+      "id": "WI-0021",
+      "title": "Propose GV and RR identifier prefixes to the upstream Praxis IDENTIFIERS.md standard (DF-VE-ID-2026-5C1E)",
+      "description": null,
+      "tags": [
+        "identifiers,upstream"
+      ],
+      "priority": "medium",
+      "status": "captured",
+      "attachments": [],
+      "createdAt": "2026-10-14T00:40:09.547Z",
+      "updatedAt": "2026-10-14T00:40:09.547Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
