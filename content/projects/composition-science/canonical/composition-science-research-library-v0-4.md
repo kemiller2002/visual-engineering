@@ -1,4 +1,5 @@
 ---
+id: RR-VE-COMP-2026-0978
 slug: composition-science-research-library-v0-4
 project: composition-science
 purposes:

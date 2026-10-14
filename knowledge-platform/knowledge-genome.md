@@ -1,4 +1,5 @@
 ---
+id: GV-VE-2026-6EE4
 project: visual-engineering-knowledge-platform
 purposes:
   - orient

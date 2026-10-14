@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-4796
+---
+
 # Visual Engineering handoff
 
 ## Objective

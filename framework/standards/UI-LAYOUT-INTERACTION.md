@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-B61F
+---
+
 # Universal UI Layout and Interaction Conformance
 
 Version: 1.0.0  

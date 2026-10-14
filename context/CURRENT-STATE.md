@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-0B02
+---
+
 # Visual Engineering current state
 
 ## Repository status

@@ -1,4 +1,5 @@
 ---
+id: CN-VE-2026-6E0B
 purposes:
   - reference
   - integrate

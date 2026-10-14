@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-81E8
+---
+
 # Agent Execution Brief: Universal UI Conformance Rollout
 
 **Mission:** Deliver the governed universal layout and real-action contract across every maintained Echelon application, marketing site, component demo and interactive document preview. Start from [the standard](../standards/UI-LAYOUT-INTERACTION.md), [the rollout procedure](UI-CONFORMANCE-ROLLOUT.md) and [the candidate inventory](../rollouts/ui-conformance/targets.csv). Parent tracking issue: https://github.com/kemiller2002/visual-engineering/issues/47.

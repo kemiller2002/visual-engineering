@@ -1,4 +1,5 @@
 ---
+id: RR-VE-ATL-2026-41D5
 title: "Project Atlas Autonomous Research Report: Johannes Itten's Seven Color Contrasts"
 project: project-atlas
 series: "Masters vs. Modern Science"

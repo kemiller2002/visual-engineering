@@ -1,4 +1,5 @@
 ---
+id: RR-VE-COMP-2026-23F3
 authors:
   - OpenAI Research Agent
 confidence: Medium-High

@@ -32,6 +32,12 @@ jobs:
         id: research-validate
         run: npm run research:validate
 
+      - name: Require canonical identifiers on published documents
+        run: npm run research:ids -- --check
+
+      - name: Test identifier allocator
+        run: npm run research:ids:test
+
       - name: Validate layout catalog
         run: npm run layouts:validate
 

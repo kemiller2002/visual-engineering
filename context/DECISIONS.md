@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-09C7
+---
+
 # Visual Engineering decisions
 
 Material decisions use `DF-` records under `research/decisions/`. This compact

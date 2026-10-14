@@ -1,4 +1,5 @@
 ---
+id: RR-VE-ATL-2026-E994
 title: "ATLAS-0001: Proximity and Relative Separation"
 project: project-atlas
 version: "0.1"

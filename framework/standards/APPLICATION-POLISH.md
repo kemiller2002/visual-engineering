@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-DE4A
+---
+
 # Application Polish Standard
 
 Status: normative

@@ -1,4 +1,5 @@
 ---
+id: CN-VE-2026-5CEA
 purposes:
   - reference
   - integrate

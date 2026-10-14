@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-8049
+---
+
 # Visual Engineering research frontier
 
 This directory contains derived frontier views: unresolved questions,

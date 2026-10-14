@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-9151
+---
+
 # Visual Engineering architecture
 
 ## Current architecture

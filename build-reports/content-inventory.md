@@ -2,10 +2,10 @@
 
 ## Summary
 
-- publishable source: 826
+- publishable source: 812
+- ambiguous: 416
 - generated output: 1
 - archived: 2
-- ambiguous: 401
 - intake/unprocessed: 1
 - ignored: 68
 
@@ -18,9 +18,9 @@
 - publishable source: `agent-context/UI-DECISION-CHECKLIST.md`
 - publishable source: `agent-context/UI-FOUNDATIONS.md`
 - publishable source: `AGENTS.md`
-- publishable source: `BOOTSTRAP.md`
+- ambiguous: `BOOTSTRAP.md`
 - generated output: `build-reports/content-inventory.md`
-- publishable source: `CHANGELOG.md`
+- ambiguous: `CHANGELOG.md`
 - publishable source: `CLAUDE.md`
 - archived: `content/archive/duplicates/composition-science/Composition_Science_Research_Library_v0.2.md`
 - archived: `content/archive/duplicates/project-atlas/Project_Atlas_Visual_Information_Transfer_Foundations_v1.md`
@@ -200,22 +200,23 @@
 - ambiguous: `docs/work-protocol.md`
 - ambiguous: `experiments/ex-ve-tcg-319c/README.md`
 - ambiguous: `experiments/ex-ve-typ-001/README.md`
-- publishable source: `framework/policies/EVIDENCE-POLICY.md`
-- publishable source: `framework/policies/OUTPUT-POLICY.md`
-- publishable source: `framework/policies/RESEARCH-POLICY.md`
+- publishable source: `framework/decisions/DF-VE-ID-2026-5C1E--published-document-identifiers.md`
+- ambiguous: `framework/policies/EVIDENCE-POLICY.md`
+- ambiguous: `framework/policies/OUTPUT-POLICY.md`
+- ambiguous: `framework/policies/RESEARCH-POLICY.md`
 - publishable source: `framework/protocols/AGENT-UI-CONFORMANCE-ROLLOUT.md`
 - publishable source: `framework/protocols/APPLICATION-POLISH-REVIEW.md`
-- publishable source: `framework/protocols/ARTIFACT-LIFECYCLE.md`
-- publishable source: `framework/protocols/SUPERSESSION.md`
+- ambiguous: `framework/protocols/ARTIFACT-LIFECYCLE.md`
+- ambiguous: `framework/protocols/SUPERSESSION.md`
 - publishable source: `framework/protocols/UI-CONFORMANCE-ROLLOUT.md`
-- publishable source: `framework/REP-SPECIFICATION.md`
+- ambiguous: `framework/REP-SPECIFICATION.md`
 - publishable source: `framework/standards/APPLICATION-POLISH.md`
-- publishable source: `framework/standards/ARTIFACT-TIERS.md`
-- publishable source: `framework/standards/CONFIDENCE.md`
-- publishable source: `framework/standards/IDENTIFIERS.md`
+- ambiguous: `framework/standards/ARTIFACT-TIERS.md`
+- ambiguous: `framework/standards/CONFIDENCE.md`
+- ambiguous: `framework/standards/IDENTIFIERS.md`
 - publishable source: `framework/standards/MOTION-AND-INTERACTION.md`
-- publishable source: `framework/standards/NAMING-STANDARD.md`
-- publishable source: `framework/standards/TAXONOMY.md`
+- ambiguous: `framework/standards/NAMING-STANDARD.md`
+- ambiguous: `framework/standards/TAXONOMY.md`
 - publishable source: `framework/standards/UI-LAYOUT-INTERACTION.md`
 - publishable source: `GEMINI.md`
 - publishable source: `HANDOFF.md`
@@ -1308,5 +1309,5 @@
 - publishable source: `templates/research/JOURNAL-TEMPLATE.md`
 - publishable source: `templates/research/REP-TEMPLATE.md`
 - publishable source: `templates/research/THEORY-TEMPLATE.md`
-- publishable source: `tools/theme-catalog-validate/README.md`
-- publishable source: `tools/theme-measure/README.md`
+- ambiguous: `tools/theme-catalog-validate/README.md`
+- ambiguous: `tools/theme-measure/README.md`

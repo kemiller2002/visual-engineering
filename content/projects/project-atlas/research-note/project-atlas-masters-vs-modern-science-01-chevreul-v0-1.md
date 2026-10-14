@@ -1,4 +1,5 @@
 ---
+id: RR-VE-ATL-2026-E0DE
 title: "Masters vs. Modern Science 01: Michel-Eugène Chevreul"
 project: project-atlas
 series: "Masters vs. Modern Science"
