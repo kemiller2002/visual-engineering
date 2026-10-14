@@ -2,508 +2,76 @@
   "schemaVersion": "1.0",
   "generatedOn": "2026-07-22",
   "performance": {
-    "documentCount": 756,
-    "parseTimeMs": 2737.295625,
-    "renderTimeMs": 1750.7574169999998,
-    "searchIndexTimeMs": 869.1658749999997,
-    "totalBuildTimeMs": 5592.2998339999995
+    "documentCount": 812,
+    "parseTimeMs": 9575.724788,
+    "renderTimeMs": 4423.541105,
+    "searchIndexTimeMs": 2059.3502519999984,
+    "totalBuildTimeMs": 16818.767534000002
   },
   "summary": {
-    "totalDocuments": 756,
+    "totalDocuments": 812,
     "byArtifactType": {
-      "research-document": 708,
-      "concept": 17,
+      "research-document": 736,
+      "concept": 23,
       "Architecture and Decision Framework": 1,
-      "decision-framework": 2,
-      "evidence": 3,
-      "experiment": 11,
-      "hypothesis": 2,
-      "journal-entry": 4,
-      "research-package": 7,
-      "theory": 1
+      "decision-framework": 6,
+      "evidence": 4,
+      "experiment": 18,
+      "hypothesis": 3,
+      "journal-entry": 9,
+      "research-package": 10,
+      "theory": 2
     },
     "byResearchArea": {
-      "General Research": 742,
+      "General Research": 789,
       "Composition Science": 1,
       "Clinical Communication Engineering": 8,
+      "replace-me": 7,
       "color,contrast,low-vision,color-vision-deficiency": 1,
       "Project Atlas / Perceptual Measurement": 1,
       "Project Atlas / Typography Genome": 1,
       "Component Library Foundations": 1,
-      "Product Genome": 1
+      "Product Genome": 1,
+      "accessibility,typography,color,human-factors": 1,
+      "layout,interaction,accessibility": 1
     },
     "byProject": {
       "design-library": 11,
-      "visual-engineering": 11,
+      "visual-engineering": 13,
+      "terminal-character-grid": 10,
       "composition-science": 23,
       "project-atlas": 25,
-      "visual-engineering-knowledge-platform": 10,
       "clinical-communication-engineering": 8,
+      "perceptual-envelope": 9,
       "beautiful-digital-experiences": 4,
       "itten-color-contrasts": 13,
+      "visual-engineering-knowledge-platform": 10,
       "product-genome": 3
     },
     "byPurpose": {
-      "decide": 11,
-      "reference": 69,
+      "decide": 15,
+      "reference": 82,
       "chronicle": 8,
-      "apply": 21,
-      "integrate": 73,
-      "verify": 65,
+      "apply": 29,
+      "verify": 74,
       "reproduce": 16,
-      "orient": 33
+      "integrate": 78,
+      "orient": 33,
+      "execute": 2
     }
   },
   "diagnostics": [
     {
       "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "agent-context/AGENT-INSTRUCTIONS.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
+      "code": "unknown-purpose",
+      "sourcePath": "content/projects/perceptual-envelope/hypothesis-registry/perceptual-envelope-hypotheses-v1.md",
+      "message": "Unknown document purpose \"execute\". Use a controlled purpose or update the publisher vocabulary deliberately."
     },
     {
       "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/research-note/architecture-as-a-foundation-for-composition-science.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/architecture/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-note/atlas-0001-proximity-and-relative-separation-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/attention/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/build-pipeline.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/cognition/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/color/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/component-architecture/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/design-library/research-report/component-library-foundations-research-report.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/canonical/composition-genome-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/research-note/composition-science-architecture-human-scale-and-proportion-research.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/canonical/composition-science-repository-governance-specification-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/canonical/composition-science-research-library-v0-2-2.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/canonical/composition-science-research-library-v0-4.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/canonical/composition-science-research-library-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/phase-report/composition-science-phase-2-visual-hierarchy-and-wayfinding.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/phase-report/composition-science-phase-3-evidence-review-attention-wayfinding.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/composition/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/registries/decisions/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "agent-context/README.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/evidence/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/registries/evidence/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-report/project-atlas-typography-autonomous-research-report-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/registries/experiments/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/hierarchy/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/human-factors/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/registries/hypotheses/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/implementation-roadmap.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/intake-preservation.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/research-report/intuitive-is-just-familiar-research-report.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/research-note/intuitive-is-just-familiar-predictive-fit-rep-v2.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/knowledge-genome.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/knowledge-graph/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/learning/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/audit/project-atlas-letter-confusion-data-audit-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-note/project-atlas-masters-vs-modern-science-01-chevreul-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/metadata-standard.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/migration-plan.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/ontology/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/perception/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/product-design/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/product-genome/knowledge-model/product-genome-autonomous-research-run-01.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/product-genome/canonical/product-genome-project-atlas-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/case-study/project-atlas-applied-case-study-001-account-settings-form.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-report/project-atlas-autonomous-research-report-001-relational-legibility.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-report/project-atlas-autonomous-research-itten-seven-contrasts-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/evidence-registry/project-atlas-color-evidence-registry-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/canonical/project-atlas-color-vocabulary-and-mechanism-taxonomy.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-framework/project-atlas-comparative-color-framework-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/evidence-gallery/project-atlas-evidence-gallery-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-plan/project-atlas-foundation-research-plan.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/evidence-collection/project-atlas-foundational-documents-and-ribbon-evidence-collection-001.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/research-note/project-atlas-masters-vs-modern-science-02-josef-albers-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/canonical/project-atlas-perceptual-color-genome.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/canonical/project-atlas-research-methodology-v0-2.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/comparative-study/project-atlas-ribbon-comparative-study-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/crosswalk/project-atlas-rosetta-stone-cross-system-design-mechanism-map-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/canonical/project-atlas-project-charter-v0-1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/repository-architecture.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/repository-manifest.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/research-methodology/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/risk-assessment.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/search-architecture.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/spacing/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/README.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/template/composition-science-markdown-template-v1.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/typography/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/composition-science/research-note/composition-science-visual-density-crowding-and-perceptual-separation.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "agent-context/UI-ANTI-PATTERNS.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "agent-context/UI-DECISION-CHECKLIST.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "agent-context/UI-FOUNDATIONS.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/projects/project-atlas/canonical/project-atlas-visual-information-transfer-foundations-v1-2.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "content/concepts/wayfinding/index.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
-    },
-    {
-      "severity": "warning",
-      "code": "missing-id",
-      "sourcePath": "knowledge-platform/website-architecture.md",
-      "message": "Compatibility mode inferred metadata because no canonical identifier was present."
+      "code": "unknown-purpose",
+      "sourcePath": "content/projects/perceptual-envelope/research-execution-package/rp-ve-pe-001-perceptual-envelope-program.md",
+      "message": "Unknown document purpose \"execute\". Use a controlled purpose or update the publisher vocabulary deliberately."
     }
   ]
 }

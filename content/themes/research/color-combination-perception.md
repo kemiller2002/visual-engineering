@@ -1,3 +1,7 @@
+---
+id: RR-VE-THM-2026-9A60
+---
+
 # Color Combination Perception: Evidence Baseline
 
 Status: research baseline

@@ -1,4 +1,5 @@
 ---
+id: RR-VE-ATL-2026-2CCD
 title: "Project Atlas Autonomous Research Report 001"
 subtitle: "From Design-System Convergence to Predictive Mechanisms"
 project: project-atlas

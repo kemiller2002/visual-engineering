@@ -1,4 +1,5 @@
 ---
+id: CN-VE-2026-7420
 purposes:
   - reference
   - integrate

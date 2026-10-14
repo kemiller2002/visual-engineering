@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-73AD
+---
+
 # Motion and Interaction Standard
 
 Status: normative

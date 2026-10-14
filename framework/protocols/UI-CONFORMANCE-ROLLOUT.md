@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-754D
+---
+
 # Universal UI Conformance: Cross-Repository Rollout
 
 Status: staged adoption, not a claim that any existing application already passes  

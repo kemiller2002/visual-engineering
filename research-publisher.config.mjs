@@ -29,7 +29,24 @@ export default {
       // Tooling and product documentation for @echelon-foundry/visual-engineering.
       // These are not research artifacts and are not published to the research site.
       "README.md",
+      "CHANGELOG.md",
+      "tools/**/README.md",
       "docs/**",
+      // Praxis-installed governance documents. Praxis owns and replaces these on
+      // upgrade, so their identifiers cannot be maintained here and they are not
+      // Visual Engineering research (DF-VE-ID-2026-5C1E).
+      "BOOTSTRAP.md",
+      "framework/REP-SPECIFICATION.md",
+      "framework/policies/EVIDENCE-POLICY.md",
+      "framework/policies/OUTPUT-POLICY.md",
+      "framework/policies/RESEARCH-POLICY.md",
+      "framework/protocols/ARTIFACT-LIFECYCLE.md",
+      "framework/protocols/SUPERSESSION.md",
+      "framework/standards/ARTIFACT-TIERS.md",
+      "framework/standards/CONFIDENCE.md",
+      "framework/standards/IDENTIFIERS.md",
+      "framework/standards/NAMING-STANDARD.md",
+      "framework/standards/TAXONOMY.md",
       "src/**",
       "tests/**",
       "npm/**",

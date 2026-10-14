@@ -1,4 +1,5 @@
 ---
+id: RR-VE-COMP-2026-1E8C
 authors:
 - OpenAI autonomous research agent
 confidence: High for familiarity and feedback findings; Moderate for predictive-fit model; Low-Moderate for neural unification

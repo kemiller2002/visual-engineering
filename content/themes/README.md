@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-0DC2
+---
+
 # Theme Specimen Catalog
 
 This catalog records reusable color combinations as evidence-bearing theme specimens.

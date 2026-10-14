@@ -1,4 +1,5 @@
 ---
+id: RR-VE-COMP-2026-9755
 slug: intuitive-is-just-familiar-research-report
 authors:
 - OpenAI autonomous research agent

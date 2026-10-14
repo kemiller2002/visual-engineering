@@ -1,3 +1,7 @@
+---
+id: GV-VE-2026-C23D
+---
+
 # Visual Engineering known risks
 
 | Risk | Likelihood | Impact | Mitigation | Owner |
