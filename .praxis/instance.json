@@ -1,0 +1,12 @@
+{
+  "schema": "praxis.instance/1",
+  "instanceId": "pxi-fa850a5b4a0340e3b49a722b007c9edf",
+  "createdAt": "2026-11-25T17:56:08.761Z",
+  "createdWith": "3.25.0",
+  "repository": {
+    "provider": "github",
+    "repositoryId": null,
+    "repository": "kemiller2002/visual-engineering"
+  },
+  "predecessors": []
+}
