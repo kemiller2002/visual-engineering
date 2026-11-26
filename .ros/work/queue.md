@@ -36,4 +36,4 @@
 | WI-0020 | Backfill canonical identifiers for the 115 published documents that lack one, extend the identifier policy for governance and research-report documents, and fail validation on missing ids | complete |  | medium |
 | WI-0021 | Propose GV and RR identifier prefixes to the upstream Praxis IDENTIFIERS.md standard (DF-VE-ID-2026-5C1E) | captured | identifiers,upstream | medium |
 | WI-0022 | Upgrade to echelon-current 1.42.0 (praxis 3.7.2->3.25.0, ordo 1.5.0->1.20.0, limen 0.9.0->0.9.1) | complete |  | medium |
-| WI-0023 | Upgrade to echelon-current 1.43.0 (Praxis 3.25.0 -> 3.26.0) | ready |  | medium |
+| WI-0023 | Upgrade to echelon-current 1.43.0 (Praxis 3.25.0 -> 3.26.0) | complete |  | medium |

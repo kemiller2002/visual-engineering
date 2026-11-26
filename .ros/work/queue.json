@@ -476,10 +476,10 @@
       "description": null,
       "tags": [],
       "priority": "medium",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-11-26T00:25:18.538Z",
-      "updatedAt": "2026-11-26T00:25:18Z",
+      "updatedAt": "2026-11-26T00:29:13Z",
       "createdBy": "unknown",
       "createdByActor": {
         "kind": "agent",
